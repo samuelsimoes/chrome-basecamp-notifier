@@ -1,0 +1,96 @@
+body {
+	padding: 0;
+	margin: 0;
+}
+
+#close-button {
+	position: absolute;
+	top: 10px;
+	right: 20px;
+	cursor: pointer;
+}
+	
+.login-button {
+	text-align: center;
+	padding: 12px;
+}
+
+.login-button input {
+	font-family: "Lucida Grande","Helvetica Neue", helvetica, arial, sans-serif;
+	font-size: 11px;
+	line-height: 16px;
+	padding: 2px 10px;
+	margin: -1px 0 0;
+	background: white;
+	color: black;
+	border: 1px solid #CCC;
+	-webkit-box-shadow: 0px 1px 0px #DDD;
+	vertical-align: top;
+	-webkit-appearance: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+ul {
+	margin: 0px;
+	padding: 0px;
+}
+
+body {
+	font-family: "Lucida Grande","Helvetica Neue", helvetica, arial, sans-serif;
+	font-size: 12px;
+}
+
+.content {
+	max-height: 500px;
+	overflow: auto;
+	width: 800px;
+	position: relative;
+}
+
+h1 {
+	font-size: 12px;
+	font-weight: bold;
+	font-weight: light;
+	padding-left: 10px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	margin-top: 0px;
+	border-bottom: 2px solid #efefef;
+	margin-bottom: 1px;
+}
+
+.notification-list li {
+	padding: 6px 10px;
+	display: block;
+	color: #303030;
+	text-decoration: none;
+}
+
+.notification-list li {
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fafafa), color-stop(50%,#f6f6f6), color-stop(51%,#f2f2f2), color-stop(100%,#fbfbfb));
+	border-bottom: 1px dotted #e2e2e2;
+	margin-bottom: 1px;
+	cursor: pointer;
+	text-shadow: 1px 1px 0px #fff;
+}
+
+.notification-list .user {
+	color: #ababab;
+}
+
+.notification-list .new {
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#BCFECC), color-stop(50%,#95FFAE), color-stop(51%,#8afda5), color-stop(100%,#B7FFC8));
+	text-shadow: 1px 1px 0px #b7ffc8;
+	border-bottom: 1px solid #8cffa7;
+}
+
+.notification-list .new .user {
+	color: #25cd4d;
+}
+
+.notification-list small {
+	font-size: 9px;
+	float: right;
+	font-style: italic;
+}

@@ -1,0 +1,8 @@
+/**
+ * App infos from http://integrate.37signals.com
+ */
+ConfigKeys = {
+	client_id: "",
+	client_secret: "",
+	redirect_uri: "chrome-extension://<chrome-extension-id>/options.html"
+}
