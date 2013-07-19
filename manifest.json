@@ -1,6 +1,6 @@
 {
   "name": "Basecamp Notifier",
-  "version": "0.2",
+  "version": "1.0",
   "description": "Display Basecamp activity with desktop notifications.",
   "icons": {
     "16": "img/icons/16.png",
@@ -9,8 +9,8 @@
   },
   "permissions": [
     "notifications",
-    "https://launchpad.37signals.com/",
-    "https://basecamp.com/",
+    "https://launchpad.37signals.com/*",
+    "https://basecamp.com/*",
     "background"
   ],
   "options_page": "options.html",
