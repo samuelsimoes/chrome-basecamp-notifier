@@ -1,13 +1,17 @@
-BasecampNotifier.UserToken = Backbone.Model.extend({
-  initialize: function(){
-    this.url = "https://launchpad.37signals.com/authorization/token?client_id="
-               + BasecampNotifier.ConfigKeys.client_id +
-               "&redirect_uri="
-               + encodeURIComponent(BasecampNotifier.ConfigKeys.redirect_uri) +
-               "&client_secret="
-               + BasecampNotifier.ConfigKeys.client_secret +
-               "&type=web_server&code=" + this.get("auth_code");
-  }
-}, {
-  modelType: "UserToken"
+define(["app", "backbone", "backbone.deferred"], function(App) {
+  return Backbone.DeferredModel.extend({
+    url: function() {
+      return "https://launchpad.37signals.com/authorization/token?client_id="
+              + App.clientId +
+              "&redirect_uri="
+              + encodeURIComponent(App.redirectUri) +
+              "&client_secret="
+              + App.clientSecret +
+              "&type=web_server&code=" + this.get("auth_code");
+    }
+  }, {
+    current: function() {
+      return localStorage.getItem("currentToken");
+    }
+  });
 });

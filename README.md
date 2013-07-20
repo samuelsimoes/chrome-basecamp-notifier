@@ -8,7 +8,17 @@ Basecamp Chrome Notifier is in beta version, feel free to help us improve the ex
 
 Extension link on Chrome Store: http://d.pr/B38v
 
-Obs.: Case you want install this extension in your Chrome in the unpacked version mode you need register an app in http://integrate.37signals.com and put the app infos into `configkeys.js.default` and rename it for `configkeys.js`.
+###Instructions
+
+In order to run this project you need **[Bower](http://https://github.com/bower/bower)** to manage the dependencies, for install Bower use:
+
+```npm install -g bower```
+
+and then, inside projects folder:
+
+```bower install```
+
+You also need register an app in **[http://integrate.37signals.com](http://integrate.37signals.com)**  and put the app infos into `js/config_keys.js`, follow the exemple inside `js/config_keys.js.default`.
 
 
 -----------------------------------------

@@ -1,0 +1,10 @@
+/**
+ * App infos from http://integrate.37signals.com
+ */
+define([], function(){
+  return {
+    clientId: "",
+    clientSecret: "",
+    redirectUri: "chrome-extension://<your-app-id>/options.html"
+  };
+});

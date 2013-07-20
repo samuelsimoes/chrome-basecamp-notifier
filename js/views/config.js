@@ -1,52 +1,59 @@
-BasecampNotifier.ConfigView = Backbone.View.extend({
-  el: $("#main-content"),
+define([
+  "models/user",
+  "models/user_token",
+  "services/auth",
+  "backbone",
+  "ejs"
+], function(User, UserToken, Auth) {
 
-  loadingTemplate: function() { return new EJS({ url: "/js/templates/configs/loading.ejs" }); },
+  return Backbone.View.extend({
+    el: $("#main-content"),
 
-  render: function() {
-    this.resolveAction();
-  },
+    loadingTemplate: function() { return new EJS({ url: "/js/templates/configs/loading.ejs" }); },
 
-  renderLoadingPage: function() {
-    this.$el.html(this.loadingTemplate().render({}));
-  },
+    render: function() {
+      this.resolveAction();
+    },
 
-  resolveAction: function() {
-    if (this.returningFromPermissionScreen()) {
-      this.fetchUser();
-    } else if (!BasecampNotifier.User.loggedIn()) {
-      BasecampNotifier.User.authenticate();
-    } else {
-      console.log("Usuário já logado");
-    }
-  },
+    renderLoadingPage: function() {
+      this.$el.html(this.loadingTemplate().render({}));
+    },
 
-  fetchUser: function() {
-    var tokenPromisse = BasecampNotifier.User.fetchNewToken(this.authCode);
+    resolveAction: function() {
+      if (this.returningFromPermissionScreen()) {
+        this.fetchUser();
+      } else if (UserToken.current() == undefined) {
+        Auth.getPermission();
+      } else {
+        var userPromisse = User.current();
 
-    this.renderLoadingPage();
-
-    tokenPromisse.done(function(){
-      setTimeout(function() {
-        var userPromisse = BasecampNotifier.User.fetchUser();
-
-        userPromisse.done(function() {
-          setTimeout(function() {
-            console.log("Usuário Carregado com sucesso!");
-          }, 0);
+        userPromisse.done(function(model){
+          console.log(model);
         });
-      }, 0);
-    });
-  },
+      }
+    },
 
-  returningFromPermissionScreen: function() {
-    var authCode = location.search.match(/\?code\=([^\&]+)/);
+    fetchUser: function() {
+      var tokenPromise = Auth.authorize(this.authCode);
 
-    if (authCode != undefined) {
-      this.authCode = authCode[1];
-      return true;
-    } else {
-      return false;
+      tokenPromise.done(function() {
+        var userPromisse = User.current();
+
+        userPromisse.done(function(model){
+          console.log(model);
+        });
+      });
+    },
+
+    returningFromPermissionScreen: function() {
+      var authCode = location.search.match(/\?code\=([^\&]+)/);
+
+      if (authCode != undefined) {
+        this.authCode = authCode[1];
+        return true;
+      } else {
+        return false;
+      }
     }
-  }
+  });
 });
