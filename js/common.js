@@ -7,7 +7,7 @@ require.config({
     "backbone.deferred": "vendor/backbone.deferred/index",
     "backbone.local_storage": "vendor/backbone.localStorage/backbone.localStorage",
     "backbone.dual_storage": "vendor/backbone.dualstorage/backbone.dualstorage",
-    "ejs": "vendor/ejs/ejs",
+    "text": "vendor/text/text",
     "app": "app"
   },
   shim: {

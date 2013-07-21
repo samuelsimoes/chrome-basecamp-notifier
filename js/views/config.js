@@ -2,21 +2,23 @@ define([
   "models/user",
   "models/user_token",
   "services/auth",
-  "backbone",
-  "ejs"
-], function(User, UserToken, Auth) {
+  "text!templates/configs.html",
+  "backbone"
+], function(User, UserToken, Auth, ConfigTpl) {
 
   return Backbone.View.extend({
-    el: $("#main-content"),
+    el: $(".container"),
 
-    loadingTemplate: function() { return new EJS({ url: "/js/templates/configs/loading.ejs" }); },
+    loadingTemplate: _.template("<div class=\"load-view\"><h1>Loading...</h1></div>"),
+
+    configsTemplate: _.template(ConfigTpl),
 
     render: function() {
       this.resolveAction();
     },
 
     renderLoadingPage: function() {
-      this.$el.html(this.loadingTemplate().render({}));
+      this.$el.html(this.loadingTemplate({}));
     },
 
     resolveAction: function() {
@@ -35,13 +37,16 @@ define([
       }
     },
 
-    fetchUser: function() {
-      var userPromisse = User.current();
+    renderUserConfigs: function() {
+      var that = this;
 
-      userPromisse.done(function(model){
-        console.log(model);
-        console.log("Carregou o usuário");
+      User.current().done(function(model){
+        that.renderConfigsContent();
       });
+    },
+
+    renderConfigsContent: function() {
+      this.$el.html(this.configsTemplate({}));
     },
 
     returningFromPermissionScreen: function() {
