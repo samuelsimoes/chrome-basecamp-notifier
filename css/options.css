@@ -1,72 +1,80 @@
 body {
-	background: url(../img/paper.png);
-	font-family: helvetica, arial, sans-serif !important;
+  background: url(../img/paper.png);
+  font-family: helvetica, arial, sans-serif !important;
 }
 
 .container {
-	border-radius: 8px;
-	background: #fff;
-	width: 400px;
-	-webkit-box-shadow: 0px 0px 5px rgba(00, 00, 00, 0.2);
-	border: 1px solid #CCC;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin-left: -200px;
-	margin-top: -150px;
+  border-radius: 8px;
+  background: #fff;
+  width: 400px;
+  -webkit-box-shadow: 0px 0px 5px rgba(00, 00, 00, 0.2);
+  border: 1px solid #CCC;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -200px;
+  margin-top: -150px;
 }
 
 .title {
-	border-bottom: 1px solid #dddddd;
-	padding: 18px;
+  border-bottom: 1px solid #dddddd;
+  padding: 18px;
 }
 
 h1 {
-	color: #7D7A75;
-	font-weight: bold;
-	font-size: 18px;
+  color: #7D7A75;
+  font-weight: bold;
+  font-size: 18px;
 }
 
 .options {
-	padding: 18px;
+  padding: 18px;
 }
 
 .options h2 {
-	font-size: 15px;
-	margin-bottom: 10px;
-	font-weight: bold;
+  font-size: 15px;
+  margin-bottom: 10px;
+  font-weight: bold;
 }
 
 .project-list .project {
-	margin-bottom: 10px;
-	font-size: 12px;
+  margin-bottom: 10px;
+  font-size: 12px;
 }
 
 input[type=submit] {
-	font-family: "Lucida Grande","Helvetica Neue", helvetica, arial, sans-serif;
-	font-size: 11px;
-	line-height: 16px;
-	padding: 2px 10px;
-	margin: -1px 0 0;
-	background: white;
-	color: black;
-	border: 1px solid #CCC;
-	-webkit-box-shadow: 0px 1px 0px #DDD;
-	vertical-align: top;
-	-webkit-appearance: none;
-	border-radius: 5px;
-	cursor: pointer;
+  font-family: "Lucida Grande","Helvetica Neue", helvetica, arial, sans-serif;
+  font-size: 11px;
+  line-height: 16px;
+  padding: 2px 10px;
+  margin: -1px 0 0;
+  background: white;
+  color: black;
+  border: 1px solid #CCC;
+  -webkit-box-shadow: 0px 1px 0px #DDD;
+  vertical-align: top;
+  -webkit-appearance: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .flash {
-	padding: 8px 18px;
-	background: #FFFBF1;
-	font-size: 11px;
-	border-bottom: 1px dotted #F0E1B9;
-	display: none;
+  padding: 8px 18px;
+  background: #FFFBF1;
+  font-size: 11px;
+  border-bottom: 1px dotted #F0E1B9;
+  display: none;
 }
 
 .load-view {
-	padding: 20px;
-	text-align: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.project {
+  margin-bottom: 8px;
+}
+
+.project label {
+  font-size: 13px;
 }

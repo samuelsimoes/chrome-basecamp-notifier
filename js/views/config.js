@@ -2,9 +2,11 @@ define([
   "models/user",
   "models/user_token",
   "services/auth",
+  "views/accounts",
+  "collections/accounts",
   "text!templates/configs.html",
   "backbone"
-], function(User, UserToken, Auth, ConfigTpl) {
+], function(User, UserToken, Auth, AccountsView, Accounts, ConfigTpl) {
 
   return Backbone.View.extend({
     el: $(".container"),
@@ -42,11 +44,17 @@ define([
 
       User.current().done(function(model){
         that.renderConfigsContent();
+        that.renderAccountsToSelect(model.get("accounts"));
       });
     },
 
     renderConfigsContent: function() {
       this.$el.html(this.configsTemplate({}));
+    },
+
+    renderAccountsToSelect: function(accounts) {
+      var accounts = new Accounts(accounts);
+      return new AccountsView({ collection: accounts }).render();
     },
 
     returningFromPermissionScreen: function() {
