@@ -20,28 +20,27 @@ define([
     },
 
     resolveAction: function() {
+      var that = this;
+
+      this.renderLoadingPage();
+
       if (this.returningFromPermissionScreen()) {
-        this.fetchUser();
+        Auth.authorize(this.authCode).done(function(){
+          that.renderUserConfigs();
+        });
       } else if (UserToken.current() == undefined) {
         Auth.getPermission();
       } else {
-        var userPromisse = User.current();
-
-        userPromisse.done(function(model){
-          console.log(model);
-        });
+        this.renderUserConfigs();
       }
     },
 
     fetchUser: function() {
-      var tokenPromise = Auth.authorize(this.authCode);
+      var userPromisse = User.current();
 
-      tokenPromise.done(function() {
-        var userPromisse = User.current();
-
-        userPromisse.done(function(model){
-          console.log(model);
-        });
+      userPromisse.done(function(model){
+        console.log(model);
+        console.log("Carregou o usuário");
       });
     },
 
