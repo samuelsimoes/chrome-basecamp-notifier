@@ -13,6 +13,14 @@ define([
 
     loadingTemplate: _.template("<div class=\"load-view\"><h1>Loading...</h1></div>"),
 
+    events: {
+      "click #save" : "closeWindow",
+      "click #logout" : function() {
+        localStorage.removeItem("currentToken");
+        this.closeWindow();
+      }
+    },
+
     configsTemplate: _.template(ConfigTpl),
 
     render: function() {
@@ -21,6 +29,11 @@ define([
 
     renderLoadingPage: function() {
       this.$el.html(this.loadingTemplate({}));
+    },
+
+    closeWindow: function() {
+      window.open('', '_self', '');
+      window.close();
     },
 
     resolveAction: function() {
