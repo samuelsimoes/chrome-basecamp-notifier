@@ -1,4 +1,8 @@
-define(["text!templates/account.html", "backbone"], function(AccountTpl) {
+define([
+  "text!templates/account.html",
+  "services/listened_accounts",
+  "backbone"
+], function(AccountTpl, ListenedAccounts) {
   return Backbone.View.extend({
     template: _.template(AccountTpl),
 
@@ -7,7 +11,7 @@ define(["text!templates/account.html", "backbone"], function(AccountTpl) {
     },
 
     render: function() {
-      var view = this.template(this.model.toJSON());
+      var view = this.template(_.extend(this.model.toJSON(), { selected: this.selected() }));
 
       this.setElement(view);
 
@@ -15,10 +19,11 @@ define(["text!templates/account.html", "backbone"], function(AccountTpl) {
     },
 
     selected: function() {
+      return ListenedAccounts.isListened(this.model.get("id"));
     },
 
     updateStatus: function() {
-      console.log("mudou");
+      ListenedAccounts.toggle(this.model.toJSON());
     }
   });
 });
