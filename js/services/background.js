@@ -2,8 +2,9 @@ define([
   "collections/events",
   "services/listened_accounts",
   "services/unread_events_cache",
-  "services/notification"
-], function(Events, ListenedAccounts, UnreadEventsCache, Notification) {
+  "services/notification",
+  "services/badge"
+], function(Events, ListenedAccounts, UnreadEventsCache, Notification, Badge) {
 
   var module = {};
 
@@ -12,6 +13,7 @@ define([
 
     events.on("add", function(model) {
       UnreadEventsCache.addItem(model.get("id"));
+      Badge.update();
       Notification.notify(model, account);
     });
 

@@ -1,7 +1,6 @@
 define([
-  "services/unread_events_cache",
   "services/text",
-], function(UnreadEventsCache, Text) {
+], function(Text) {
 
   var module = {};
 
