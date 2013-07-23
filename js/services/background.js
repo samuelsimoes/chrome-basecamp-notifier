@@ -1,17 +1,18 @@
 define([
   "collections/events",
   "services/listened_accounts",
-  "services/unread_events_cache"
-], function(Events, ListenedAccounts, UnreadEventsCache) {
+  "services/unread_events_cache",
+  "services/notification"
+], function(Events, ListenedAccounts, UnreadEventsCache, Notification) {
 
-  var module = {}
+  var module = {};
 
   var fetchAccountEvents = function(account) {
     var events = new Events([], { account_id: account.id });
 
     events.on("add", function(model) {
       UnreadEventsCache.addItem(model.get("id"));
-      console.log("Notify!");
+      Notification.notify(model, account);
     });
 
     events.stream();

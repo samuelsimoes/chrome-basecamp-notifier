@@ -11,7 +11,7 @@ define(["underscore"], function() {
 
   module.markAsRead = function(item) {
     var item = (_.isArray(item)) ? item : [item];
-    persistCache(_.difference(module.unreadItems, item));
+    persistCache(_.difference(module.unreadItems(), item));
   };
 
   module.addItem = function(id) {

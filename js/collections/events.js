@@ -32,12 +32,16 @@ define([
       var that = this;
 
       this.stream = setInterval(function() {
-        that.fetchAuthorized({ update: true });
+        if(UserToken.current() != undefined) {
+          that.fetchAuthorized({ update: true });
+        } else {
+          that.stopStream();
+        }
       }, 3 * 1000);
     },
 
     stopStream: function() {
-      clearTimeInterval(this.stream);
+      clearInterval(this.stream);
     }
   });
 });
