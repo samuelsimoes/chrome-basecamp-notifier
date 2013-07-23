@@ -26,6 +26,18 @@ define([
     markAsRead: function() {
       var ids = _.pluck(this.toJSON(), "id");
       UnreadEventsCache.markAsRead(ids);
+    },
+
+    stream: function() {
+      var that = this;
+
+      this.stream = setInterval(function() {
+        that.fetchAuthorized({ update: true });
+      }, 3 * 1000);
+    },
+
+    stopStream: function() {
+      clearTimeInterval(this.stream);
     }
   });
 });

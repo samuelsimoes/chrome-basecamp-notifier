@@ -1,5 +1,5 @@
-(function(){
-  var popUpView = new BasecampNotifier.PopupView();
-
-  popUpView.render();
-})();
+require(["common"], function (common) {
+  require(["views/popup"], function(PopupView){
+    new PopupView().render();
+  });
+});
