@@ -30,14 +30,41 @@ define([
 
     stream: function() {
       var that = this;
+      var promise = $.Deferred();
 
-      this.stream = setInterval(function() {
+      var fetch = function() {
+        var eventsPromise = that.fetchAuthorized({ update: true });
+        eventsPromise.done(function(collection){
+          promise.notify(collection);
+        });
+      };
+
+      var resolveAction = function() {
         if(UserToken.current() != undefined) {
-          that.fetchAuthorized({ update: true });
+          fetch();
         } else {
           that.stopStream();
         }
-      }, 3 * 1000);
+      };
+
+      this.stream = setInterval(resolveAction, 3 * 1000);
+
+      return promise.promise();
+    },
+
+    updateCache: function() {
+      return localStorage.setItem(this.url, JSON.stringify(this.toJSON()));
+    },
+
+    fetchCached: function() {
+      var cached = JSON.parse(localStorage.getItem(this.url)) || [];
+      var promise = $.Deferred();
+
+      this.set(this.parse(cached));
+
+      promise.resolve(this);
+
+      return promise.promise();
     },
 
     stopStream: function() {

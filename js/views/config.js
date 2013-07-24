@@ -32,6 +32,7 @@ define([
     },
 
     closeWindow: function() {
+      chrome.extension.getBackgroundPage().location.reload();
       window.open('', '_self', '');
       window.close();
     },

@@ -1,7 +1,6 @@
 define([
   "services/unread_events_cache",
-  "backbone",
-  "backbone.fetch_cache"
+  "backbone"
 ], function(UnreadEventsCache) {
 
   return Backbone.Model.extend({
