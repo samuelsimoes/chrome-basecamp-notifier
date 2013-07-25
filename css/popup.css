@@ -3,6 +3,10 @@ body {
   margin: 0;
 }
 
+strong {
+  font-weight: bold;
+}
+
 #close-button {
   position: absolute;
   top: 10px;
