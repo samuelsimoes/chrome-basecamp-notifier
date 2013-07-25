@@ -8,16 +8,10 @@ define([
   return Backbone.Model.extend({
     initialize: function() {
       this.set("icon", this.icon());
-      this.set("for_me", this.forMe());
     },
 
     viewed: function() {
       return (UnreadEventsCache.unreadItems()[this.id] == undefined);
-    },
-
-    forMe: function() {
-      var user = User.current();
-      return Text.contains(this.get("summary"), user.get("full_name"));
     },
 
     icon: function() {

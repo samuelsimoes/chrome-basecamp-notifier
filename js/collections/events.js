@@ -1,16 +1,41 @@
 define([
   "models/event",
   "models/user_token",
+  "models/user",
   "services/unread_events_cache",
+  "services/text",
   "backbone",
   "backbone.deferred"
-], function(Event, UserToken, UnreadEventsCache) {
+], function(Event, UserToken, User, UnreadEventsCache, Text) {
 
   return Backbone.DeferredCollection.extend({
     model: Event,
 
     initialize: function(models, options) {
       this.url = "https://basecamp.com/" + options.account_id + "/api/v1/events.json";
+      this.currentUser = User.current();
+
+      this.on("add", function(event, collection) {
+        this.permit(event);
+        this.checkEventAsForMe(event);
+      });
+    },
+
+    // Prevents add the event which the current user is the author
+    permit: function(event) {
+      if (event.get("creator").name == this.currentUser.get("full_name")) {
+        this.remove(event);
+      } else {
+        this.trigger("permitedItemAdd", event);
+      }
+    },
+
+    // Check if the current event is for current user
+    checkEventAsForMe: function(event) {
+      event.set(
+        "for_me",
+        Text.contains(event.get("summary"), this.currentUser.get("partial_full_name"))
+      );
     },
 
     comparator: function(model) {
@@ -43,13 +68,13 @@ define([
         });
       };
 
-      var resolveAction = function() {
+      var resolveAction = (function() {
         if(UserToken.current() != undefined) {
           fetch();
         } else {
           that.stopStream();
         }
-      };
+      })();
 
       this.stream = setInterval(resolveAction, 100 * 1000);
 

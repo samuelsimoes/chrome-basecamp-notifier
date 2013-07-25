@@ -2,7 +2,8 @@ define(["models/user_token", "backbone", "backbone.deferred"], function(UserToke
   return Backbone.DeferredModel.extend({
     initialize: function() {
       var identity = this.get("identity");
-      this.set("full_name", identity.first_name + " " + identity.last_name[0]);
+      this.set("partial_full_name", identity.first_name + " " + identity.last_name[0]);
+      this.set("full_name", identity.first_name + " " + identity.last_name);
     },
     url: function() {
       return "https://launchpad.37signals.com/authorization.json";

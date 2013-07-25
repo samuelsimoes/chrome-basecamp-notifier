@@ -13,8 +13,7 @@ define([
     var events = new Events([], { account_id: account.id });
     var stream = events.stream();
 
-    // On new item in collection
-    events.on("add", function(model) {
+    events.on("permitedItemAdd", function(model) {
       UnreadEventsCache.addItem(model.get("id"));
       Badge.update();
       Notification.notify(model, account);
