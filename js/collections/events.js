@@ -68,13 +68,14 @@ define([
         });
       };
 
-      var resolveAction = (function() {
+      var resolveAction = function() {
         if(UserToken.current() != undefined) {
           fetch();
         } else {
           that.stopStream();
         }
-      })();
+      };
+      resolveAction();
 
       this.stream = setInterval(resolveAction, 100 * 1000);
 

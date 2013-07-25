@@ -12,16 +12,23 @@ define([
   var fetchAccountEvents = function(account) {
     var events = new Events([], { account_id: account.id });
     var stream = events.stream();
+    var firstTime = true;
 
-    events.on("permitedItemAdd", function(model) {
+    var notify = function(model) {
+      if (firstTime) return;
       UnreadEventsCache.addItem(model.get("id"));
       Badge.update();
       Notification.notify(model, account);
+    };
+
+    events.on("permitedItemAdd", function(model) {
+      notify(model);
     });
 
     // On successful cycle
     stream.progress(function(collection) {
       collection.updateCache();
+      firstTime = false;
     });
   };
 

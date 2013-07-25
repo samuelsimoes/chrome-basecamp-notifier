@@ -24,7 +24,7 @@ define([
       var events = this.eventsCollection().fetchCached();
 
       events.done(function(collection) {
-        _.each(collection.models, function(model) {
+        _.each(_.first(collection.models, 10), function(model) {
           that.renderEvent(model);
         });
 
