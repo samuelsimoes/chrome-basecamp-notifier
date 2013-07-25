@@ -55,11 +55,10 @@ define([
 
     renderUserConfigs: function() {
       var that = this;
+      var user = User.current();
 
-      User.current().done(function(model){
-        that.renderConfigsContent();
-        that.renderAccountsToSelect(model.get("accounts"));
-      });
+      that.renderConfigsContent();
+      that.renderAccountsToSelect(user.get("accounts"));
     },
 
     renderConfigsContent: function() {

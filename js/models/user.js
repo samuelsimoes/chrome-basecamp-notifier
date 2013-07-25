@@ -4,7 +4,7 @@ define(["models/user_token", "backbone", "backbone.deferred"], function(UserToke
       return "https://launchpad.37signals.com/authorization.json";
     }
   }, {
-    current: function() {
+    fetchCurrentUser: function() {
       var user = new this();
 
       return user.fetch({
@@ -12,6 +12,12 @@ define(["models/user_token", "backbone", "backbone.deferred"], function(UserToke
           xhr.setRequestHeader('Authorization', ("Bearer " + UserToken.current()));
         }
       });
+    },
+
+    current: function() {
+      var cachedUser = JSON.parse(localStorage.getItem("currentUser"));
+      var user = new this(cachedUser);
+      return user;
     }
   });
 });

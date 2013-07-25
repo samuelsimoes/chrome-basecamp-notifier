@@ -1,12 +1,12 @@
-define(["app", "models/user_token"], function(App, UserToken) {
+define(["app", "models/user_token", "models/user"], function(App, UserToken, User) {
   module = {};
 
   var persistToken = function(token) {
     return localStorage.setItem("currentToken", token);
   };
 
-  var persistCurrentUserId = function(userId) {
-    return localStorage.setItem("currentUserId", userId);
+  var persistCurrentUser = function(user) {
+    localStorage.setItem("currentUser", JSON.stringify(user.toJSON()));
   };
 
   var getToken = function(authCode) {
@@ -25,7 +25,19 @@ define(["app", "models/user_token"], function(App, UserToken) {
   };
 
   module.authorize = function(authCode) {
-    return getToken(authCode);
+    var promise = $.Deferred()
+    var tokenPromise = getToken(authCode);
+
+    tokenPromise.done(function(token){
+      var userPromise = User.fetchCurrentUser();
+
+      userPromise.done(function(user){
+        persistCurrentUser(user);
+        promise.resolve(token);
+      });
+    });
+
+    return promise.promise();
   };
 
   return module;
