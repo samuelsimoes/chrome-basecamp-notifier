@@ -13,6 +13,10 @@ define([
       this.url = "https://basecamp.com/" + options.account_id + "/api/v1/events.json";
     },
 
+    comparator: function(model) {
+      return Date.parse(model.get("created_at"));
+    },
+
     fetchAuthorized: function(params) {
       var defaults = {
         beforeSend: function(xhr) {
@@ -47,7 +51,7 @@ define([
         }
       };
 
-      this.stream = setInterval(resolveAction, 3 * 1000);
+      this.stream = setInterval(resolveAction, 100 * 1000);
 
       return promise.promise();
     },

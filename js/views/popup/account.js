@@ -38,7 +38,7 @@ define([
     },
 
     eventsCollection: function() {
-      return new Events({ account_id: this.model.get("id") });
+      return new Events([], { account_id: this.model.get("id") });
     }
   });
 });
