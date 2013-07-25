@@ -14,7 +14,7 @@ define([
     },
 
     comparator: function(model) {
-      return Date.parse(model.get("created_at"));
+      return -Date.parse(model.get("created_at"));
     },
 
     fetchAuthorized: function(params) {
