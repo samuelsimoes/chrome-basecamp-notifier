@@ -35,6 +35,16 @@ define(["app", "models/user_token", "models/user"], function(App, UserToken, Use
         persistCurrentUser(user);
         promise.resolve(token);
       });
+
+      // Case don't properly fetch user rollback
+      userPromise.fail(function(user){
+        localStorage.removeItem("currentToken")
+        promise.reject();
+      });
+    });
+
+    tokenPromise.fail(function() {
+      promise.reject();
     });
 
     return promise.promise();

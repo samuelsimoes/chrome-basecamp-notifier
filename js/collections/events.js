@@ -23,7 +23,7 @@ define([
 
     // Prevents add the event which the current user is the author
     permit: function(event) {
-      if (event.get("creator").name == this.currentUser.get("full_name")) {
+      if (event.get("creator").name == this.currentUser.fullName()) {
         this.remove(event);
       } else {
         this.trigger("permitedItemAdd", event);
@@ -34,7 +34,7 @@ define([
     checkEventAsForMe: function(event) {
       event.set(
         "for_me",
-        Text.contains(event.get("summary"), this.currentUser.get("partial_full_name"))
+        Text.contains(event.get("summary"), this.currentUser.partialFullName())
       );
     },
 

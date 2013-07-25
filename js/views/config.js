@@ -43,8 +43,13 @@ define([
       this.renderLoadingPage();
 
       if (this.returningFromPermissionScreen()) {
-        Auth.authorize(this.authCode).done(function(){
+        var auth = Auth.authorize(this.authCode);
+        auth.done(function(){
           that.renderUserConfigs();
+        });
+
+        auth.fail(function(){
+          alert("Erro, não foi possível salvar o usuário.");
         });
       } else if (UserToken.current() == undefined) {
         Auth.getPermission();
@@ -55,10 +60,10 @@ define([
 
     renderUserConfigs: function() {
       var that = this;
-      var user = User.current();
-
-      that.renderConfigsContent();
-      that.renderAccountsToSelect(user.get("accounts"));
+      User.fetchCurrentUser().done(function(user){
+        that.renderConfigsContent();
+        that.renderAccountsToSelect(user.get("accounts"));
+      });
     },
 
     renderConfigsContent: function() {
