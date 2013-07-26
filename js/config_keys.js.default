@@ -4,7 +4,6 @@
 define([], function(){
   return {
     clientId: "",
-    clientSecret: "",
-    redirectUri: "chrome-extension://<your-app-id>/options.html"
+    clientSecret: ""
   };
 });
