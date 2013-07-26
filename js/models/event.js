@@ -8,6 +8,7 @@ define([
   return Backbone.Model.extend({
     initialize: function() {
       this.set("icon", this.icon());
+      this.set("viewed", this.viewed());
     },
 
     viewed: function() {
@@ -29,6 +30,10 @@ define([
         return "icon-check";
       } else if (Text.contains(this.get("action"), "gave") && Text.contains(this.get("action"), "access")) {
         return "icon-key";
+      } else if (Text.contains(this.get("action"), "posted a message")) {
+        return "icon-envelope";
+      } else if (Text.contains(this.get("action"), "deleted")) {
+        return "icon-remove";
       }
     }
   });

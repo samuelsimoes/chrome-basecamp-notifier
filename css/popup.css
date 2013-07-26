@@ -127,3 +127,11 @@ h1:first-child {
   font-size: 9px;
   font-style: italic;
 }
+
+.unread .icon {
+  color: #81A56E;
+}
+
+.unread {
+  font-weight: bold;
+}

@@ -5,18 +5,19 @@ define([
   "views/accounts",
   "collections/accounts",
   "text!templates/configs.html",
-  "backbone"
+  "backbone",
+  "easytab"
 ], function(User, UserToken, Auth, AccountsView, Accounts, ConfigTpl) {
 
   return Backbone.View.extend({
-    el: $(".container"),
+    el: $(".content"),
 
     loadingTemplate: _.template("<div class=\"load-view\"><h1>Loading...</h1></div>"),
 
     events: {
       "click #save" : "closeWindow",
       "click #logout" : function() {
-        localStorage.removeItem("currentToken");
+        localStorage.clear();
         this.closeWindow();
       }
     },
@@ -68,6 +69,7 @@ define([
 
     renderConfigsContent: function() {
       this.$el.html(this.configsTemplate({}));
+      this.$el.find(".tab-container").easytabs();
     },
 
     renderAccountsToSelect: function(accounts) {

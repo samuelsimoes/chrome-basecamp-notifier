@@ -7,6 +7,7 @@
     "underscore-amd": "1.5.1",
     "requirejs": "2.1.8",
     "backbone.deferred": "https://raw.github.com/arhea/backbone-deferred/master/backbone-deferred.js",
-    "text": "2.0.8"
+    "text": "2.0.8",
+    "easytabs": "3.2.0"
   }
 }

@@ -8,7 +8,7 @@ define(["views/account", "backbone"], function(AccountView) {
 
     renderItem: function(account) {
       var item = new AccountView({ model: account });
-      jQuery(".accounts").append(item.render());
+      jQuery("#tabs1-accounts").append(item.render());
     }
   });
 });
