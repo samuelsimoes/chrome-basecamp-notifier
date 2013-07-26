@@ -5,7 +5,7 @@ define([
   "backbone"
 ], function(UnreadEventsCache, User, Text) {
 
-  return Backbone.Model.extend({
+  var Event = Backbone.Model.extend({
     initialize: function() {
       this.set("icon", this.icon());
       this.set("viewed", this.viewed());
@@ -16,25 +16,48 @@ define([
     },
 
     icon: function() {
+      var type = this.type();
+      var typeInfos = Event.types[type];
+
+      if (type && typeInfos) {
+        return typeInfos.icon;
+      }
+    },
+
+    type: function() {
       if (Text.contains(this.get("action"), "re-assigned a to-do")) {
-        return "icon-retweet";
+        return "re_assign_todo";
       } else if (Text.contains(this.get("action"), "commented on")) {
-        return "icon-comment";
+        return "comment";
       } else if (Text.contains(this.get("action"), "moved a to-do")) {
-        return "icon-sort";
+        return "move_todo";
       } else if (Text.contains(this.get("action"), "added a to-do")) {
-        return "icon-check-empty";
+        return "add_todo";
       } else if (Text.contains(this.get("action"), "assigned a to-do")) {
-        return "icon-male";
+        return "assign_todo";
       } else if (Text.contains(this.get("action"), "completed a to-do")) {
-        return "icon-check";
+        return "complete_todo";
       } else if (Text.contains(this.get("action"), "gave") && Text.contains(this.get("action"), "access")) {
-        return "icon-key";
+        return "gave_access";
       } else if (Text.contains(this.get("action"), "posted a message")) {
-        return "icon-envelope";
-      } else if (Text.contains(this.get("action"), "deleted")) {
-        return "icon-remove";
+        return "message";
+      } else if (Text.contains(this.get("action"), "deleted a to-do")) {
+        return "delete_todo";
       }
     }
+  }, {
+    types: {
+      re_assign_todo: { label: "Re-Assigned a to-do", icon: "icon-retweet" },
+      comment: { label: "Comments", icon: "icon-comment" },
+      move_todo: { label: "Move to-do", icon: "icon-sort" },
+      add_todo: { label: "Add to-do", icon: "icon-check-empty" },
+      assign_todo: { label: "Assigns to-do", icon: "icon-male" },
+      complete_todo: { label: "Completes to-do", icon: "icon-check" },
+      gave_access: { label: "Gave Access", icon: "icon-key" },
+      message: { label: "Post Messages", icon: "icon-envelope" },
+      delete_todo: { label: "Delete to-do", icon: "icon-remove" },
+    }
   });
+
+  return Event;
 });
