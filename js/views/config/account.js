@@ -1,17 +1,20 @@
 define([
-  "text!templates/account.html",
+  "text!templates/checkbox.html",
   "services/configs_listened_accounts",
   "backbone"
-], function(AccountTpl, ConfigListenedAccounts) {
+], function(CheckboxTpl, ConfigListenedAccounts) {
   return Backbone.View.extend({
-    template: _.template(AccountTpl),
+    template: _.template(CheckboxTpl),
 
     events: {
       "click :checkbox": "updateStatus"
     },
 
     render: function() {
-      var view = this.template(_.extend(this.model.toJSON(), { selected: this.selected() }));
+      var view = this.template({
+        selected: this.selected(),
+        label: this.model.get("name")
+      });
 
       this.setElement(view);
 

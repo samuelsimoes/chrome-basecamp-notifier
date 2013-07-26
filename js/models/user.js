@@ -12,16 +12,25 @@ define(["models/user_token", "backbone", "backbone.deferred"], function(UserToke
     fullName: function() {
       var identity = this.get("identity");
       return identity.first_name + " " + identity.last_name;
+    },
+
+    cacheUser: function() {
+      localStorage.setItem("currentUser", JSON.stringify(this.toJSON()));
     }
   }, {
     fetchCurrentUser: function() {
       var user = new this();
-
-      return user.fetch({
+      var userPromise = user.fetch({
         beforeSend: function(xhr) {
           xhr.setRequestHeader('Authorization', ("Bearer " + UserToken.current()));
         }
       });
+
+      userPromise.done(function(model){
+        user.cacheUser();
+      });
+
+      return userPromise;
     },
 
     current: function() {

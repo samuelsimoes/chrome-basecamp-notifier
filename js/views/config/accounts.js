@@ -1,4 +1,7 @@
-define(["views/config/account", "backbone"], function(AccountView) {
+define([
+  "views/config/account",
+  "backbone"
+], function(AccountView) {
   return Backbone.View.extend({
     render: function() {
       _.each(this.collection.models, function(account) {

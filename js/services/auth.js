@@ -1,20 +1,12 @@
 define(["app", "models/user_token", "models/user"], function(App, UserToken, User) {
   module = {};
 
-  var persistToken = function(token) {
-    return localStorage.setItem("currentToken", token);
-  };
-
-  var persistCurrentUser = function(user) {
-    localStorage.setItem("currentUser", JSON.stringify(user.toJSON()));
-  };
-
   var getToken = function(authCode) {
     var token = new UserToken({ auth_code: authCode });
     var tokenPromise = token.fetch({ type: "POST" });
 
     tokenPromise.done(function(model) {
-      persistToken(model.get("access_token"));
+      model.cacheToken();
     });
 
     return tokenPromise;
@@ -32,8 +24,7 @@ define(["app", "models/user_token", "models/user"], function(App, UserToken, Use
       var userPromise = User.fetchCurrentUser();
 
       userPromise.done(function(user){
-        persistCurrentUser(user);
-        promise.resolve(token);
+        promise.resolve(token, user);
       });
 
       // Case don't properly fetch user rollback

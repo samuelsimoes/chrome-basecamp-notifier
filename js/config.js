@@ -1,6 +1,6 @@
 require(["common"], function (common) {
-  require(["views/config/config"], function(ConfigView){
-    new ConfigView().render();
+  require(["services/config_page_mediator"], function(ConfigPageMediator){
+    ConfigPageMediator.mediate();
   });
 });
 

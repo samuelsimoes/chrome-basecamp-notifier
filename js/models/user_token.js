@@ -8,6 +8,10 @@ define(["app", "backbone", "backbone.deferred"], function(App) {
               "&client_secret="
               + App.clientSecret +
               "&type=web_server&code=" + this.get("auth_code");
+    },
+
+    cacheToken: function() {
+      return localStorage.setItem("currentToken", this.get("access_token"));
     }
   }, {
     current: function() {
