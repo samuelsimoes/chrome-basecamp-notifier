@@ -9,13 +9,20 @@ define([
 
     tagName: "li",
 
+    className: "event-view",
+
     events: {
-      "click .event-item": "sendToBasecamp"
+      "click": "sendToBasecamp"
     },
 
     render: function() {
       this.model.set("summary", Text.truncate(this.model.get("summary"), 100, "..."));
       this.$el.html(this.template(this.model.toJSON()));
+
+      if (!this.model.viewed()) {
+        this.$el.addClass("unread");
+      }
+
       return this.el;
     },
 

@@ -1,16 +1,14 @@
-<li class="event-item <% if(!viewed) { %>unread<% } %>">
-  <div class="icon">
-    <i class="<%= icon %>"></i>
-  </div>
+<div class="icon">
+  <i class="<%= icon %>"></i>
+</div>
 
-  <div class="summary">
-    <% if(for_me) { %><strong><% } %>
-    <%= creator.name %>
-    <%= summary %>
-    <% if(for_me) { %></strong><% } %>
-  </div>
+<div class="summary">
+  <% if(for_me) { %><strong><% } %>
+  <%= creator.name %>
+  <%= summary %>
+  <% if(for_me) { %></strong><% } %>
+</div>
 
-  <div class="project">
-    <%= bucket.name %>
-  </div>
-</li>
+<div class="project">
+  <%= bucket.name %>
+</div>
