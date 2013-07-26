@@ -5,9 +5,18 @@ define([
   "views/accounts",
   "collections/accounts",
   "text!templates/configs.html",
+  "services/configs_listened_events",
   "backbone",
   "easytab"
-], function(User, UserToken, Auth, AccountsView, Accounts, ConfigTpl) {
+], function(
+  User,
+  UserToken,
+  Auth,
+  AccountsView,
+  Accounts,
+  ConfigTpl,
+  ConfigListenedEvents
+) {
 
   return Backbone.View.extend({
     el: $(".content"),

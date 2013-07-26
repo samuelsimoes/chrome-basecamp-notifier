@@ -1,8 +1,8 @@
 define([
   "text!templates/account.html",
-  "services/listened_accounts",
+  "services/configs_listened_accounts",
   "backbone"
-], function(AccountTpl, ListenedAccounts) {
+], function(AccountTpl, ConfigListenedAccounts) {
   return Backbone.View.extend({
     template: _.template(AccountTpl),
 
@@ -19,11 +19,11 @@ define([
     },
 
     selected: function() {
-      return ListenedAccounts.isListened(this.model.get("id"));
+      return ConfigListenedAccounts.isListened(this.model.get("id"));
     },
 
     updateStatus: function() {
-      ListenedAccounts.toggle(this.model.toJSON());
+      ConfigListenedAccounts.toggle(this.model.toJSON());
     }
   });
 });

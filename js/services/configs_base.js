@@ -1,18 +1,18 @@
 define([], function() {
 
   var module = {};
-  var configCache;
+  window.configCache;
 
   module.commit = function() {
-    localStorage.setItem("configs", JSON.stringify(configCache));
+    localStorage.setItem("configs", JSON.stringify(window.configCache));
   };
 
   module.configs = function() {
-    if (configCache != undefined) {
-      return configCache;
+    if (window.configCache != undefined) {
+      return window.configCache;
     } else {
       var configs = JSON.parse(localStorage.getItem("configs")) || {};
-      configCache = configs;
+      window.configCache = configs;
       return configs;
     }
   };
@@ -23,7 +23,7 @@ define([], function() {
 
   module.set = function(key, value) {
     var cachedValue = this.get(key);
-    configCache[key] = value;
+    window.configCache[key] = value;
     this.commit();
   };
 

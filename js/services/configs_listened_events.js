@@ -4,10 +4,10 @@ define(["services/configs_base", "backbone"], function(ConfigsBase) {
     return this.get("listenedEvents") || [];
   };
 
-  ConfigsBase.toggleListenedEvent = function(key) {
+  ConfigsBase.toggle = function(key) {
     var listenedEvents = this.listenedEvents();
 
-    if (this.isListenedEvent(key)) {
+    if (this.isListened(key)) {
       listenedEvents = _.difference(listenedEvents, [key]);
     } else {
       listenedEvents = _.union(listenedEvents, [key]);
@@ -16,7 +16,7 @@ define(["services/configs_base", "backbone"], function(ConfigsBase) {
     this.set("listenedEvents", listenedEvents);
   };
 
-  ConfigsBase.isListenedEvent = function(key) {
+  ConfigsBase.isListened = function(key) {
     return _.has(this.listenedEvents(), key);
   };
 

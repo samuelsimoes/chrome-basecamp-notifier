@@ -1,9 +1,9 @@
 define([
   "collections/accounts",
   "views/popup/accounts",
-  "services/listened_accounts",
+  "services/configs_listened_accounts",
   "backbone"
-], function(Accounts, AccountsView, ListenedAccounts) {
+], function(Accounts, AccountsView, ConfigListenedAccounts) {
   return Backbone.View.extend({
     render: function() {
       var listenedAccounts = new Accounts(this.listenedAccounts());
@@ -13,7 +13,7 @@ define([
     },
 
     listenedAccounts: function() {
-      return _.values(ListenedAccounts.listenedAccounts());
+      return _.values(ConfigListenedAccounts.listenedAccounts());
     }
   });
 });

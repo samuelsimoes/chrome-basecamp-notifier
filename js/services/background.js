@@ -1,11 +1,11 @@
 define([
   "collections/events",
-  "services/listened_accounts",
+  "services/configs_listened_accounts",
   "services/unread_events_cache",
   "services/notification",
   "services/badge",
   "models/user_token"
-], function(Events, ListenedAccounts, UnreadEventsCache, Notification, Badge, UserToken) {
+], function(Events, ConfigListenedAccounts, UnreadEventsCache, Notification, Badge, UserToken) {
 
   var module = {};
 
@@ -33,7 +33,7 @@ define([
   };
 
   module.streamEvents = function() {
-    var listenedAccounts = ListenedAccounts.listenedAccounts();
+    var listenedAccounts = ConfigListenedAccounts.listenedAccounts();
 
     for(var account in listenedAccounts) {
       fetchAccountEvents(listenedAccounts[account]);
