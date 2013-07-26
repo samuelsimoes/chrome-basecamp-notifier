@@ -2,7 +2,7 @@ define([
   "models/user",
   "models/user_token",
   "services/auth",
-  "views/accounts",
+  "views/config/accounts",
   "collections/accounts",
   "text!templates/configs.html",
   "services/configs_listened_events",
