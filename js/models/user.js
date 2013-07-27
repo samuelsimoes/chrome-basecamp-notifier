@@ -6,7 +6,7 @@ define(["models/user_token", "backbone", "backbone.deferred"], function(UserToke
 
     partialFullName: function() {
       var identity = this.get("identity");
-      return identity.first_name + " " + identity.last_name[0];
+      return identity.first_name + " " + identity.last_name[0] + ".";
     },
 
     fullName: function() {

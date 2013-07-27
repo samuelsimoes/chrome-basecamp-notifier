@@ -43,6 +43,8 @@ define([
         return "message";
       } else if (Text.contains(this.get("action"), "deleted a to-do")) {
         return "delete_todo";
+      } else if (Text.contains(this.get("action"), "deleted a comment")) {
+        return "delete_comment";
       }
     }
   }, {
@@ -56,6 +58,7 @@ define([
       gave_access: { label: "Gave Access", icon: "icon-key" },
       message: { label: "Post Messages", icon: "icon-envelope" },
       delete_todo: { label: "Delete to-do", icon: "icon-remove" },
+      delete_comment: { label: "Delete Comment", icon: "icon-remove" }
     }
   });
 
