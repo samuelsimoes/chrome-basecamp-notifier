@@ -1,10 +1,10 @@
 define([
-  "services/configs_listened_events",
+  "services/configs_ignored_events",
   "views/config/event",
   "models/event",
   "backbone"
 ], function(
-  ConfigListenedEvents,
+  ConfigIgnoredEvents,
   EventView,
   Event
 ) {
