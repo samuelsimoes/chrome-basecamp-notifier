@@ -78,7 +78,7 @@ define([
       };
       resolveAction();
 
-      this.stream = setInterval(resolveAction, 100 * 1000);
+      this.stream = setInterval(resolveAction, 60 * 1000);
 
       return promise.promise();
     },
