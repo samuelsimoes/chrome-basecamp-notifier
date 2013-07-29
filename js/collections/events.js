@@ -3,10 +3,11 @@ define([
   "models/user_token",
   "models/user",
   "services/unread_events_cache",
+  "services/configs_ignored_events",
   "services/text",
   "backbone",
   "backbone.deferred"
-], function(Event, UserToken, User, UnreadEventsCache, Text) {
+], function(Event, UserToken, User, UnreadEventsCache, ConfigIgnoredEvents, Text) {
 
   return Backbone.DeferredCollection.extend({
     model: Event,
@@ -23,7 +24,7 @@ define([
 
     // Prevents add the event which the current user is the author
     permit: function(event) {
-      if (event.get("creator").name == this.currentUser.fullName()) {
+      if (event.get("creator").name == this.currentUser.fullName() || ConfigIgnoredEvents.isIgnored(event.type())) {
         this.remove(event);
       } else {
         this.trigger("permitedItemAdd", event);
