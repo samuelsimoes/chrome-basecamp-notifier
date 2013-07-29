@@ -1,32 +1,24 @@
 define([], function() {
 
-  var module = {};
-  window.configCache;
+  var Configs = function() {};
 
-  module.commit = function() {
-    localStorage.setItem("configs", JSON.stringify(window.configCache));
+  Configs.prototype.commit = function(configs) {
+    localStorage.setItem("configs", JSON.stringify(configs));
   };
 
-  module.configs = function() {
-    if (window.configCache != undefined) {
-      return window.configCache;
-    } else {
-      var configs = JSON.parse(localStorage.getItem("configs")) || {};
-      window.configCache = configs;
-      return configs;
-    }
+  Configs.prototype.configs = function() {
+    return JSON.parse(localStorage.getItem("configs")) || {};
   };
 
-  module.get = function(key) {
+  Configs.prototype.get = function(key) {
     return this.configs()[key];
   };
 
-  module.set = function(key, value) {
-    var cachedValue = this.get(key);
-    window.configCache[key] = value;
-    this.commit();
+  Configs.prototype.set = function(key, value) {
+    var configs = this.configs();
+    configs[key] = value;
+    this.commit(configs);
   };
 
-  return module;
-
+  return Configs;
 });

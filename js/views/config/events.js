@@ -15,7 +15,9 @@ define([
       var events = Event.types;
 
       for(event in events) {
-        $("#tabs2-events").append(new EventView({ model: events[event] }).render());
+        var eventModel = _.extend(events[event], { key: event });
+        var eventView = new EventView({ model: eventModel });
+        $("#tabs2-events").append(eventView.render());
       }
     }
   });

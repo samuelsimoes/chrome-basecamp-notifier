@@ -1,25 +1,31 @@
 define([
   "text!templates/checkbox.html",
+  "services/configs_ignored_events",
   "backbone"
 ], function(
-  CheckboxTpl
+  CheckboxTpl,
+  ConfigIgnoredEvents
 ) {
   return Backbone.View.extend({
     template: _.template(CheckboxTpl),
 
-    /*events: {
+    events: {
       "click :checkbox": "updateStatus"
-    },*/
+    },
 
     render: function() {
       var view = this.template({
-        selected: false,
+        selected: ConfigIgnoredEvents.isIgnored(this.model.key),
         label: this.model.label
       });
 
       this.setElement(view);
 
       return this.el;
+    },
+
+    updateStatus: function() {
+      ConfigIgnoredEvents.toggle(this.model.key);
     }
   });
 });

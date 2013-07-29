@@ -1,10 +1,13 @@
 define(["services/configs_base", "backbone"], function(ConfigsBase) {
 
-  ConfigsBase.ignoredEvents = function() {
-    return this.get("ignoredEvents") || [];
+  var base = new ConfigsBase();
+  var module = {};
+
+  module.ignoredEvents = function() {
+    return base.get("ignoredEvents") || [];
   };
 
-  ConfigsBase.toggle = function(key) {
+  module.toggle = function(key) {
     var ignoredEvents = this.ignoredEvents();
 
     if (this.isIgnored(key)) {
@@ -13,12 +16,12 @@ define(["services/configs_base", "backbone"], function(ConfigsBase) {
       ignoredEvents = _.union(ignoredEvents, [key]);
     }
 
-    this.set("ignoredEvents", ignoredEvents);
+    base.set("ignoredEvents", ignoredEvents);
   };
 
-  ConfigsBase.isIgnored = function(key) {
-    return _.has(this.ignoredEvents(), key);
+  module.isIgnored = function(key) {
+    return _.contains(this.ignoredEvents(), key);
   };
 
-  return ConfigsBase;
+  return module;
 });

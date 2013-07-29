@@ -1,14 +1,17 @@
 define(["services/configs_base", "backbone"], function(ConfigsBase) {
 
-  ConfigsBase.listenedAccounts = function() {
-    return this.get("listenedAccounts") || {};
+  var base = new ConfigsBase();
+  var module = {};
+
+  module.listenedAccounts = function() {
+    return base.get("listenedAccounts") || {};
   };
 
-  ConfigsBase.isListened = function(accountId) {
+  module.isListened = function(accountId) {
     return _.has(this.listenedAccounts(), accountId);
   };
 
-  ConfigsBase.toggle = function(account) {
+  module.toggle = function(account) {
     var listenedAccounts = this.listenedAccounts();
 
     if (this.isListened(account.id)) {
@@ -17,8 +20,8 @@ define(["services/configs_base", "backbone"], function(ConfigsBase) {
       listenedAccounts[account.id] = account;
     }
 
-    this.set("listenedAccounts", listenedAccounts);
+    base.set("listenedAccounts", listenedAccounts);
   };
 
-  return ConfigsBase;
+  return module;
 });
