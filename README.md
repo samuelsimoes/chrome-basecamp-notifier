@@ -18,6 +18,12 @@ and then, inside projects folder:
 
 You also need register an app in **[http://integrate.37signals.com](http://integrate.37signals.com)**  and put the app infos into `js/config_keys.js`, follow the exemple inside `js/config_keys.js.default`.
 
+### To-do
+* Write tests!!
+* Give the possibility to the user disable the desktop notifications.
+* Give the possibility to the user to choose the items quantity in the popup.
+* Give the possibility to the user to choose what projects he want ignore.
+* Bring back the highlight in unread items...
 
 -----------------------------------------
 
