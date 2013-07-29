@@ -45,6 +45,12 @@ define([
         return "delete_todo";
       } else if (Text.contains(this.get("action"), "deleted a comment")) {
         return "delete_comment";
+      } else if (Text.contains(this.get("action"), "changed a to-do")) {
+        return "changed_todo";
+      } else if (Text.contains(this.get("action"), "deleted an event")) {
+        return "deleted_event";
+      } else if (Text.contains(this.get("action"), "rescheduled an event")) {
+        return "rescheduled_event";
       }
     }
   }, {
@@ -58,7 +64,10 @@ define([
       gave_access: { label: "Gave Access", icon: "icon-key" },
       message: { label: "Post Messages", icon: "icon-envelope" },
       delete_todo: { label: "Delete to-do", icon: "icon-remove" },
-      delete_comment: { label: "Delete Comment", icon: "icon-remove" }
+      delete_comment: { label: "Delete Comment", icon: "icon-remove" },
+      changed_todo: { label: "Change to-do", icon: "icon-exchange" },
+      deleted_event: { label: "Delete Event", icon: "icon-calendar" },
+      rescheduled_event: { label: "Reschedule Event", icon: "icon-calendar-empty" }
     }
   });
 
