@@ -14,6 +14,16 @@ strong {
   cursor: pointer;
 }
 
+#configs_button {
+  position: absolute;
+  z-index: 2;
+  right: 10px;
+  top: 7px;
+  font-size: 20px;
+  text-decoration: none;
+  color: #000;
+}
+
 .login-button {
   text-align: center;
   padding: 12px;
