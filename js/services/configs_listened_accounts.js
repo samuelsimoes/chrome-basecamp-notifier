@@ -1,10 +1,10 @@
 define(["services/configs_base", "backbone"], function(ConfigsBase) {
 
-  var base = new ConfigsBase();
+  var base = new ConfigsBase("listenedAccounts", {});
   var module = {};
 
   module.listenedAccounts = function() {
-    return base.get("listenedAccounts") || {};
+    return base.get();
   };
 
   module.isListened = function(accountId) {
@@ -20,7 +20,7 @@ define(["services/configs_base", "backbone"], function(ConfigsBase) {
       listenedAccounts[account.id] = account;
     }
 
-    base.set("listenedAccounts", listenedAccounts);
+    base.save(listenedAccounts);
   };
 
   return module;

@@ -1,23 +1,24 @@
 define([], function() {
 
-  var Configs = function() {};
-
-  Configs.prototype.commit = function(configs) {
-    localStorage.setItem("configs", JSON.stringify(configs));
+  var Configs = function(configKey, defaultValue) {
+    this.configKey = configKey;
+    this.defaultValue = defaultValue;
   };
 
-  Configs.prototype.configs = function() {
-    return JSON.parse(localStorage.getItem("configs")) || {};
+  Configs.prototype.commit = function() {
+    localStorage.setItem(this.configKey, JSON.stringify(this.cache));
   };
 
-  Configs.prototype.get = function(key) {
-    return this.configs()[key];
+  Configs.prototype.get = function() {
+    if (this.cache == undefined) {
+      this.cache = JSON.parse(localStorage.getItem(this.configKey)) || this.defaultValue;
+    }
+    return this.cache;
   };
 
-  Configs.prototype.set = function(key, value) {
-    var configs = this.configs();
-    configs[key] = value;
-    this.commit(configs);
+  Configs.prototype.save = function(value) {
+    this.cache = value;
+    this.commit();
   };
 
   return Configs;
