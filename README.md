@@ -1,4 +1,4 @@
-# Basecamp Chrome Notifier V 1.1
+# Basecamp Chrome Notifier V 1.2
 
 Extension for Google Chrome which notifies the activity in your Basecamp Accounts with desktop notifications.
 
@@ -23,7 +23,7 @@ You also need register an app in **[http://integrate.37signals.com](http://integ
 * Give the possibility to the user disable the desktop notifications.
 * Give the possibility to the user to choose the items quantity in the popup.
 * Give the possibility to the user to choose what projects he want ignore.
-* Bring back the highlight in unread items...
+* ~~Bring back the highlight in unread items…~~
 
 -----------------------------------------
 
