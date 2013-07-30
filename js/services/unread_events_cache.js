@@ -3,10 +3,14 @@ define(["underscore"], function() {
 
   var persistCache = function(idsArray) {
     localStorage.setItem("unreadEvents", JSON.stringify(idsArray));
+    window.unreadItemsCache = idsArray;
   };
 
   module.unreadItems = function() {
-    return JSON.parse(localStorage.getItem("unreadEvents")) || [];
+    if (window.unreadItemsCache == undefined) {
+      window.unreadItemsCache = JSON.parse(localStorage.getItem("unreadEvents")) || [];
+    }
+    return window.unreadItemsCache;
   };
 
   module.markAsRead = function(item) {
