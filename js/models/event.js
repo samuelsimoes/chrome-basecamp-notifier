@@ -12,7 +12,7 @@ define([
     },
 
     viewed: function() {
-      return (UnreadEventsCache.unreadItems()[this.id] == undefined);
+      return !_.contains(UnreadEventsCache.unreadItems(), this.id);
     },
 
     icon: function() {
