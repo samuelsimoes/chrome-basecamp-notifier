@@ -14,7 +14,10 @@ require(["../js/common"], function (common) {
     var specs = [];
 
     specs.push("../specs/models/user");
+    specs.push("../specs/models/event");
     specs.push("../specs/services/configs_ignored_events");
+    specs.push("../specs/services/unread_events_cache");
+    specs.push("../specs/collections/events");
 
     $(function(){
       require(specs, function(){
