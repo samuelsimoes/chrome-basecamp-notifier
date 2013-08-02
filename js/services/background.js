@@ -1,43 +1,59 @@
 define([
+  "collections/accounts",
   "collections/events",
+  "services/filter",
   "services/configs_listened_accounts",
   "services/unread_events_cache",
   "services/notification",
   "services/badge",
   "models/user_token"
-], function(Events, ConfigListenedAccounts, UnreadEventsCache, Notification, Badge, UserToken) {
+], function(
+  Accounts,
+  Events,
+  Filter,
+  ConfigListenedAccounts,
+  UnreadEventsCache,
+  Notification,
+  Badge,
+  UserToken
+) {
 
   var module = {};
 
+  var notify = function(model) {
+    if (module.firstTime) return;
+    UnreadEventsCache.addItem(model.get("id"));
+    Badge.update();
+    Notification.notify(model);
+  };
+
   var fetchAccountEvents = function(account) {
-    var events = new Events([], { account_id: account.id });
+    var events = new Events([], {
+      account: account,
+      userToken: UserToken
+    });
     var stream = events.stream();
-    var firstTime = true;
+    var filter = new Filter(events);
+    module.firstTime = true;
 
-    var notify = function(model) {
-      if (firstTime) return;
-      UnreadEventsCache.addItem(model.get("id"));
-      Badge.update();
-      Notification.notify(model, account);
-    };
-
-    events.on("permitedItemAdd", function(model) {
+    events.on("filteredAdd", function(model) {
       notify(model);
     });
 
     // On successful cycle
     stream.progress(function(collection) {
       collection.updateCache();
-      firstTime = false;
+      module.firstTime = false;
     });
   };
 
   module.streamEvents = function() {
     var listenedAccounts = ConfigListenedAccounts.listenedAccounts();
+    listenedAccounts = new Accounts(_.values(listenedAccounts));
 
-    for(var account in listenedAccounts) {
-      fetchAccountEvents(listenedAccounts[account]);
-    }
+    _.each(listenedAccounts.models, function(model) {
+      fetchAccountEvents(model);
+    });
   };
 
   module.init = function() {

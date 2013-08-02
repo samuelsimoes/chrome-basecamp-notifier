@@ -42,9 +42,8 @@ define([
     return bubble;
   };
 
-  module.notify = function(model, account) {
+  module.notify = function(model) {
     module.model = model;
-    module.account = account;
 
     notification().show();
   };

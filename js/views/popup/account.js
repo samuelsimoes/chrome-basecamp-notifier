@@ -1,10 +1,9 @@
 define([
   "text!templates/popup/account.html",
   "collections/events",
-  "services/badge",
   "views/popup/event",
   "backbone"
-], function(AccountTpl, Events, Badge, EventView) {
+], function(AccountTpl, Events, EventView) {
   return Backbone.View.extend({
     template: _.template(AccountTpl),
 
@@ -12,11 +11,6 @@ define([
       this.setElement(this.template({ name: this.model.get("name") }));
       this.renderEvents();
       return this.el;
-    },
-
-    checkAllEventsAsRead: function(collection) {
-      collection.markAsRead();
-      Badge.update();
     },
 
     renderEvents: function() {
@@ -27,8 +21,6 @@ define([
         _.each(_.first(collection.models, 15), function(model) {
           that.renderEvent(model);
         });
-
-        that.checkAllEventsAsRead(collection);
       });
     },
 
@@ -38,7 +30,7 @@ define([
     },
 
     eventsCollection: function() {
-      return new Events([], { account_id: this.model.get("id") });
+      return new Events([], { account: this.model });
     }
   });
 });
