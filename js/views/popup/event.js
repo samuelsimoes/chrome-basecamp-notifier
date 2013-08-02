@@ -16,7 +16,7 @@ define([
     },
 
     render: function() {
-      this.model.set("summary", Text.truncate(this.model.get("summary"), 90, "..."));
+      this.model.set("summary", Text.truncate(this.model.get("summary"), 85, "..."));
       this.$el.html(this.template(this.model.toJSON()));
 
       if (!this.model.viewed()) {
