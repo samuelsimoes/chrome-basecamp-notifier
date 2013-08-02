@@ -3,14 +3,16 @@ define(["underscore"], function() {
 
   var persistCache = function(idsArray) {
     localStorage.setItem("unreadEvents", JSON.stringify(idsArray));
-    window.unreadItemsCache = idsArray;
+    chrome.extension.getBackgroundPage().unreadEventsCache = idsArray;
   };
 
   module.unreadItems = function() {
-    if (window.unreadItemsCache == undefined) {
-      window.unreadItemsCache = JSON.parse(localStorage.getItem("unreadEvents")) || [];
+    if (chrome.extension.getBackgroundPage().unreadEventsCache==undefined) {
+      var persisted = localStorage.getItem("unreadEvents");
+      return (persisted) ? JSON.parse(persisted) : [];
+    } else {
+      return chrome.extension.getBackgroundPage().unreadEventsCache;
     }
-    return window.unreadItemsCache;
   };
 
   module.markAsRead = function(item) {
@@ -20,6 +22,10 @@ define(["underscore"], function() {
 
   module.addItem = function(id) {
     persistCache(_.union(module.unreadItems(), [id]));
+  };
+
+  module.clear = function() {
+    persistCache([]);
   };
 
   return module;
