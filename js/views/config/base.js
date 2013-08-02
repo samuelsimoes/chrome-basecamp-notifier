@@ -37,6 +37,7 @@ define([
 
       that.renderAccountsTab(user.get("accounts"));
       that.renderEventsTab();
+      that.renderProjectsTab();
     },
 
     renderLoadingPage: function() {
@@ -56,6 +57,9 @@ define([
     renderAccountsTab: function(accounts) {
       var accounts = new Accounts(accounts);
       new AccountsView({ collection: accounts }).render();
+    },
+
+    renderProjectsTab: function() {
     }
   });
 });
