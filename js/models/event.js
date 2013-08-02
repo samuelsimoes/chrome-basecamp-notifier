@@ -51,6 +51,14 @@ define([
         return "deleted_event";
       } else if (Text.contains(this.get("action"), "rescheduled an event")) {
         return "rescheduled_event";
+      } else if (Text.contains(this.get("action"), "created a to-do list")) {
+        return "create_todo_list";
+      } else if (Text.contains(this.get("action"), "invited")) {
+        return "invite";
+      } else if (Text.contains(this.get("action"), "re-opened a to-do")) {
+        return "reopened_todo";
+      } else if (Text.contains(this.get("action"), "removed the assignment")) {
+        return "removed_assignment";
       }
     }
   }, {
@@ -67,7 +75,11 @@ define([
       delete_comment: { label: "Delete Comment", icon: "icon-remove" },
       changed_todo: { label: "Change to-do", icon: "icon-exchange" },
       deleted_event: { label: "Delete Event", icon: "icon-calendar" },
-      rescheduled_event: { label: "Reschedule Event", icon: "icon-calendar-empty" }
+      rescheduled_event: { label: "Reschedule Event", icon: "icon-calendar-empty" },
+      create_todo_list: { label: "Create to-do list", icon: "icon-list-ol" },
+      invite: { label: "Invite to Project", icon: "icon-bullhorn" },
+      removed_assignment: { label: "Remove assignment", icon: "icon-remove" },
+      reopened_todo: { label: "Remove assignment", icon: "icon-edit" }
     }
   });
 
