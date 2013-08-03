@@ -34,8 +34,15 @@ define(["models/user_token", "backbone", "backbone.deferred"], function(UserToke
     },
 
     current: function() {
-      var cachedUser = JSON.parse(localStorage.getItem("currentUser"));
-      var user = new this(cachedUser);
+      if(chrome.extension.getBackgroundPage().currentUser == undefined) {
+        var cachedUser = JSON.parse(localStorage.getItem("currentUser"));
+        var user = new this(cachedUser);
+
+        chrome.extension.getBackgroundPage().currentUser = user;
+      } else {
+        var user = chrome.extension.getBackgroundPage().currentUser;
+      }
+
       return user;
     }
   });
