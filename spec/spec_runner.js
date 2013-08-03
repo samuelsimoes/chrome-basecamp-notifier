@@ -13,11 +13,11 @@ require(["../js/common"], function (common) {
 
     var specs = [];
 
-    specs.push("../specs/models/user");
-    specs.push("../specs/models/event");
-    specs.push("../specs/services/configs_ignored_events");
-    specs.push("../specs/services/unread_events_cache");
-    specs.push("../specs/collections/events");
+    specs.push("../spec/models/user_spec");
+    specs.push("../spec/models/event_spec");
+    specs.push("../spec/services/configs_ignored_events_spec");
+    specs.push("../spec/services/unread_events_cache_spec");
+    specs.push("../spec/collections/events_spec");
 
     $(function(){
       require(specs, function(){
