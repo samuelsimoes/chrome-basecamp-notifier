@@ -1,11 +1,20 @@
-define([], function() {
+define([
+  "services/configs_ignored_events",
+  "models/user",
+  "underscore"
+], function(
+  ConfigIgnoredEvents,
+  User
+) {
 
   var Filter = function(collection) {
     var that = this;
     this.collection = collection;
 
     this.collection.on("add", function(model) {
-      if (that.isCreatedByMe(model) || that.isIgnoredType(model)) {
+      that.model = model;
+
+      if (that.isCreatedByMe() || that.isIgnoredType()) {
         that.collection.remove(model);
       } else {
         that.collection.trigger("filteredAdd", model);
@@ -14,11 +23,11 @@ define([], function() {
   };
 
   Filter.prototype.isCreatedByMe = function() {
-    return false;
+    return User.current().fullName() == this.model.get("creator").name;
   };
 
   Filter.prototype.isIgnoredType = function() {
-    return false;
+    return _.contains(ConfigIgnoredEvents.ignoredEvents(), this.model.get("type"));
   };
 
   return Filter;

@@ -9,6 +9,7 @@ define([
     initialize: function() {
       this.set("icon", this.icon());
       this.set("viewed", this.viewed());
+      this.set("type", this.type());
     },
 
     viewed: function() {
