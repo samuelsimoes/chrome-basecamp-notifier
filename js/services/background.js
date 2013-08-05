@@ -6,7 +6,8 @@ define([
   "services/unread_events_cache",
   "services/notification",
   "services/badge",
-  "models/user_token"
+  "models/user_token",
+  "services/migrator"
 ], function(
   Accounts,
   Events,
@@ -15,7 +16,8 @@ define([
   UnreadEventsCache,
   Notification,
   Badge,
-  UserToken
+  UserToken,
+  Migrator
 ) {
 
   var module = {};
@@ -58,6 +60,7 @@ define([
 
   module.init = function() {
     module.streamEvents();
+    Migrator();
   };
 
   return module;

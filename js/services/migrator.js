@@ -9,10 +9,16 @@ define([], function() {
 
     legacyConfig = JSON.parse(legacyConfig);
 
-    localStorage
-      .setItem("ignoredEvents", JSON.stringify(legacyConfig.ignoredEvents));
-    localStorage
-      .setItem("listenedAccounts", JSON.stringify(legacyConfig.listenedAccounts));
+    if (legacyConfig.ignoredEvents) {
+      localStorage
+        .setItem("ignoredEvents", JSON.stringify(legacyConfig.ignoredEvents));
+    };
+
+    if (legacyConfig.listenedAccounts) {
+      localStorage
+        .setItem("listenedAccounts", JSON.stringify(legacyConfig.listenedAccounts));
+    };
+
     localStorage
       .removeItem("configs");
   };
