@@ -17,6 +17,7 @@ require(["../js/common"], function (common) {
     specs.push("../spec/models/event_spec");
     specs.push("../spec/services/configs_ignored_events_spec");
     specs.push("../spec/services/filter_spec");
+    specs.push("../spec/services/migrator_spec");
     specs.push("../spec/services/unread_events_cache_spec");
     specs.push("../spec/collections/events_spec");
 
