@@ -9,16 +9,16 @@ define([
   Event
 ) {
   return Backbone.View.extend({
-    el: $("#tabs2-events"),
-
     render: function() {
       var events = Event.types;
 
       for(event in events) {
         var eventModel = _.extend(events[event], { key: event });
         var eventView = new EventView({ model: eventModel });
-        $("#tabs2-events").append(eventView.render());
+        this.$el.append(eventView.render());
       }
+
+      return this;
     }
   });
 });

@@ -7,11 +7,13 @@ define([
       _.each(this.collection.models, function(account) {
         this.renderItem(account);
       }, this);
+
+      return this;
     },
 
     renderItem: function(account) {
       var item = new AccountView({ model: account });
-      jQuery("#tabs1-accounts").append(item.render());
+      this.$el.append(item.render());
     }
   });
 });

@@ -51,12 +51,14 @@ define([
     },
 
     renderEventsTab: function() {
-      new EventsView().render();
+      var eventsView = new EventsView().render();
+      this.$el.find("#tabs2-events").html(eventsView.el);
     },
 
     renderAccountsTab: function(accounts) {
       var accounts = new Accounts(accounts);
-      new AccountsView({ collection: accounts }).render();
+      var accountsView = new AccountsView({ collection: accounts }).render();
+      this.$el.find("#tabs1-accounts").html(accountsView.el);
     },
 
     renderProjectsTab: function() {
