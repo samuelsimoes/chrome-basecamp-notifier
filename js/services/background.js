@@ -3,6 +3,7 @@ define([
   "collections/events",
   "services/filter",
   "services/configs_listened_accounts",
+  "services/configs_misc",
   "services/unread_events_cache",
   "services/notification",
   "services/badge",
@@ -13,6 +14,7 @@ define([
   Events,
   Filter,
   ConfigListenedAccounts,
+  ConfigsMisc,
   UnreadEventsCache,
   Notification,
   Badge,
@@ -21,13 +23,6 @@ define([
 ) {
 
   var module = {};
-
-  var notify = function(model) {
-    if (module.firstTime) return;
-    UnreadEventsCache.addItem(model.get("id"));
-    Badge.update();
-    Notification.notify(model);
-  };
 
   var fetchAccountEvents = function(account) {
     var events = new Events([], {
@@ -39,7 +34,14 @@ define([
     module.firstTime = true;
 
     events.on("filteredAdd", function(model) {
-      notify(model);
+      if (!module.firstTime) {
+        UnreadEventsCache.addItem(model.get("id"));
+        Badge.update();
+
+        if(!ConfigsMisc.get("disable_desktop_notifications")) {
+          Notification.notify(model);
+        };
+      }
     });
 
     // On successful cycle

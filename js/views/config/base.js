@@ -2,6 +2,7 @@ define([
   "models/user",
   "views/config/accounts",
   "views/config/events",
+  "views/config/misc_configs",
   "collections/accounts",
   "text!templates/configs.html",
   "backbone",
@@ -10,6 +11,7 @@ define([
   User,
   AccountsView,
   EventsView,
+  MiscConfigsView,
   Accounts,
   ConfigTpl
 ) {
@@ -30,14 +32,13 @@ define([
     configsTemplate: _.template(ConfigTpl),
 
     render: function(user) {
-      var that = this;
-
       this.$el.html(this.configsTemplate({}));
       this.$el.find(".tab-container").easytabs();
 
-      that.renderAccountsTab(user.get("accounts"));
-      that.renderEventsTab();
-      that.renderProjectsTab();
+      this.renderAccountsTab(user.get("accounts"));
+      this.renderEventsTab();
+      this.renderProjectsTab();
+      this.renderMiscConfigsTab();
     },
 
     renderLoadingPage: function() {
@@ -59,6 +60,11 @@ define([
       var accounts = new Accounts(accounts);
       var accountsView = new AccountsView({ collection: accounts }).render();
       this.$el.find("#tabs1-accounts").html(accountsView.el);
+    },
+
+    renderMiscConfigsTab: function() {
+      var miscConfigsView = new MiscConfigsView().render();
+      this.$el.find("#tabs4-misc").html(miscConfigsView.el)
     },
 
     renderProjectsTab: function() {
