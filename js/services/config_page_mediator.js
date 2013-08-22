@@ -49,6 +49,12 @@ define([
       User.fetchCurrentUser().done(function(user) {
         module.configView.render(user);
       });
+
+      User.fetchCurrentUser().fail(function () {
+        alert("Could not load your user information, please authorize the app again.");
+        localStorage.removeItem("currentToken");
+        Auth.getPermission();
+      });
     }
   }
 
