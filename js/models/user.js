@@ -1,4 +1,12 @@
-define(["models/user_token", "backbone", "backbone.deferred"], function(UserToken) {
+define([
+  "models/user_token",
+  "collections/accounts",
+  "backbone",
+  "backbone.deferred"
+], function(
+  UserToken,
+  Accounts
+) {
   return Backbone.DeferredModel.extend({
     url: function() {
       return "https://launchpad.37signals.com/authorization.json";
@@ -7,6 +15,14 @@ define(["models/user_token", "backbone", "backbone.deferred"], function(UserToke
     partialFullName: function() {
       var identity = this.get("identity");
       return identity.first_name + " " + identity.last_name[0] + ".";
+    },
+
+    getAccounts: function () {
+      if (this.accounts == undefined) {
+        this.accounts = new Accounts(this.get("accounts"));
+      }
+
+      return this.accounts;
     },
 
     fullName: function() {

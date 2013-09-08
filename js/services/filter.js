@@ -1,9 +1,11 @@
 define([
   "services/configs_ignored_events",
+  "services/configs_ignored_projects",
   "models/user",
   "underscore"
 ], function(
   ConfigIgnoredEvents,
+  ConfigIgnoredProjects,
   User
 ) {
 
@@ -14,7 +16,7 @@ define([
     this.collection.on("add", function(model) {
       that.model = model;
 
-      if (that.isCreatedByMe() || that.isIgnoredType()) {
+      if (that.isCreatedByMe() || that.isIgnoredType() || that.isIgnoredProject()) {
         that.collection.remove(model);
       } else {
         that.collection.trigger("filtrated-add", model);
@@ -28,6 +30,10 @@ define([
 
   Filter.prototype.isIgnoredType = function() {
     return _.contains(ConfigIgnoredEvents.ignoredEvents(), this.model.get("type"));
+  };
+
+  Filter.prototype.isIgnoredProject = function() {
+    return _.contains(ConfigIgnoredProjects.ignoredProjectsIds(), this.model.bucketId());
   };
 
   return {

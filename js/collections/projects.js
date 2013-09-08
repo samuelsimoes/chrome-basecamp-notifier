@@ -1,7 +1,21 @@
-define(["model/user_token", "backbone"], function (UserToken) {
+define([
+  "models/user_token",
+  "models/project",
+  "backbone"
+], function (
+  UserToken,
+  Project
+) {
+
   return Backbone.DeferredCollection.extend({
+    model: Project,
+
+    url: function () {
+      return "https://basecamp.com/" + this.account.getId() + "/api/v1/projects.json";
+    },
+
     initialize: function(models, options) {
-      url: "https://basecamp.com/" + options.account_id + "/api/v1/projects.json"
+      this.account = options.account;
     },
 
     fetchAuthorized: function(params) {

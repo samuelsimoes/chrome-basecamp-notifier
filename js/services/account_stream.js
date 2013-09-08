@@ -40,8 +40,8 @@ define([
 
   AccountStream.prototype.attachErrorHandler = function () {
     this.events.on("error", function (model, xhr) {
-      that.dispatcher.trigger("stream-error", xhr);
-    });
+      this.dispatcher.trigger("stream-error", xhr);
+    }, this);
   };
 
   AccountStream.prototype.attachNewItemHandler = function () {

@@ -29,7 +29,11 @@ define([
     },
 
     bucketName: function () {
-      return this.get("creator").name;
+      return this.get("bucket").name;
+    },
+
+    bucketId: function () {
+      return this.get("bucket").id;
     },
 
     link: function () {

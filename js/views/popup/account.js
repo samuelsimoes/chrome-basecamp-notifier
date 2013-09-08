@@ -18,10 +18,20 @@ define([
       var events = this.eventsCollection().fetchCached();
 
       events.done(function(collection) {
-        _.each(_.first(collection.models, 15), function(model) {
-          that.renderEvent(model);
-        });
+        var firstItems = _.first(collection.models, 15);
+
+        if (_.isEmpty(firstItems)) {
+          that.renderNoItemsMessage();
+        } else {
+          _.each(firstItems, function(model) {
+            that.renderEvent(model);
+          });
+        }
       });
+    },
+
+    renderNoItemsMessage: function () {
+      this.$el.find(".notification-list").html("<li class='no-items'>No new events</li>");
     },
 
     renderEvent: function(eventItem) {

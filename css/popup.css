@@ -129,6 +129,12 @@ h1:first-child {
   border-bottom: 1px solid #8cffa7;
 }
 
+.notification-list .no-items {
+  text-align: center;
+  font-size: 14px;
+  color: #F7CFCF;
+}
+
 .notification-list .new .user {
   color: #25cd4d;
 }

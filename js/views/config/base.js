@@ -3,6 +3,7 @@ define([
   "views/config/accounts",
   "views/config/events",
   "views/config/misc_configs",
+  "views/config/projects",
   "collections/accounts",
   "text!templates/configs.html",
   "backbone",
@@ -12,6 +13,7 @@ define([
   AccountsView,
   EventsView,
   MiscConfigsView,
+  ProjectsView,
   Accounts,
   ConfigTpl
 ) {
@@ -35,7 +37,9 @@ define([
       this.$el.html(this.configsTemplate({}));
       this.$el.find(".tab-container").easytabs();
 
-      this.renderAccountsTab(user.get("accounts"));
+      this.accounts = user.getAccounts();
+
+      this.renderAccountsTab();
       this.renderEventsTab();
       this.renderProjectsTab();
       this.renderMiscConfigsTab();
@@ -57,8 +61,7 @@ define([
     },
 
     renderAccountsTab: function(accounts) {
-      var accounts = new Accounts(accounts);
-      var accountsView = new AccountsView({ collection: accounts }).render();
+      var accountsView = new AccountsView({ collection: this.accounts }).render();
       this.$el.find("#tabs1-accounts").html(accountsView.el);
     },
 
@@ -68,6 +71,14 @@ define([
     },
 
     renderProjectsTab: function() {
+      var projectsViewPromise = new ProjectsView().render();
+      var tab = this.$el.find("#tabs3-projects")
+
+      tab.html("Loading projects, please wait...")
+
+      projectsViewPromise.done(function (view) {
+        tab.html(view.el);
+      });
     }
   });
 });

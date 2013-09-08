@@ -34,7 +34,7 @@ define([
       };
       fetchEvents();
 
-      this.stream = setInterval(fetchEvents, 1 * 1000);
+      this.stream = setInterval(fetchEvents, 60 * 1000);
     },
 
     updateCache: function () {

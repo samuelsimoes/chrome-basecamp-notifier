@@ -15,7 +15,9 @@ define(["services/configs_base", "backbone"], function(ConfigsBase) {
     var listenedAccounts = this.listenedAccounts();
 
     if (this.isListened(account)) {
-      listenedAccounts = _.without(listenedAccounts, account);
+      listenedAccounts = _.filter(listenedAccounts, function (listenedAccount) {
+        return listenedAccount.id != account.getId();
+      });
     } else {
       listenedAccounts.push(account.toJSON());
     }
