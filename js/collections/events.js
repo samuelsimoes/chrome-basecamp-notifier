@@ -8,7 +8,7 @@ define([
     initialize: function(models, options) {
       this.account = options.account;
       this.userToken = options.userToken;
-      this.url = "https://basecamp.com/" + this.account.get("id") + "/api/v1/events.json";
+      this.url = "https://basecamp.com/" + this.account.getId() + "/api/v1/events.json";
     },
 
     comparator: function(model) {

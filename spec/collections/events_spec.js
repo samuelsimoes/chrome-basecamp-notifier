@@ -8,26 +8,16 @@ define(["collections/events"], function(Events){
         });
       }
 
-      this.account = {};
-      this.account.get = jasmine.createSpy().andCallFake(function(id) {
-        return 20;
-      });
+      this.account = jasmine.createSpyObj("account", ["getId"]);
+      this.account.getId.andReturn(20);
 
-      this.userToken = {};
-      this.userToken.current = jasmine.createSpy().andCallFake(function() {
-        return "20ab";
-      });
+      this.userToken = jasmine.createSpyObj("userToken", ["current"]);
+      this.userToken.current.andReturn("20ab");
 
       this.models = [];
     });
 
     describe("fetching", function(){
-      beforeEach(function(){
-        /*spyOn($, "ajax").andCallFake(function(options) {
-          options.success([]);
-        });*/
-      });
-
       it("#fetchAuthorized with correct header", function() {
         var spy = spyOn(XMLHttpRequest.prototype, "setRequestHeader");
         this.subject().fetchAuthorized();

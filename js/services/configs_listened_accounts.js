@@ -7,17 +7,17 @@ define(["services/configs_base", "backbone"], function(ConfigsBase) {
     return base.get();
   };
 
-  module.isListened = function(accountId) {
-    return _.has(this.listenedAccounts(), accountId);
+  module.isListened = function(account) {
+    return _.findWhere(this.listenedAccounts(), { id: account.getId() }) != undefined;
   };
 
   module.toggle = function(account) {
     var listenedAccounts = this.listenedAccounts();
 
-    if (this.isListened(account.id)) {
-      delete listenedAccounts[account.id];
+    if (this.isListened(account)) {
+      listenedAccounts = _.without(listenedAccounts, account);
     } else {
-      listenedAccounts[account.id] = account;
+      listenedAccounts.push(account.toJSON());
     }
 
     base.save(listenedAccounts);

@@ -13,7 +13,7 @@ define([
     render: function() {
       var view = this.template({
         selected: this.selected(),
-        label: this.model.get("name")
+        label: this.model.getName()
       });
 
       this.setElement(view);
@@ -22,11 +22,11 @@ define([
     },
 
     selected: function() {
-      return ConfigListenedAccounts.isListened(this.model.get("id"));
+      return ConfigListenedAccounts.isListened(this.model);
     },
 
     updateStatus: function() {
-      ConfigListenedAccounts.toggle(this.model.toJSON());
+      ConfigListenedAccounts.toggle(this.model);
     }
   });
 });

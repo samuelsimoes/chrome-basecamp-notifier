@@ -1,26 +1,12 @@
 define([], function() {
 
   return function() {
-    var legacyConfig = localStorage.getItem("configs");
+    var legacyAccountsConfig = JSON.parse(localStorage.getItem("listenedAccounts"));
 
-    if (!legacyConfig) {
+    if (_.isArray(legacyAccountsConfig)) {
       return;
+    } else {
+      localStorage.setItem("listenedAccounts", JSON.stringify(_.values(legacyAccountsConfig)));
     };
-
-    legacyConfig = JSON.parse(legacyConfig);
-
-    if (legacyConfig.ignoredEvents) {
-      localStorage
-        .setItem("ignoredEvents", JSON.stringify(legacyConfig.ignoredEvents));
-    };
-
-    if (legacyConfig.listenedAccounts) {
-      localStorage
-        .setItem("listenedAccounts", JSON.stringify(legacyConfig.listenedAccounts));
-    };
-
-    localStorage
-      .removeItem("configs");
   };
-
 });

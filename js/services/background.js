@@ -53,7 +53,7 @@ define([
 
   module.streamEvents = function() {
     var listenedAccounts = ConfigListenedAccounts.listenedAccounts();
-    listenedAccounts = new Accounts(_.values(listenedAccounts));
+    listenedAccounts = new Accounts(listenedAccounts);
 
     _.each(listenedAccounts.models, function(model) {
       fetchAccountEvents(model);
