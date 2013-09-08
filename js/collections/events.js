@@ -26,37 +26,22 @@ define([
       return this.fetch(_.extend(defaults, params));
     },
 
-    stream: function() {
+    startStream: function () {
       var that = this;
-      var promise = $.Deferred();
 
-      var fetch = function() {
-        var eventsPromise = that.fetchAuthorized({ update: true });
-
-        eventsPromise.done(function(collection){
-          promise.notify(collection);
-        });
+      var fetchEvents = function () {
+        that.fetchAuthorized({ update: true });
       };
+      fetchEvents();
 
-      var resolveAction = function() {
-        if(that.userToken.current() != undefined) {
-          fetch();
-        } else {
-          that.stopStream();
-        }
-      };
-      resolveAction();
-
-      this.stream = setInterval(resolveAction, 60 * 1000);
-
-      return promise.promise();
+      this.stream = setInterval(fetchEvents, 1 * 1000);
     },
 
-    updateCache: function() {
+    updateCache: function () {
       return localStorage.setItem(this.url, JSON.stringify(this.toJSON()));
     },
 
-    fetchCached: function() {
+    fetchCached: function () {
       var cached = JSON.parse(localStorage.getItem(this.url)) || [];
       var promise = $.Deferred();
 

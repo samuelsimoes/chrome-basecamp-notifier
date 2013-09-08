@@ -15,6 +15,10 @@ define([
     return this.allConfigs()[key];
   };
 
+  module.disabledDesktopNotifications = function () {
+    return this.get("disable_desktop_notifications");
+  };
+
   module.toggle = function(key) {
     var allConfigs = this.allConfigs();
     allConfigs[key] = !allConfigs[key];

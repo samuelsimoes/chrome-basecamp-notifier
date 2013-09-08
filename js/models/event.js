@@ -13,7 +13,31 @@ define([
     },
 
     viewed: function() {
-      return !_.contains(UnreadEventsCache.unreadItems(), this.id);
+      return !UnreadEventsCache.isUnread(this);
+    },
+
+    getId: function () {
+      return this.get("id");
+    },
+
+    creatorAvatarUrl: function () {
+      return this.get("creator").avatar_url;
+    },
+
+    creatorName: function () {
+      return this.get("creator").name;
+    },
+
+    bucketName: function () {
+      return this.get("creator").name;
+    },
+
+    link: function () {
+      return this.get("html_url");
+    },
+
+    summary: function () {
+      return this.get("summary");
     },
 
     icon: function() {

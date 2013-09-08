@@ -15,13 +15,21 @@ define(["underscore"], function() {
     }
   };
 
+  module.unredItemsCount = function () {
+    return this.unreadItems().length;
+  };
+
+  module.isUnread = function (item) {
+    return _.contains(this.unreadItems(), item.getId());
+  };
+
   module.markAsRead = function(item) {
-    var item = (_.isArray(item)) ? item : [item];
+    var item = (_.isArray(item)) ? item : [item.getId()];
     persistCache(_.difference(module.unreadItems(), item));
   };
 
-  module.addItem = function(id) {
-    persistCache(_.union(module.unreadItems(), [id]));
+  module.addItem = function(eventItem) {
+    persistCache(_.union(module.unreadItems(), [eventItem.getId()]));
   };
 
   module.clear = function() {

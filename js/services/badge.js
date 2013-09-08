@@ -4,19 +4,14 @@ define([
 
   var module = {};
 
-  var text = function() {
-    var unreadItems = UnreadEventsCache.unreadItems().length;
-    return (unreadItems == 0) ? "" : unreadItems.toString();
+  var text = function(number) {
+    return (number == 0 || number == undefined) ? "" : number.toString();
   };
 
-  module.update = function() {
+  module.update = function(number) {
     chrome.browserAction.setBadgeBackgroundColor({ color: "#0044a9" });
-
-    chrome.browserAction.setBadgeText({
-      text: text()
-    });
+    chrome.browserAction.setBadgeText({ text: text(number) });
   };
 
   return module;
-
 });

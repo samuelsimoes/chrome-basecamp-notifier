@@ -17,7 +17,7 @@ define([
       if (that.isCreatedByMe() || that.isIgnoredType()) {
         that.collection.remove(model);
       } else {
-        that.collection.trigger("filteredAdd", model);
+        that.collection.trigger("filtrated-add", model);
       }
     });
   };
@@ -30,5 +30,9 @@ define([
     return _.contains(ConfigIgnoredEvents.ignoredEvents(), this.model.get("type"));
   };
 
-  return Filter;
+  return {
+    watch: function (collection) {
+      return new Filter(collection);
+    }
+  };
 });

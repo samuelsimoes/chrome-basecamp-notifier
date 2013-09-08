@@ -1,6 +1,8 @@
 define(["services/unread_events_cache"], function(UnreadEvents){
   describe("UnreadEvents", function() {
     beforeEach(function(){
+      this.eventItem = jasmine.createSpyObj("account", ["getId"]);
+      this.eventItem.getId.andReturn(90);
       spyOn(localStorage, "setItem");
     });
 
@@ -19,7 +21,7 @@ define(["services/unread_events_cache"], function(UnreadEvents){
         });
 
         it("should append a new value", function() {
-          UnreadEvents.addItem(90);
+          UnreadEvents.addItem(this.eventItem);
 
           expect(UnreadEvents.unreadItems()).toEqual([30, 40, 90]);
 
@@ -50,7 +52,7 @@ define(["services/unread_events_cache"], function(UnreadEvents){
         });
 
         it("should append a new value", function() {
-          UnreadEvents.addItem(90);
+          UnreadEvents.addItem(this.eventItem);
 
           expect(UnreadEvents.unreadItems()).toEqual([30, 40, 90]);
 
@@ -59,6 +61,21 @@ define(["services/unread_events_cache"], function(UnreadEvents){
 
           expect(chrome.extension.getBackgroundPage().unreadEventsCache)
             .toEqual([30,40,90]);
+        });
+
+        it ("#markAsRead remove item from unread cache", function () {
+          UnreadEvents.addItem(this.eventItem);
+
+          UnreadEvents.markAsRead(this.eventItem);
+
+          expect(UnreadEvents.unreadItems()).toEqual([30, 40]);
+
+          expect(chrome.extension.getBackgroundPage().unreadEventsCache)
+            .toEqual([30,40]);
+        });
+
+        it ("#unredItemsCount", function () {
+          expect(UnreadEvents.unredItemsCount()).toEqual(2);
         });
 
         it("#clear should clear the cache", function(){
@@ -84,7 +101,7 @@ define(["services/unread_events_cache"], function(UnreadEvents){
       });
 
       it("should append a new value", function() {
-        UnreadEvents.addItem(90);
+        UnreadEvents.addItem(this.eventItem);
 
         expect(localStorage.setItem)
           .toHaveBeenCalledWith("unreadEvents", JSON.stringify([90]));
