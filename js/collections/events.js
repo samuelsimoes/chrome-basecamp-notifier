@@ -1,7 +1,12 @@
 define([
   "models/event",
+  "services/http_cache",
   "backbone.deferred"
-], function(Event) {
+], function(
+  Event,
+  HttpCache
+) {
+
   return Backbone.DeferredCollection.extend({
     model: Event,
 
@@ -20,6 +25,19 @@ define([
       var defaults = {
         beforeSend: function(xhr) {
           xhr.setRequestHeader("Authorization", ("Bearer " + that.userToken.current()));
+
+          var lastModifiedHeader = HttpCache.getLastModifiedHeader(that.url);
+
+          if (lastModifiedHeader != undefined) {
+            xhr.setRequestHeader("If-Modified-Since", lastModifiedHeader);
+          }
+        },
+        success: function (model, collection, event) {
+          HttpCache
+            .storeLastModifiedHeader(
+              that.url,
+              event.xhr.getResponseHeader('Last-Modified')
+            );
         }
       };
 
@@ -30,7 +48,7 @@ define([
       var that = this;
 
       var fetchEvents = function () {
-        that.fetchAuthorized({ update: true });
+        that.fetchAuthorized({ update: true, timeout: 50000 });
       };
       fetchEvents();
 
