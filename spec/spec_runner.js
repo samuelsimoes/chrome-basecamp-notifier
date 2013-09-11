@@ -1,4 +1,4 @@
-require(["../js/common"], function (common) {
+require(["../js/main"], function (main) {
   require(["jasmine", "jasmine-html"], function(){
     var jasmineEnv = jasmine.getEnv();
     jasmineEnv.updateInterval = 1000;
