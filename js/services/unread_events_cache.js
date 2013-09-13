@@ -25,11 +25,11 @@ define(["underscore"], function() {
 
   module.markAsRead = function(item) {
     var item = (_.isArray(item)) ? item : [item.getId()];
-    persistCache(_.difference(module.unreadItems(), item));
+    persistCache(_.difference(this.unreadItems(), item));
   };
 
   module.addItem = function(eventItem) {
-    persistCache(_.union(module.unreadItems(), [eventItem.getId()]));
+    persistCache(_.union(this.unreadItems(), [eventItem.getId()]));
   };
 
   module.clear = function() {
