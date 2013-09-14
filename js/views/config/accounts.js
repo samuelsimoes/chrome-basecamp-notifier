@@ -5,7 +5,9 @@ define([
   return Backbone.View.extend({
     render: function() {
       _.each(this.collection.models, function(account) {
-        this.renderItem(account);
+        if (account.get("product") == "bcx") {
+          this.renderItem(account);
+        }
       }, this);
 
       return this;
