@@ -53,10 +53,10 @@ define([
   };
 
   return function() {
+    Migrator();
+
     handleStreamError();
     createAllStreams();
     startStreamEvents();
-
-    Migrator();
   };
 });
