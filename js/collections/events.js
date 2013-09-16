@@ -1,9 +1,11 @@
 define([
   "models/event",
+  "services/events_cache",
   "services/http_cache",
   "backbone.deferred"
 ], function(
   Event,
+  EventsCache,
   HttpCache
 ) {
 
@@ -56,11 +58,11 @@ define([
     },
 
     updateCache: function () {
-      return localStorage.setItem(this.url, JSON.stringify(this.toJSON()));
+      EventsCache.update(this.url, this.toJSON());
     },
 
     fetchCached: function () {
-      var cached = JSON.parse(localStorage.getItem(this.url)) || [];
+      var cached = EventsCache.get(this.url);
       var promise = $.Deferred();
 
       this.set(this.parse(cached));

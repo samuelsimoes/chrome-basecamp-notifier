@@ -18,12 +18,10 @@ define([
       var events = this.eventsCollection().fetchCached();
 
       events.done(function(collection) {
-        var firstItems = _.first(collection.models, 15);
-
-        if (_.isEmpty(firstItems)) {
+        if (_.isEmpty(collection.models)) {
           that.renderNoItemsMessage();
         } else {
-          _.each(firstItems, function(model) {
+          _.each(collection.models, function(model) {
             that.renderEvent(model);
           });
         }
