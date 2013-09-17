@@ -15,7 +15,18 @@ define([
     initialize: function(models, options) {
       this.account = options.account;
       this.userToken = options.userToken;
-      this.url = "https://basecamp.com/" + this.account.getId() + "/api/v1/events.json";
+    },
+
+    urlRoot: function () {
+      return "https://basecamp.com/" + this.account.getId() + "/api/v1/events.json";
+    },
+
+    url: function () {
+      if (this.modifiedSince == undefined) {
+        return this.urlRoot();
+      } else {
+        return this.urlRoot() + "?since=" + this.modifiedSince;
+      }
     },
 
     comparator: function(model) {
@@ -50,6 +61,10 @@ define([
       var that = this;
 
       var fetchEvents = function () {
+        if (that.models[0] != undefined) {
+          that.modifiedSince = that.models[0].get("created_at");
+        }
+
         that.fetchAuthorized({ update: true, timeout: 50000 });
       };
       fetchEvents();
