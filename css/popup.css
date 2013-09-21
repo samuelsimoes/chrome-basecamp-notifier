@@ -151,3 +151,44 @@ h1:first-child {
 .unread {
   font-weight: bold;
 }
+
+.etabs {
+  margin: 5px 0 0 0;
+  padding-left: 5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.etabs:after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  content: "";
+  width: 100%;
+  z-index: 0;
+  border-bottom: 1px solid #DDD;
+}
+
+.etabs .tab {
+  float: left;
+  margin-right: 1px;
+  position: relative;
+  z-index: 1;
+}
+
+.etabs .tab a {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding: 0 10px;
+  border: 1px solid #DDD;
+  border-bottom: 0;
+  font-size: 11px;
+  text-decoration: none;
+  display: block;
+  line-height: 24px;
+  color: #000;
+}
+
+.etabs .tab.active a {
+  border-bottom: 1px solid #fff;
+}

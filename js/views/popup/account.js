@@ -2,14 +2,19 @@ define([
   "text!templates/popup/account.html",
   "collections/events",
   "views/popup/event",
-  "backbone"
+  "backbone",
+  "easytab"
 ], function(AccountTpl, Events, EventView) {
   return Backbone.View.extend({
     template: _.template(AccountTpl),
 
     render: function() {
       this.setElement(this.template({ name: this.model.get("name") }));
+
+      this.$el.easytabs({ animationSpeed: "fast" });
+
       this.renderEvents();
+
       return this.el;
     },
 
