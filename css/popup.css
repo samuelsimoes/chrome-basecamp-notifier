@@ -94,12 +94,27 @@ h1:first-child {
   float: left;
 }
 
-.notification-list .icon {
-  width: 25px;
+.icons-container {
+  width: 40px;
   text-align: center;
   font-size: 15px;
   margin-right: 5px;
   color: #E9E5DA;
+}
+
+.icons-container i {
+  width: 15px;
+  display: inline-block;
+}
+
+.icons-container a {
+  margin-left: 2px;
+  text-decoration: none;
+  color: #E9E5DA;
+}
+
+.icons-container a:hover i:before {
+  content: "\f005";
 }
 
 .notification-list li:hover {
