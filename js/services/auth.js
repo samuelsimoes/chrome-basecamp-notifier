@@ -2,14 +2,16 @@ define(["app", "models/user_token", "models/user"], function(App, UserToken, Use
   module = {};
 
   var getToken = function(authCode) {
+    var promise = $.Deferred();
     var token = new UserToken({ auth_code: authCode });
     var tokenPromise = token.fetch({ type: "POST" });
 
-    tokenPromise.done(function(model) {
-      model.cacheToken();
+    tokenPromise.done(function() {
+      token.cacheToken();
+      promise.resolve(token);
     });
 
-    return tokenPromise;
+    return promise;
   };
 
   module.getPermission = function() {

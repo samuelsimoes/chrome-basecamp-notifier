@@ -1,13 +1,12 @@
 define([
   "models/user_token",
   "collections/accounts",
-  "backbone",
-  "backbone.deferred"
+  "backbone"
 ], function(
   UserToken,
   Accounts
 ) {
-  return Backbone.DeferredModel.extend({
+  return Backbone.Model.extend({
     url: function() {
       return "https://launchpad.37signals.com/authorization.json";
     },
@@ -36,17 +35,19 @@ define([
   }, {
     fetchCurrentUser: function() {
       var user = new this();
+      var promise = $.Deferred();
       var userPromise = user.fetch({
         beforeSend: function(xhr) {
           xhr.setRequestHeader('Authorization', ("Bearer " + UserToken.current()));
         }
       });
 
-      userPromise.done(function(model){
+      userPromise.done(function(){
         user.cacheUser();
+        promise.resolve(user);
       });
 
-      return userPromise;
+      return promise;
     },
 
     current: function() {

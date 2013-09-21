@@ -1,15 +1,14 @@
 define([
   "models/event",
   "services/events_cache",
-  "services/http_cache",
-  "backbone.deferred"
+  "services/http_cache"
 ], function(
   Event,
   EventsCache,
   HttpCache
 ) {
 
-  return Backbone.DeferredCollection.extend({
+  return Backbone.Collection.extend({
     model: Event,
 
     initialize: function(models, options) {

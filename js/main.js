@@ -4,7 +4,6 @@ require.config({
     "jquery": "vendor/jquery/jquery",
     "underscore": "vendor/underscore-amd/underscore",
     "backbone": "vendor/backbone-amd/backbone",
-    "backbone.deferred": "vendor/backbone.deferred/index",
     "text": "vendor/text/text",
     "jasmine": "vendor/jasmine/lib/jasmine-core/jasmine",
     "jasmine-html": "vendor/jasmine/lib/jasmine-core/jasmine-html",
@@ -12,10 +11,6 @@ require.config({
     "app": "app"
   },
   shim: {
-    "backbone.deferred": {
-      deps: ["underscore", "backbone"],
-      exports: "deferred"
-    },
     "easytab": {
       deps: ["jquery"]
     },

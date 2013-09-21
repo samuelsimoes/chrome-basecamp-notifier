@@ -7,7 +7,7 @@ define([
   Project
 ) {
 
-  return Backbone.DeferredCollection.extend({
+  return Backbone.Collection.extend({
     model: Project,
 
     url: function () {

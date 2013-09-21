@@ -1,5 +1,11 @@
-define(["app", "backbone", "backbone.deferred"], function(App) {
-  return Backbone.DeferredModel.extend({
+define([
+  "app",
+  "backbone"
+], function(
+  App
+) {
+
+  return Backbone.Model.extend({
     initialize: function (attrs, options) {
       this.options = (options != undefined) ? options : {};
     },
@@ -46,6 +52,7 @@ define(["app", "backbone", "backbone.deferred"], function(App) {
     }
   }, {
     currentRefresh: function () {
+      var promise = $.Deferred();
       var currentToken = new this({
         access_token: localStorage.getItem("currentToken"),
         refresh_token: localStorage.getItem("refreshToken")
@@ -53,11 +60,12 @@ define(["app", "backbone", "backbone.deferred"], function(App) {
 
       var newTokenPromise = currentToken.refresh();
 
-      newTokenPromise.done(function (model) {
-        model.cacheToken();
+      newTokenPromise.done(function () {
+        currentToken.cacheToken();
+        promise.resolve(currentToken);
       });
 
-      return newTokenPromise;
+      return promise;
     },
 
     current: function() {
