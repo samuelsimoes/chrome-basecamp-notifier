@@ -1,2 +1,3 @@
 js/config_keys.js
 js/vendor
+pack_for_dist.sh
