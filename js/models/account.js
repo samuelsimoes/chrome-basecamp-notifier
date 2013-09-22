@@ -1,8 +1,12 @@
 define([
   "collections/projects",
+  "collections/events",
+  "collections/starred_events",
   "backbone"
 ], function(
-  Projects
+  Projects,
+  Events,
+  StarredEvents
 ) {
 
   return Backbone.Model.extend({
@@ -20,6 +24,16 @@ define([
       }
 
       return this.projects;
+    },
+
+    getEventsFromCache: function (attribute) {
+      var eventsCollection = new Events([], { account: this.model });
+      return eventsCollection.fetchCached();
+    },
+
+    getStarredEvents: function () {
+      var starredEvents = new StarredEvents([], { account: this });
+      return starredEvents.fetch();
     }
   });
 });

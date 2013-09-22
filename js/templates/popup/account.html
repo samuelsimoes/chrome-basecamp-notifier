@@ -2,15 +2,17 @@
   <h1><%= name %></h1>
 
   <ul class="etabs">
-    <li class="tab"><a href="#tabs1-accounts">Latest Events</a></li>
-    <li class="tab"><a href="#tabs2-events">Starred Events</a></li>
+    <li class="tab"><a href="#tabs1-<%= cid %>-accounts">Latest Events</a></li>
+    <li class="tab"><a href="#tabs2-<%= cid %>-events">Starred Events</a></li>
   </ul>
 
-  <div id="tabs1-accounts" class="tab-content">
-    <ul class="notification-list">
+  <div id="tabs1-<%= cid %>-accounts" class="tab-content">
+    <ul class="notification-list latest-notifications">
     </ul>
   </div>
 
-  <div id="tabs2-events" class="tab-content">
+  <div id="tabs2-<%= cid %>-events" class="tab-content">
+    <ul class="notification-list starred-items-list">
+    </ul>
   </div>
 </div>

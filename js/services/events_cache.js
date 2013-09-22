@@ -6,9 +6,15 @@ define([
 ) {
 
   return {
-    update: function (key, collection) {
+    update: function (key, collection, override) {
       var actualCache = this.get(key);
-      var newCache = _.first(_.union(collection, actualCache), 15);
+
+      if (override == undefined && override == true) {
+        var newCache = _.first(_.union(collection, actualCache), 15);
+      } else {
+        var newCache = collection;
+      }
+
       var backgroundPage = chrome.extension.getBackgroundPage();
 
       if(!_.isObject(backgroundPage.eventsCache)) {

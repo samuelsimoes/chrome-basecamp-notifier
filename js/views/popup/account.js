@@ -4,12 +4,34 @@ define([
   "views/popup/event",
   "backbone",
   "easytab"
-], function(AccountTpl, Events, EventView) {
+], function(
+  AccountTpl,
+  Events,
+  EventView
+) {
+
   return Backbone.View.extend({
     template: _.template(AccountTpl),
 
     render: function() {
-      this.setElement(this.template({ name: this.model.get("name") }));
+      var that = this;
+
+      this.setElement(this.template({ name: this.model.get("name"), cid: this.model.cid }));
+
+      var starredEventsPromise = this.model.getStarredEvents();
+      var latestEventsPromise = this.model.getEventsFromCache();
+
+      starredEventsPromise.done(function (collection) {
+        that.starredEvents = collection;
+
+        that.listenStarEvents();
+        that.renderStarredItems();
+      });
+
+      latestEventsPromise.done(function (collection) {
+        that.eventsCollection = collection;
+        that.renderEvents();
+      });
 
       this.$el.easytabs({ animationSpeed: "fast" });
 
@@ -18,32 +40,51 @@ define([
       return this.el;
     },
 
-    renderEvents: function() {
-      var that = this;
-      var events = this.eventsCollection().fetchCached();
+    listenStarEvents: function () {
+      this.on("star-item", function (eventItem) {
+        this.starredEvents.addEvent(eventItem);
+      }, this);
 
-      events.done(function(collection) {
-        if (_.isEmpty(collection.models)) {
-          that.renderNoItemsMessage();
-        } else {
-          _.each(collection.models, function(model) {
-            that.renderEvent(model);
-          });
-        }
-      });
+      this.on("remove-star", function (eventItem) {
+        this.starredEvents.removeEvent(eventItem);
+      }, this);
+
+      this.on("remove-star star-item", function () {
+        this.renderEvents();
+        this.renderStarredItems();
+      }, this);
+    },
+
+    renderStarredItems: function () {
+      var target = this.$el.find(".starred-items-list");
+
+      target.html("");
+
+      _.each(this.starredEvents.models, function(model) {
+        target.append(this.renderEvent(model));
+      }, this);
+    },
+
+    renderEvents: function() {
+      var target = this.$el.find(".latest-notifications");
+
+      target.html("");
+
+      if (_.isEmpty(this.eventsCollection.models)) {
+        this.renderNoItemsMessage();
+      } else {
+        _.each(this.eventsCollection.models, function(model) {
+          target.append(this.renderEvent(model));
+        }, this);
+      }
     },
 
     renderNoItemsMessage: function () {
       this.$el.find(".notification-list").html("<li class='no-items'>No new events</li>");
     },
 
-    renderEvent: function(eventItem) {
-      var event = new EventView({ model: eventItem });
-      this.$el.find(".notification-list").append(event.render());
-    },
-
-    eventsCollection: function() {
-      return new Events([], { account: this.model });
+    renderEvent: function(eventItem, type) {
+      return new EventView({ model: eventItem, parentView: this }).render();
     }
   });
 });

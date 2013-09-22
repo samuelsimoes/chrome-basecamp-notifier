@@ -1,9 +1,13 @@
 define([
   "services/unread_events_cache",
-  "models/user",
+  "services/events_cache",
   "services/text",
   "backbone"
-], function(UnreadEventsCache, User, Text) {
+], function(
+  UnreadEventsCache,
+  EventsCache,
+  Text
+) {
 
   var Event = Backbone.Model.extend({
     initialize: function() {
@@ -18,6 +22,16 @@ define([
 
     getId: function () {
       return this.get("id");
+    },
+
+    isStarred: function () {
+      var StarredEvents = EventsCache.get("starred-items-" + this.getAccountId());
+      return _.findWhere(StarredEvents, { id: this.getId() }) != undefined;
+    },
+
+    getAccountId: function (attribute) {
+      var accountIdExp = /[0-9]{7}/;
+      return accountIdExp.exec(this.get("url"))[0];
     },
 
     creatorAvatarUrl: function () {
