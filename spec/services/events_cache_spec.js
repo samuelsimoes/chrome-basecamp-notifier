@@ -12,6 +12,9 @@ define([
 
     describe("with previous cache", function() {
       beforeEach(function() {
+        spyOn(chrome.extension.getBackgroundPage(), "eventsCache")
+          .andReturn([{ id: 10 }]);
+
         spyOn(localStorage, "getItem")
           .andReturn(JSON.stringify([{ id: 10 }]));
       });
@@ -43,6 +46,9 @@ define([
 
     describe("without previous cache", function() {
       beforeEach(function() {
+        spyOn(chrome.extension.getBackgroundPage(), "eventsCache")
+          .andReturn([]);
+
         spyOn(localStorage, "getItem")
           .andReturn(undefined);
       });
