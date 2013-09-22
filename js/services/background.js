@@ -52,19 +52,12 @@ define([
     });
   };
 
-  var presentNewFeature = function () {
-    if(UserToken.current() != undefined && localStorage.getItem("currentVersion") != "1.4.0") {
-      chrome.tabs.create({ url: chrome.extension.getURL('options.html?new_feature=true#tabs3-projects') });
-    }
-  };
-
   return function() {
     Migrator();
 
     handleStreamError();
     createAllStreams();
     startStreamEvents();
-    presentNewFeature();
 
     localStorage.setItem("currentVersion", "1.4.0");
   };

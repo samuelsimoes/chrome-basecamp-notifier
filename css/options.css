@@ -156,13 +156,3 @@ input[type=submit] {
   border-top: 1px solid #DDD;
   padding: 15px 10px 0 10px;
 }
-
-.new_feature {
-  background: url("../img/new_feature_image.png");
-  height: 38px;
-  width: 211px;
-  position: absolute;
-  top: 35px;
-  left: 58px;
-  z-index: 1;
-}

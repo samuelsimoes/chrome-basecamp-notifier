@@ -39,26 +39,16 @@ define([
       this.$el.html(this.configsTemplate({}));
       this.$el.find(".tab-container").easytabs();
 
-      var presentNewFeatureFlag = location.search.match(/\?new_feature\=([^\&]+)/);
-
       this.accounts = user.getAccounts();
 
       this.renderAccountsTab();
       this.renderEventsTab();
       this.renderProjectsTab();
       this.renderMiscConfigsTab();
-
-      if(presentNewFeatureFlag) {
-        this.presentNewFeature();
-      }
     },
 
     renderLoadingPage: function() {
       this.$el.html(this.loadingTemplate({}));
-    },
-
-    presentNewFeature: function () {
-      this.$el.find("#tab-container").append("<p class='new_feature'></p>");
     },
 
     close: function() {
