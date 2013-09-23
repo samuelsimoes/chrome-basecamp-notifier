@@ -7,13 +7,14 @@ define([
 
   return {
     update: function (key, collection, override) {
-      var actualCache = this.get(key);
-
-      if (override == undefined && override == true) {
-        var newCache = _.first(_.union(collection, actualCache), 15);
-      } else {
+      if (override == true) {
         var newCache = collection;
+      } else {
+        var actualCache = this.get(key);
+        var newCache = _.union(collection, actualCache);
       }
+
+      newCache = _.first(newCache, 15);
 
       var backgroundPage = chrome.extension.getBackgroundPage();
 
