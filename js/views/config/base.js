@@ -45,6 +45,11 @@ define([
       this.renderEventsTab();
       this.renderProjectsTab();
       this.renderMiscConfigsTab();
+      this.printVersion();
+    },
+
+    printVersion: function () {
+      $("#extension_version").html("v" + chrome.runtime.getManifest().version);
     },
 
     renderLoadingPage: function() {

@@ -59,6 +59,6 @@ define([
     createAllStreams();
     startStreamEvents();
 
-    localStorage.setItem("currentVersion", "1.4.0");
+    localStorage.setItem("currentVersion", chrome.runtime.getManifest().version);
   };
 });
