@@ -1,4 +1,4 @@
-# Basecamp Chrome Notifier V 1.4.0
+# Basecamp Chrome Notifier V 1.5.0
 
 Extension for Google Chrome which notifies the activity in your Basecamp Accounts with desktop notifications.
 
@@ -22,7 +22,7 @@ You also need register an app in **[http://integrate.37signals.com](http://integ
 
 ## Tests
 
-To run the test suite you need run the specs inside Chrome because the Chrome Extension API, for this, when you [install the extension in unpacked mode](http://superuser.com/a/247654/235416) access: 
+To run the test suite you need run the specs inside Chrome because the Chrome Extension API, for this, when you [install the extension in unpacked mode](http://superuser.com/a/247654/235416) access:
 
 `chrome-extension://<you-chrome-extension-id>/spec_runner.html`.
 
