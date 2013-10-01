@@ -1,12 +1,10 @@
 define([], function() {
 
   return function() {
-    var legacyAccountsConfig = JSON.parse(localStorage.getItem("listenedAccounts"));
-
-    if (_.isArray(legacyAccountsConfig)) {
-      return;
-    } else {
-      localStorage.setItem("listenedAccounts", JSON.stringify(_.values(legacyAccountsConfig)));
-    };
+    if (localStorage.getItem("currentVersion") == "1.5.0" && localStorage.getItem("refreshToken") == undefined) {
+      localStorage.removeItem("currentToken");
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("currentUser");
+    }
   };
 });
