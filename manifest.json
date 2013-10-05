@@ -1,6 +1,6 @@
 {
   "name": "Basecamp Notifier",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "Display Basecamp activity with desktop notifications.",
   "icons": {
     "16": "img/icons/16.png",
