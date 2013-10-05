@@ -1,4 +1,4 @@
-# Basecamp Chrome Notifier V 1.5.0
+# Basecamp Chrome Notifier
 
 Extension for Google Chrome which notifies the activity in your Basecamp Accounts with desktop notifications.
 
