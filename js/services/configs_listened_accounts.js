@@ -1,6 +1,6 @@
 define(["services/configs_base", "backbone"], function(ConfigsBase) {
 
-  var base = new ConfigsBase("listenedAccounts", {});
+  var base = new ConfigsBase("listenedAccounts", []);
   var module = {};
 
   module.listenedAccounts = function() {
