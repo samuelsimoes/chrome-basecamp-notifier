@@ -2,23 +2,49 @@ define([], function() {
 
   var module = {};
 
-  // C'mon Basecamp...
+  var escapeChars = {
+    lt: '<',
+    gt: '>',
+    quot: '"',
+    amp: '&',
+    apos: "'"
+  };
+
   module.removeSpanTags = function(text) {
-    var text = text.replace("<span>", "");
-    return text.replace("</span>", "");
+    return this.stripTags(text);
+  };
+
+  module.stripTags = function(str){
+    if (str == null) return '';
+    return String(str).replace(/<\/?[^>]+>/g, '');
+  };
+
+  module.unescapeHTML = function(str) {
+    if (str == null) return '';
+    return String(str).replace(/\&([^;]+);/g, function(entity, entityCode){
+      var match;
+
+      if (entityCode in escapeChars) {
+        return escapeChars[entityCode];
+      } else if (match = entityCode.match(/^#x([\da-fA-F]+)$/)) {
+        return String.fromCharCode(parseInt(match[1], 16));
+      } else if (match = entityCode.match(/^#(\d+)$/)) {
+        return String.fromCharCode(~~match[1]);
+      } else {
+        return entity;
+      }
+    });
   };
 
   module.capitalize = function(text) {
     return text.charAt(0).toUpperCase() + text.slice(1);
   };
 
-  module.truncate = function(str, maxLength, suffix)  {
-      if(str.length > maxLength) {
-          str = str.substring(0, maxLength + 1);
-          str = str.substring(0, Math.min(str.length, str.lastIndexOf(" ")));
-          str = str + suffix;
-      }
-      return str;
+  module.truncate = function(str, length, truncateStr)  {
+    if (str == null) return '';
+    str = String(str); truncateStr = truncateStr || '...';
+    length = ~~length;
+    return str.length > length ? str.slice(0, length) + truncateStr : str;
   };
 
   module.contains = function(str, needle) {
