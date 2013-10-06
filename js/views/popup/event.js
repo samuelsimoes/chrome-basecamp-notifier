@@ -20,12 +20,23 @@ define([
       this.parentView = this.options.parentView;
     },
 
-    render: function() {
-      this.model.set("summary", Text.truncate(this.model.get("summary"), 85, "..."));
+    summary: function () {
+      var treatedSummary = Text.stripTags(this.model.get("summary"));
+      treatedSummary = Text.unescapeHTML(treatedSummary);
 
+      var creatorNameLength = this.model.creatorFirstName().length;
+      var bucketNameLength = this.model.bucketName().length;
+      var summaryLength = 108 - (creatorNameLength + bucketNameLength);
+
+      return Text.truncate(treatedSummary, summaryLength, "...");
+    },
+
+    render: function() {
       var viewVars = _.extend(this.model.toJSON(), {
         is_starred: this.model.isStarred(),
-        avatar_url: this.model.creatorAvatarUrl()
+        avatar_url: this.model.creatorAvatarUrl(),
+        creator_name: this.model.creatorFirstName(),
+        summary: this.summary()
       });
 
       this.$el.html(this.template(viewVars));

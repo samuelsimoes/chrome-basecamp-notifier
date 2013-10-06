@@ -38,6 +38,13 @@ define([
       return this.get("creator").avatar_url;
     },
 
+    creatorFirstName: function () {
+      if (_.isUndefined(this.firstNameCache)) {
+        this.firstNameCache = this.creatorName().split(" ")[0];
+      }
+      return this.firstNameCache;
+    },
+
     creatorName: function () {
       return this.get("creator").name;
     },
