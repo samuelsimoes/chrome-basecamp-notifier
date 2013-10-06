@@ -23,7 +23,10 @@ define([
     render: function() {
       this.model.set("summary", Text.truncate(this.model.get("summary"), 85, "..."));
 
-      var viewVars = _.extend(this.model.toJSON(), { is_starred: this.model.isStarred() });
+      var viewVars = _.extend(this.model.toJSON(), {
+        is_starred: this.model.isStarred(),
+        avatar_url: this.model.creatorAvatarUrl()
+      });
 
       this.$el.html(this.template(viewVars));
 

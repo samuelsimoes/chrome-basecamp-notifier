@@ -90,16 +90,15 @@ h1:first-child {
   padding: 0 6px;
 }
 
-.notification-list li > div {
-  float: left;
-}
-
 .icons-container {
+  z-index: 3;
+  position: relative;
   width: 40px;
   text-align: center;
   font-size: 15px;
   margin-right: 5px;
   color: #E9E5DA;
+  display: inline-block;
 }
 
 .icons-container i {
@@ -115,6 +114,36 @@ h1:first-child {
 
 .icons-container a:hover i:before {
   content: "\f005";
+}
+
+.summary {
+  padding-left: 28px;
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+}
+
+.first-line {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.first-line .creator-avatar {
+  z-index: 1;
+  position: absolute;
+  top: 4px;
+  left: 45px;
+  opacity: 0.5;
+  height: 24px;
+}
+
+.first-line:hover .creator-avatar {
+  opacity: 1;
+}
+
+.creator-avatar {
+  border-radius: 50%;
 }
 
 .notification-list li:hover {
@@ -206,4 +235,10 @@ h1:first-child {
 
 .etabs .tab.active a {
   border-bottom: 1px solid #fff;
+}
+
+.clearfix:after {
+  content: '';
+  display: block;
+  clear: both;
 }
