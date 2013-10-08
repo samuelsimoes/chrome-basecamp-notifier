@@ -3,6 +3,14 @@ body {
   margin: 0;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
+::selection {
+  background: #5E9AC9;
+}
+
 strong {
   font-weight: bold;
 }
@@ -131,6 +139,10 @@ h1:first-child {
   margin: 0 -6px;
   min-height: 80px;
   display: none;
+}
+
+.second-line .content a {
+  color: #000;
 }
 
 .second-line .creator-avatar {
