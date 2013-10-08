@@ -2,11 +2,15 @@ define([
   "services/unread_events_cache",
   "services/events_cache",
   "services/text",
+  "models/user_token",
+  "models/comment",
   "backbone"
 ], function(
   UnreadEventsCache,
   EventsCache,
-  Text
+  Text,
+  UserToken,
+  Comment
 ) {
 
   var Event = Backbone.Model.extend({
@@ -27,6 +31,26 @@ define([
     isStarred: function () {
       var StarredEvents = EventsCache.get("starred-items-" + this.getAccountId());
       return _.findWhere(StarredEvents, { id: this.getId() }) != undefined;
+    },
+
+    isCommentEvent: function () {
+      return this.type() == "comment";
+    },
+
+    getCommentId: function () {
+      var commentUrlPart = this.get("html_url").split("#")[1];
+      return commentUrlPart.split("_")[1];
+    },
+
+    comment: function () {
+      if (_.isUndefined(this.commentInstance)) {
+        this.commentInstance = new Comment(
+          { id: this.getCommentId(), html_url: this.get("html_url") },
+          { userToken: UserToken.current(), url: this.get("url") }
+        );
+      }
+
+      return this.commentInstance;
     },
 
     getAccountId: function (attribute) {

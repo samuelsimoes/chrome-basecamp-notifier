@@ -83,7 +83,6 @@ h1:first-child {
 .notification-list li {
   border-bottom: 1px dotted #EBE8E0;
   margin-bottom: 1px;
-  cursor: pointer;
   text-shadow: 1px 1px 0px #FFF;
   line-height: 30px;
   overflow: hidden;
@@ -123,7 +122,70 @@ h1:first-child {
   display: inline-block;
 }
 
+.second-line {
+  position: relative;
+  border-top: 2px solid #FFD0D0;
+  background: #FFF4F0;
+  box-sizing: border-box;
+  padding: 0 11px 0;
+  margin: 0 -6px;
+  min-height: 80px;
+  display: none;
+}
+
+.second-line .creator-avatar {
+  top: 12px;
+  background: #fff;
+  position: absolute;
+}
+
+.second-line .bottom-link {
+  margin-top: 2px;
+  margin-left: 10px;
+  float: right;
+  font-weight: bold;
+  color: #9FA786;
+  text-decoration: none;
+}
+
+.second-line .bottom-link:hover {
+  color: #000;
+}
+
+.ballon {
+  position: relative;
+  background: #FFF;
+  line-height: 18px;
+  padding: 10px 13px;
+  margin-left: 69px;
+  margin-top: 13px;
+  border-radius: 8px;
+}
+
+.ballon .time {
+  display: block;
+  margin-top: 6px;
+  font-size: 9px;
+  color: #9C9B9B;
+  line-height: 11px;
+  text-align: right;
+}
+
+.ballon:after {
+  content: '';
+  position: absolute;
+  border-style: solid;
+  border-width: 15px 15px 15px 0;
+  border-color: rgba(0, 0, 0, 0) #FFF;
+  display: block;
+  width: 0;
+  z-index: 1;
+  left: -9px;
+  top: 13px;
+}
+
 .first-line {
+  cursor: pointer;
   width: 100%;
   position: relative;
   overflow: hidden;
@@ -138,16 +200,16 @@ h1:first-child {
   height: 24px;
 }
 
-.first-line:hover .creator-avatar {
-  opacity: 1;
-}
-
 .creator-avatar {
   border-radius: 50%;
 }
 
 .notification-list li:hover {
   background: #FDFCF8;
+}
+
+.notification-list li:hover .creator-avatar {
+  opacity: 1;
 }
 
 .notification-list li:hover .icon {
@@ -192,7 +254,7 @@ h1:first-child {
   color: #81A56E;
 }
 
-.unread {
+.unread .first-line {
   font-weight: bold;
 }
 

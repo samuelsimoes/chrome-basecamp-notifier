@@ -2,8 +2,14 @@ define([
   "text!templates/popup/event.html",
   "models/event",
   "services/text",
+  "views/popup/comment",
   "backbone"
-], function(EventTpl, Event, Text) {
+], function(
+  EventTpl,
+  Event,
+  Text,
+  CommentView
+) {
   return Backbone.View.extend({
     template: _.template(EventTpl),
 
@@ -18,6 +24,18 @@ define([
 
     initialize: function () {
       this.parentView = this.options.parentView;
+      this.resolveCommentView();
+    },
+
+    resolveCommentView: function () {
+      if (!this.model.isCommentEvent()) {
+        return;
+      }
+
+      this.commentView = new CommentView({
+        model: this.model.comment(),
+        el: this.$el.find(".second-line")
+      });
     },
 
     summary: function () {
@@ -45,6 +63,10 @@ define([
         this.$el.addClass("unread");
       }
 
+      if (this.model.isCommentEvent()) {
+        this.commentView.setElement(this.$el.find(".second-line"));
+      }
+
       return this.el;
     },
 
@@ -60,7 +82,13 @@ define([
     },
 
     sendToBasecamp: function() {
-      chrome.tabs.create({ url: this.model.get("html_url") });
+      if (this.model.isCommentEvent()) {
+        var comment = this.model.comment();
+        this.$el.find(".second-line").toggle();
+        comment.fetchAuthorized();
+      } else {
+        chrome.tabs.create({ url: this.model.get("html_url") });
+      }
     }
   });
 });
