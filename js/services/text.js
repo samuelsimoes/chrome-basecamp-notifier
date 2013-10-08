@@ -10,10 +10,6 @@ define([], function() {
     apos: "'"
   };
 
-  module.removeSpanTags = function(text) {
-    return this.stripTags(text);
-  };
-
   module.stripTags = function(str){
     if (str == null) return '';
     return String(str).replace(/<\/?[^>]+>/g, '');

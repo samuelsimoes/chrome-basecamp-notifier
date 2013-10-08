@@ -14,7 +14,9 @@ define([
   };
 
   module.popUpSummary = function() {
-    return Text.removeSpanTags(Text.capitalize(this.eventItem.summary()));
+    var treatedSummary = Text.stripTags(this.eventItem.summary());
+    treatedSummary = Text.unescapeHTML(treatedSummary);
+    return Text.capitalize(treatedSummary);
   };
 
   module.itemUrl = function() {
