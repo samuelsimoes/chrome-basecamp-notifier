@@ -1,8 +1,10 @@
 define([
   "text!templates/popup/comment.html",
+  "services/pretty_date",
   "backbone"
 ], function(
-  CommentTpl
+  CommentTpl,
+  PrettyDate
 ) {
   return Backbone.View.extend({
     template: _.template(CommentTpl),
@@ -20,7 +22,8 @@ define([
     render: function () {
       var viewVars = _.extend(this.model.toJSON(), {
         avatar_url: this.model.creatorAvatarUrl(),
-        url: this.model.getUrl()
+        url: this.model.getUrl(),
+        created_date_presented: PrettyDate(this.model.get("created_at"))
       });
 
       this.$el.html(this.template(viewVars));
