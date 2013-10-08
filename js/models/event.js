@@ -119,6 +119,8 @@ define([
         return "delete_todo";
       } else if (Text.contains(this.get("action"), "deleted a comment")) {
         return "delete_comment";
+      } else if (Text.contains(this.get("action"), "deleted a message")) {
+        return "delete_message";
       } else if (Text.contains(this.get("action"), "changed a to-do")) {
         return "changed_todo";
       } else if (Text.contains(this.get("action"), "deleted an event")) {
@@ -133,6 +135,8 @@ define([
         return "reopened_todo";
       } else if (Text.contains(this.get("action"), "removed the assignment")) {
         return "removed_assignment";
+      } else if (Text.contains(this.get("action"), "removed") && Text.contains(this.get("action"), "from the project")) {
+        return "removed_permission_from_project";
       }
     }
   }, {
@@ -147,13 +151,15 @@ define([
       message: { label: "Post Messages", icon: "icon-envelope" },
       delete_todo: { label: "Delete to-do", icon: "icon-remove" },
       delete_comment: { label: "Delete Comment", icon: "icon-remove" },
+      delete_message: { label: "Delete Message", icon: "icon-remove" },
+      removed_permission_from_project: { label: "Remove permission from Project", icon: "icon-remove" },
       changed_todo: { label: "Change to-do", icon: "icon-exchange" },
       deleted_event: { label: "Delete Event", icon: "icon-calendar" },
       rescheduled_event: { label: "Reschedule Event", icon: "icon-calendar-empty" },
       create_todo_list: { label: "Create to-do list", icon: "icon-list-ol" },
       invite: { label: "Invite to Project", icon: "icon-bullhorn" },
       removed_assignment: { label: "Remove assignment", icon: "icon-remove" },
-      reopened_todo: { label: "Remove assignment", icon: "icon-edit" }
+      reopened_todo: { label: "Re-open a todo", icon: "icon-edit" }
     }
   });
 
