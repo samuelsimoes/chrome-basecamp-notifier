@@ -27,7 +27,7 @@ define([
     },
 
     getEventsFromCache: function (attribute) {
-      var eventsCollection = new Events([], { account: this.model });
+      var eventsCollection = new Events([], { account: this });
       return eventsCollection.fetchCached();
     },
 

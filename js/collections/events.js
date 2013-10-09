@@ -34,11 +34,12 @@ define([
 
     fetchAuthorized: function(params) {
       var that = this;
+
       var defaults = {
         beforeSend: function(xhr) {
           xhr.setRequestHeader("Authorization", ("Bearer " + that.userToken.current()));
 
-          var lastModifiedHeader = HttpCache.getLastModifiedHeader(that.url);
+          var lastModifiedHeader = HttpCache.getLastModifiedHeader(that.urlRoot());
 
           if (lastModifiedHeader != undefined) {
             xhr.setRequestHeader("If-Modified-Since", lastModifiedHeader);
@@ -47,7 +48,7 @@ define([
         success: function (model, collection, event) {
           HttpCache
             .storeLastModifiedHeader(
-              that.url,
+              that.urlRoot(),
               event.xhr.getResponseHeader('Last-Modified')
             );
         }
@@ -72,11 +73,11 @@ define([
     },
 
     updateCache: function () {
-      EventsCache.update(this.url, this.toJSON());
+      EventsCache.update(this.urlRoot(), this.toJSON());
     },
 
     fetchCached: function () {
-      var cached = EventsCache.get(this.url);
+      var cached = EventsCache.get(this.urlRoot());
       var promise = $.Deferred();
 
       this.set(this.parse(cached));
