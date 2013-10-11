@@ -4,5 +4,6 @@
   dir: "../../dist",
   mainConfigFile: "../js/main.js",
   name: "main",
-  exclude: ["jasmine"]
+  exclude: ["jasmine"],
+  optimize: "none"
 })
