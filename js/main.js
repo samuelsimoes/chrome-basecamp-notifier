@@ -1,3 +1,4 @@
+
 require.config({
   baseUrl: "js",
   paths: {
@@ -8,11 +9,15 @@ require.config({
     "jasmine": "vendor/jasmine/lib/jasmine-core/jasmine",
     "jasmine-html": "vendor/jasmine/lib/jasmine-core/jasmine-html",
     "easytab": "vendor/easytabs/lib/jquery.easytabs",
+    "raven": "vendor/raven-js/dist/1.0.8/raven",
     "app": "app"
   },
   shim: {
     "easytab": {
       deps: ["jquery"]
+    },
+    "raven": {
+      exports: "Raven"
     },
     "jasmine": {
       exports: "jasmine",
@@ -29,14 +34,20 @@ require([
   "services/config_page_mediator",
   "views/popup/popup",
   "views/popup/auth_popup",
-  "models/user_token"
+  "models/user_token",
+  "app",
+  "raven"
 ], function (
   Background,
   ConfigPageMediator,
   PopupView,
   AuthPopupView,
-  UserToken
+  UserToken,
+  App,
+  Raven
 ) {
+  Raven.config(App.sentryUrl).install();
+
   var view = $("body").data("view");
 
   if (view == "options") {

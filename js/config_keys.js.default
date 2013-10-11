@@ -4,6 +4,7 @@
 define([], function(){
   return {
     clientId: "",
-    clientSecret: ""
+    clientSecret: "",
+    sentryUrl: "https://<sentry-id>@app.getsentry.com"
   };
 });
