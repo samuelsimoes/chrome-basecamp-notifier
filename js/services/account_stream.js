@@ -18,7 +18,8 @@ define([
     this.dispatcher = dispatcher;
     this.events = new Events([], {
       account: account,
-      userToken: userToken
+      userToken: userToken,
+      fetchPartly: true
     });
 
     if (filter != undefined) {

@@ -14,6 +14,10 @@ define([
     initialize: function(models, options) {
       this.account = options.account;
       this.userToken = options.userToken;
+
+      if (options.fetchPartly) {
+        this.attachPartlyFetchBehavior();
+      }
     },
 
     urlRoot: function () {
@@ -32,25 +36,34 @@ define([
       return -Date.parse(model.get("created_at"));
     },
 
+    attachPartlyFetchBehavior: function () {
+      this.on("before-send-request", function (xhr) {
+        var lastModifiedHeader = HttpCache.getLastModifiedHeader(this.urlRoot());
+
+        if (lastModifiedHeader != undefined) {
+          xhr.setRequestHeader("If-Modified-Since", lastModifiedHeader);
+        }
+      }, this);
+
+      this.on("success-request", function (xhr) {
+        HttpCache
+          .storeLastModifiedHeader(
+            this.urlRoot(),
+            xhr.getResponseHeader('Last-Modified')
+          );
+      }, this);
+    },
+
     fetchAuthorized: function(params) {
       var that = this;
 
       var defaults = {
         beforeSend: function(xhr) {
           xhr.setRequestHeader("Authorization", ("Bearer " + that.userToken.current()));
-
-          var lastModifiedHeader = HttpCache.getLastModifiedHeader(that.urlRoot());
-
-          if (lastModifiedHeader != undefined) {
-            xhr.setRequestHeader("If-Modified-Since", lastModifiedHeader);
-          }
+          that.trigger("before-send-request", xhr);
         },
         success: function (model, collection, event) {
-          HttpCache
-            .storeLastModifiedHeader(
-              that.urlRoot(),
-              event.xhr.getResponseHeader('Last-Modified')
-            );
+          that.trigger("success-request", event.xhr);
         }
       };
 
