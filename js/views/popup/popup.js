@@ -17,6 +17,15 @@ define([
   App
 ) {
   return Backbone.View.extend({
+    el: $("body"),
+
+    events: {
+      "click #configs_button": function (evt) {
+        evt.preventDefault();
+        chrome.tabs.create({ url: chrome.extension.getURL('options.html') });
+      }
+    },
+
     render: function() {
       if (UserToken.current()) {
         var listenedAccounts = new Accounts(this.listenedAccounts());
