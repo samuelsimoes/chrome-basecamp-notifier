@@ -39,8 +39,6 @@ define([
   module.mediate = function() {
     this.configView = new ConfigBaseView();
 
-    this.configView.renderLoadingPage();
-
     if (this.returningFromPermissionScreen()) {
       this.resolveAuthThings();
     } else if (UserToken.current() == undefined) {

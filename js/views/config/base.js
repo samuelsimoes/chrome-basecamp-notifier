@@ -52,10 +52,6 @@ define([
       $("#extension_version").html("v" + chrome.runtime.getManifest().version);
     },
 
-    renderLoadingPage: function() {
-      this.$el.html(this.loadingTemplate({}));
-    },
-
     close: function() {
       EventsCache.clearAllCache();
       chrome.extension.getBackgroundPage().location.reload();
