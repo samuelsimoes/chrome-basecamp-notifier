@@ -4,22 +4,30 @@ define([
   "services/configs_listened_accounts",
   "services/unread_events_cache",
   "services/badge",
+  "models/user_token",
+  "app",
   "backbone"
 ], function(
   Accounts,
   AccountsView,
   ConfigListenedAccounts,
   UnreadEventsCache,
-  Badge
+  Badge,
+  UserToken,
+  App
 ) {
   return Backbone.View.extend({
     render: function() {
-      var listenedAccounts = new Accounts(this.listenedAccounts());
-      var accountsView = new AccountsView({ collection: listenedAccounts });
+      if (UserToken.current()) {
+        var listenedAccounts = new Accounts(this.listenedAccounts());
+        var accountsView = new AccountsView({ collection: listenedAccounts });
 
-      accountsView.render();
+        accountsView.render();
 
-      this.markAllAsRead();
+        this.markAllAsRead();
+      } else {
+        chrome.tabs.create({ url: App.askForAuthorizationUri });
+      }
     },
 
     markAllAsRead: function() {

@@ -33,16 +33,12 @@ require([
   "services/background",
   "services/config_page_mediator",
   "views/popup/popup",
-  "views/popup/auth_popup",
-  "models/user_token",
   "app",
   "raven"
 ], function (
   Background,
   ConfigPageMediator,
   PopupView,
-  AuthPopupView,
-  UserToken,
   App,
   Raven
 ) {
@@ -53,17 +49,7 @@ require([
   if (view == "options") {
     ConfigPageMediator.mediate();
   } else if (view == "popup") {
-    $("#configs_button")
-      .on("click", function() {
-        chrome.tabs.create({ url: chrome.extension.getURL('options.html') });
-        return false;
-      });
-
-    if (UserToken.current() == undefined) {
-      return new AuthPopupView().render();
-    } else {
-      return new PopupView().render();
-    }
+    new PopupView().render();
   } else if (view == "background") {
     Background();
   }
