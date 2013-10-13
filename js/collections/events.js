@@ -12,6 +12,7 @@ define([
     model: Event,
 
     initialize: function(models, options) {
+      this.page = 1;
       this.account = options.account;
       this.userToken = options.userToken;
 
@@ -34,6 +35,20 @@ define([
 
     comparator: function(model) {
       return -Date.parse(model.get("created_at"));
+    },
+
+    fetchNextPage: function () {
+      var that = this;
+      var promise = this.fetchAuthorized({
+        remove: false,
+        data: { page: this.page }
+      });
+
+      promise.done(function () {
+        that.page += 1;
+      });
+
+      return promise;
     },
 
     attachPartlyFetchBehavior: function () {
