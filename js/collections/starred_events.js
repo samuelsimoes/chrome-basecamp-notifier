@@ -20,12 +20,16 @@ define([
 
     fetch: function () {
       var promise = $.Deferred();
-
       var storedItems = EventsCache.get("starred-items-" + this.account.getId());
+      var that = this;
 
       this.set(storedItems);
 
       promise.resolve(this);
+
+      promise.done(function () {
+        that.trigger("sync");
+      });
 
       return promise;
     }

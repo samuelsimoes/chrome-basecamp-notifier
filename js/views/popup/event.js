@@ -67,7 +67,7 @@ define([
         this.commentView.setElement(this.$el.find(".second-line"));
       }
 
-      return this.el;
+      return this;
     },
 
     toggleStar: function (evt) {

@@ -1,18 +1,16 @@
-<div class="project tab-container">
-  <h1><%= name %></h1>
+<h1><%= name %></h1>
 
-  <ul class="etabs">
-    <li class="tab"><a href="#tabs1-<%= cid %>-accounts">Latest Events</a></li>
-    <li class="tab"><a href="#tabs2-<%= cid %>-events">Starred Events</a></li>
+<ul class="etabs">
+  <li class="tab"><a href="#tabs1-<%= cid %>-accounts">Latest Events</a></li>
+  <li class="tab"><a href="#tabs2-<%= cid %>-events">Starred Events</a></li>
+</ul>
+
+<div id="tabs1-<%= cid %>-accounts" class="latest-notifications tab-content">
+  <ul class="notification-list">
   </ul>
+</div>
 
-  <div id="tabs1-<%= cid %>-accounts" class="tab-content">
-    <ul class="notification-list latest-notifications">
-    </ul>
-  </div>
-
-  <div id="tabs2-<%= cid %>-events" class="tab-content">
-    <ul class="notification-list starred-items-list">
-    </ul>
-  </div>
+<div id="tabs2-<%= cid %>-events" class="tab-content starred-items-list">
+  <ul class="notification-list">
+  </ul>
 </div>

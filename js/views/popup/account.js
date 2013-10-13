@@ -1,46 +1,25 @@
 define([
   "text!templates/popup/account.html",
   "collections/events",
-  "views/popup/event",
-  "backbone",
-  "easytab"
+  "views/popup/events",
+  "easytab",
+  "backbone"
 ], function(
   AccountTpl,
   Events,
-  EventView
-) {
-
+  EventsView) {
   return Backbone.View.extend({
     template: _.template(AccountTpl),
 
-    render: function() {
-      var that = this;
+    className: "account",
 
-      this.setElement(this.template({ name: this.model.get("name"), cid: this.model.cid }));
+    initialize: function () {
+      this.starredEvents = this.model.getStarredEvents();
+      this.latestEvents = this.model.getEvents();
 
-      var starredEventsPromise = this.model.getStarredEvents();
-      var latestEventsPromise = this.model.getEventsFromCache();
+      this.latestEventsView = new EventsView({ collection: this.latestEvents, parentView: this });
+      this.starredEventsView = new EventsView({ collection: this.starredEvents, parentView: this });
 
-      starredEventsPromise.done(function (collection) {
-        that.starredEvents = collection;
-
-        that.listenStarEvents();
-        that.renderStarredItems();
-      });
-
-      latestEventsPromise.done(function (collection) {
-        that.eventsCollection = collection;
-        that.renderEvents();
-      });
-
-      this.$el.easytabs({ animationSpeed: "fast" });
-
-      this.renderEvents();
-
-      return this.el;
-    },
-
-    listenStarEvents: function () {
       this.on("star-item", function (eventItem) {
         this.starredEvents.addEvent(eventItem);
       }, this);
@@ -50,41 +29,28 @@ define([
       }, this);
 
       this.on("remove-star star-item", function () {
-        this.renderEvents();
-        this.renderStarredItems();
+        this.latestEventsView.render();
+        this.starredEventsView.render();
       }, this);
     },
 
-    renderStarredItems: function () {
-      var target = this.$el.find(".starred-items-list");
+    render: function() {
+      var viewVars = { name: this.model.get("name"), cid: this.model.cid };
 
-      target.html("");
+      this.$el.html(this.template(viewVars));
 
-      _.each(this.starredEvents.models, function(model) {
-        target.append(this.renderEvent(model));
-      }, this);
-    },
+      this.$el.easytabs({ animationSpeed: "fast" });
 
-    renderEvents: function() {
-      var target = this.$el.find(".latest-notifications");
+      this.latestEventsView.
+        setElement(this.$el.find("div.latest-notifications"));
 
-      target.html("");
+      this.starredEventsView.
+        setElement(this.$el.find(".starred-items-list"));
 
-      if (_.isEmpty(this.eventsCollection.models)) {
-        this.renderNoItemsMessage();
-      } else {
-        _.each(this.eventsCollection.models, function(model) {
-          target.append(this.renderEvent(model));
-        }, this);
-      }
-    },
+      this.latestEvents.fetchCached();
+      this.starredEvents.fetch();
 
-    renderNoItemsMessage: function () {
-      this.$el.find(".notification-list").html("<li class='no-items'>No new events</li>");
-    },
-
-    renderEvent: function(eventItem, type) {
-      return new EventView({ model: eventItem, parentView: this }).render();
+      return this;
     }
   });
 });

@@ -90,12 +90,17 @@ define([
     },
 
     fetchCached: function () {
+      var that = this;
       var cached = EventsCache.get(this.urlRoot());
       var promise = $.Deferred();
 
       this.set(this.parse(cached));
 
       promise.resolve(this);
+
+      promise.done(function () {
+        that.trigger("sync");
+      });
 
       return promise.promise();
     },

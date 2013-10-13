@@ -2,11 +2,13 @@ define([
   "collections/projects",
   "collections/events",
   "collections/starred_events",
+  "models/user_token",
   "backbone"
 ], function(
   Projects,
   Events,
-  StarredEvents
+  StarredEvents,
+  UserToken
 ) {
 
   return Backbone.Model.extend({
@@ -26,14 +28,12 @@ define([
       return this.projects;
     },
 
-    getEventsFromCache: function (attribute) {
-      var eventsCollection = new Events([], { account: this });
-      return eventsCollection.fetchCached();
+    getEvents: function (attribute) {
+      return new Events([], { account: this, userToken: UserToken });
     },
 
     getStarredEvents: function () {
-      var starredEvents = new StarredEvents([], { account: this });
-      return starredEvents.fetch();
+      return new StarredEvents([], { account: this });
     }
   });
 });

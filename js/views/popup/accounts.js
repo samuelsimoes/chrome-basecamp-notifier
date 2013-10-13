@@ -13,7 +13,7 @@ define([
 
     renderItem: function(account) {
       var item = new AccountView({ model: account });
-      this.$el.append(item.render());
+      this.$el.append(item.render().el);
     }
   });
 });
