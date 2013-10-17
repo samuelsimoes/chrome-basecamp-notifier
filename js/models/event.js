@@ -133,8 +133,16 @@ define([
         return "invite";
       } else if (Text.contains(this.get("action"), "re-opened a to-do")) {
         return "reopened_todo";
+      } else if (Text.contains(this.get("action"), "created an event")) {
+        return "created_event";
+      } else if (Text.contains(this.get("action"), "created a document")) {
+        return "created_document";
       } else if (Text.contains(this.get("action"), "removed the assignment")) {
         return "removed_assignment";
+      } else if (Text.contains(this.get("action"), "uploaded a file")) {
+        return "uploaded_file";
+      } else if (Text.contains(this.get("action"), "deleted a file")) {
+        return "deleted_file";
       } else if (Text.contains(this.get("action"), "removed") && Text.contains(this.get("action"), "from the project")) {
         return "removed_permission_from_project";
       }
@@ -154,12 +162,16 @@ define([
       delete_message: { label: "Delete Message", icon: "icon-remove" },
       removed_permission_from_project: { label: "Remove permission from Project", icon: "icon-remove" },
       changed_todo: { label: "Change to-do", icon: "icon-exchange" },
-      deleted_event: { label: "Delete Event", icon: "icon-calendar" },
+      deleted_event: { label: "Delete Event", icon: "icon-remove" },
       rescheduled_event: { label: "Reschedule Event", icon: "icon-calendar-empty" },
       create_todo_list: { label: "Create to-do list", icon: "icon-list-ol" },
       invite: { label: "Invite to Project", icon: "icon-bullhorn" },
       removed_assignment: { label: "Remove assignment", icon: "icon-remove" },
-      reopened_todo: { label: "Re-open a todo", icon: "icon-edit" }
+      reopened_todo: { label: "Re-open a todo", icon: "icon-edit" },
+      created_document: { label: "Create a document", icon: "icon-file-text" },
+      created_event: { label: "Create an event", icon: "icon-calendar" },
+      uploaded_file: { label: "Upload a file", icon: "icon-picture" },
+      deleted_file: { label: "Delete a file", icon: "icon-remove" }
     }
   });
 
