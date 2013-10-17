@@ -156,3 +156,25 @@ input[type=submit] {
   border-top: 1px solid #DDD;
   padding: 15px 10px 0 10px;
 }
+
+.share-icons {
+  position: absolute;
+  bottom: 15px;
+  right: 20px;
+  text-align: center;
+}
+
+.share-icons p {
+  color: #7d7d7d;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.share-icons a {
+  text-decoration: none;
+}
+
+.share-icons img {
+  margin: 0 6px;
+}
