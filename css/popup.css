@@ -34,12 +34,12 @@ strong {
 
 .load-more {
   margin-left: 319px;
-  margin-top: 10px;
   margin-bottom: 5px;
+  margin-top: 5px;
   width: 130px;
 }
 
-.login-button {
+.button {
   height: 24px;
   padding: 0 14px;
   line-height: 24px;
@@ -54,7 +54,6 @@ strong {
   -webkit-box-shadow: 0px 1px 0px #DDD;
   border-radius: 5px;
   cursor: pointer;
-  margin-bottom: 23px;
 }
 
 ul {
@@ -270,7 +269,8 @@ h1:first-child {
   color: #81A56E;
 }
 
-.unread .first-line {
+.unread .icon,
+.unread .summary {
   font-weight: bold;
 }
 
@@ -319,4 +319,17 @@ h1:first-child {
   content: '';
   display: block;
   clear: both;
+}
+
+.meta-infos {
+  margin-left: 77px;
+  margin-top: -8px;
+}
+
+.meta-infos p {
+  float: left;
+  margin-right: 15px;
+  font-size: 10px;
+  line-height: 30px;
+  color: #C5BCA7;
 }

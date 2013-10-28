@@ -3,12 +3,14 @@ define([
   "models/event",
   "services/text",
   "views/popup/comment",
+  "services/pretty_date",
   "backbone"
 ], function(
   EventTpl,
   Event,
   Text,
-  CommentView
+  CommentView,
+  PrettyDate
 ) {
   return Backbone.View.extend({
     template: _.template(EventTpl),
@@ -43,8 +45,7 @@ define([
       treatedSummary = Text.unescapeHTML(treatedSummary);
 
       var creatorNameLength = this.model.creatorFirstName().length;
-      var bucketNameLength = this.model.bucketName().length;
-      var summaryLength = 108 - (creatorNameLength + bucketNameLength);
+      var summaryLength = 105 - creatorNameLength;
 
       return Text.truncate(treatedSummary, summaryLength, "...");
     },
@@ -54,7 +55,8 @@ define([
         is_starred: this.model.isStarred(),
         avatar_url: this.model.creatorAvatarUrl(),
         creator_name: this.model.creatorFirstName(),
-        summary: this.summary()
+        summary: this.summary(),
+        created_date_presented: PrettyDate(this.model.get("created_at"))
       });
 
       this.$el.html(this.template(viewVars));
