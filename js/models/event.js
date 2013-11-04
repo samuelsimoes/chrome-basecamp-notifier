@@ -37,9 +37,17 @@ define([
       return this.type() == "comment";
     },
 
+    /*
+     * This part of code involving commnets isn't good, but the Basecamp unfortunately
+     * don't put the comment ID in event, so many workarounds is needed in order
+     * to get the ID of comment.
+     */
     getCommentId: function () {
       var commentUrlPart = this.get("html_url").split("#")[1];
-      return commentUrlPart.split("_")[1];
+
+      if (!_.isUndefined(commentUrlPart)) {
+        return commentUrlPart.split("_")[1];
+      }
     },
 
     comment: function () {
