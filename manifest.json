@@ -8,11 +8,16 @@
     "128": "img/icons/128.png"
   },
   "permissions": [
+    "tabs",
+    "storage",
     "notifications",
     "https://launchpad.37signals.com/*",
     "https://basecamp.com/*",
     "https://app.getsentry.com/*",
     "background"
+  ],
+  "web_accessible_resources": [
+    "options.html"
   ],
   "options_page": "options.html",
   "background": {
