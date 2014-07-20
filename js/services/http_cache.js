@@ -6,7 +6,7 @@ define([
 
   return {
     storage: function () {
-      if (chrome.extension.getBackgroundPage()["httpCache"] == undefined) {
+      if (!chrome.extension.getBackgroundPage()["httpCache"]) {
         chrome.extension.getBackgroundPage()["httpCache"] = {};
       }
 

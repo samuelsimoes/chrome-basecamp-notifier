@@ -22,7 +22,7 @@ define([
       fetchPartly: true
     });
 
-    if (filter != undefined) {
+    if (filter) {
       filter.watch(this.events);
     }
 

@@ -17,7 +17,7 @@ define([
     },
 
     getAccounts: function () {
-      if (this.accounts == undefined) {
+      if (!this.accounts) {
         this.accounts = new Accounts(this.get("accounts"));
       }
 
@@ -51,7 +51,7 @@ define([
     },
 
     current: function() {
-      if(chrome.extension.getBackgroundPage().currentUser == undefined) {
+      if(!chrome.extension.getBackgroundPage().currentUser) {
         var cachedUser = JSON.parse(localStorage.getItem("currentUser"));
         var user = new this(cachedUser);
 

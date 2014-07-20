@@ -7,11 +7,11 @@ define([
 
   return Backbone.Model.extend({
     initialize: function (attrs, options) {
-      this.options = (options != undefined) ? options : {};
+      this.options = options ? options : {};
     },
 
     url: function() {
-      if (this.options.mode != undefined && this.options.mode == "refresh") {
+      if (this.options.mode == "refresh") {
         return "https://launchpad.37signals.com/authorization/token";
       } else {
         return this.newTokenUrl();
@@ -31,7 +31,7 @@ define([
     cacheToken: function() {
       localStorage.setItem("currentToken", this.get("access_token"));
 
-      if (this.get("refresh_token") != undefined) {
+      if (this.get("refresh_token")) {
         localStorage.setItem("refreshToken", this.get("refresh_token"));
       }
     },

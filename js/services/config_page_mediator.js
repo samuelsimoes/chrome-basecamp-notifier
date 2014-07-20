@@ -15,7 +15,7 @@ define([
   module.returningFromPermissionScreen = function() {
     var authCode = location.search.match(/\?code\=([^\&]+)/);
 
-    if (authCode != undefined) {
+    if (authCode) {
       this.authCode = authCode[1];
       return true;
     } else {
@@ -41,7 +41,7 @@ define([
 
     if (this.returningFromPermissionScreen()) {
       this.resolveAuthThings();
-    } else if (UserToken.current() == undefined) {
+    } else if (!UserToken.current()) {
       Auth.getPermission();
     } else {
       User.fetchCurrentUser().done(function(user) {

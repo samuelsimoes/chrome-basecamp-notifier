@@ -7,7 +7,7 @@ define(["underscore"], function() {
   };
 
   module.unreadItems = function() {
-    if (chrome.extension.getBackgroundPage().unreadEventsCache==undefined) {
+    if (!chrome.extension.getBackgroundPage().unreadEventsCache) {
       var persisted = localStorage.getItem("unreadEvents");
       return (persisted) ? JSON.parse(persisted) : [];
     } else {

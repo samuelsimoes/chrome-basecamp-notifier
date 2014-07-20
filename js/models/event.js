@@ -30,7 +30,7 @@ define([
 
     isStarred: function () {
       var StarredEvents = EventsCache.get("starred-items-" + this.getAccountId());
-      return _.findWhere(StarredEvents, { id: this.getId() }) != undefined;
+      return _.any(StarredEvents, { id: this.getId() });
     },
 
     isCommentEvent: function () {

@@ -26,7 +26,7 @@ define([
     },
 
     url: function () {
-      if (this.modifiedSince == undefined) {
+      if (!this.modifiedSince) {
         return this.urlRoot();
       } else {
         return this.urlRoot() + "?since=" + this.modifiedSince;
@@ -55,7 +55,7 @@ define([
       this.on("before-send-request", function (xhr) {
         var lastModifiedHeader = HttpCache.getLastModifiedHeader(this.urlRoot());
 
-        if (lastModifiedHeader != undefined) {
+        if (lastModifiedHeader) {
           xhr.setRequestHeader("If-Modified-Since", lastModifiedHeader);
         }
       }, this);
@@ -89,7 +89,7 @@ define([
       var that = this;
 
       var fetchEvents = function () {
-        if (that.models[0] != undefined) {
+        if (that.models[0]) {
           that.modifiedSince = that.models[0].get("created_at");
         }
 

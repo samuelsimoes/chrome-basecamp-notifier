@@ -21,7 +21,7 @@ define([
     },
 
     getProjects: function () {
-      if (this.projects == undefined) {
+      if (!this.projects) {
         this.projects = new Projects({}, { account: this });
       }
 

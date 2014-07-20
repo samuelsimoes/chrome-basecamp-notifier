@@ -36,10 +36,10 @@ define([
         backgroundPage.eventsCache = {};
       }
 
-      if (backgroundPage.eventsCache[key] == undefined) {
+      if (!backgroundPage.eventsCache[key]) {
         var storedCache = localStorage.getItem(key);
 
-        if (storedCache == undefined) {
+        if (!storedCache) {
           backgroundPage.eventsCache[key] = [];
         } else {
           backgroundPage.eventsCache[key] = JSON.parse(storedCache);

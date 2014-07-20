@@ -5,7 +5,7 @@ define([
   var module = {};
 
   var text = function(number) {
-    return (number == 0 || number == undefined) ? "" : number.toString();
+    return (!number) ? "" : number.toString();
   };
 
   module.update = function(number) {

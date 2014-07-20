@@ -10,7 +10,7 @@ define([], function() {
   };
 
   Configs.prototype.get = function() {
-    if (this.cache == undefined) {
+    if (!this.cache) {
       this.cache = JSON.parse(localStorage.getItem(this.configKey)) || this.defaultValue;
     }
     return this.cache;
