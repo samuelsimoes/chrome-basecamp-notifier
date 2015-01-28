@@ -1,6 +1,5 @@
 {
-  "name": "Basecamp Notifier",
-  "version": "1.0.0",
+  "name": "basecamp_notifier",
   "dependencies": {
     "raven-js": "1.0.8",
     "jquery": "1.10.2",

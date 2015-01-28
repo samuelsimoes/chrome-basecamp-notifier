@@ -1,0 +1,17 @@
+{
+  "name": "basecamp_notifier",
+  "version": "1.6.8",
+  "description": "Display Basecamp activity with desktop notifications.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/samuelsimoes/chrome-basecamp-notifier"
+  },
+  "author": {
+    "name": "Samuel Simões",
+    "email": "slip.cm@gmail.com",
+    "url": "https://chrome.google.com/webstore/detail/basecamp-notifier/fihjmkangcncdhnbnenfipalmcegljii"
+  },
+  "devDependencies": {
+    "bower": "*"
+  }
+}

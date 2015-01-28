@@ -1,3 +1,4 @@
-js/config_keys.js
-js/vendor
-pack_for_dist.sh
+node_modules
+src/js/vendor
+src/js/config_keys.js
+dist
