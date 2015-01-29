@@ -30,7 +30,9 @@ define([
 
     isStarred: function () {
       var StarredEvents = EventsCache.get("starred-items-" + this.getAccountId());
-      return _.any(StarredEvents, { id: this.getId() });
+      return _.any(StarredEvents, function(eventItem) {
+        return eventItem.id == this.getId();
+      }, this);
     },
 
     isCommentEvent: function () {
