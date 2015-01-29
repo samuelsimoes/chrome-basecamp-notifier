@@ -12,7 +12,17 @@ module.exports = function (grunt) {
   config.set("copy.expand", {
     expand: true,
     cwd: "src/",
-    src: ["**", "!src/js/vendor/jasmine"],
+    src: [
+      "**",
+      "!js/vendor/**",
+      "js/vendor/requirejs/require.js",
+      "js/vendor/jquery/jquery.js",
+      "js/vendor/underscore-amd/underscore.js",
+      "js/vendor/backbone-amd/backbone.js",
+      "js/vendor/text/text.js",
+      "js/vendor/easytabs/lib/jquery.easytabs.js",
+      "js/vendor/raven-js/dist/1.0.8/raven.js"
+    ],
     dest: "dist/",
     options: {
       mode: true
