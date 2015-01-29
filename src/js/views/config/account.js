@@ -27,6 +27,7 @@ define([
 
     updateStatus: function() {
       ConfigListenedAccounts.toggle(this.model);
+      Backbone.trigger("configs_updated");
     }
   });
 });

@@ -26,14 +26,22 @@ define([
     loadingTemplate: _.template("<div class=\"load-view\"><h1>Loading...</h1></div>"),
 
     events: {
-      "click #save" : "close",
       "click #logout" : function() {
         localStorage.clear();
-        this.close();
+        alert("You are successfully logged out!");
       }
     },
 
     configsTemplate: _.template(ConfigTpl),
+
+    initialize: function () {
+      this.listenTo(Backbone, "configs_updated", this.reloadBackground);
+    },
+
+    reloadBackground: function () {
+      EventsCache.clearAllCache();
+      chrome.extension.getBackgroundPage().location.reload();
+    },
 
     render: function(user) {
       this.$el.html(this.configsTemplate({}));
@@ -50,13 +58,6 @@ define([
 
     printVersion: function () {
       $("#extension_version").html("v" + chrome.runtime.getManifest().version);
-    },
-
-    close: function() {
-      EventsCache.clearAllCache();
-      chrome.extension.getBackgroundPage().location.reload();
-      window.open('', '_self', '');
-      window.close();
     },
 
     renderEventsTab: function() {
