@@ -12,7 +12,7 @@ module.exports = function (grunt) {
   config.set("copy.expand", {
     expand: true,
     cwd: "src/",
-    src: ["**"],
+    src: ["**", "!src/js/vendor/jasmine"],
     dest: "dist/",
     options: {
       mode: true
