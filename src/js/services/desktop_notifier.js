@@ -25,29 +25,31 @@ define([
 
   module.notification = function() {
     var that = this;
-    var bubble = webkitNotifications.createNotification(
-      this.avatarUrl(),
-      this.popUpSummary(),
-      this.popUpWindow()
-    );
+        notificationId = Math.random().toString(36).substring(7);
 
-    bubble.ondisplay = function(event) {
-        setTimeout(function() {
-          event.currentTarget.cancel();
-      }, 5 * 1000);
-    };
+    var notification =
+      chrome.notifications.create(
+        notificationId,
+        {
+          type: "basic",
+          title: this.popUpSummary(),
+          message: this.popUpWindow(),
+          iconUrl: this.avatarUrl()
+        },
+        function() {});
 
-    bubble.onclick = function(event) {
-      chrome.tabs.create({ url: that.itemUrl() });
-      event.currentTarget.cancel();
-    };
+    chrome.notifications.onClicked.addListener(function(clickedNotificationId) {
+      if (clickedNotificationId == notificationId) {
+        chrome.tabs.create({ url: that.itemUrl() });
+      }
+    });
 
-    return bubble;
+    return notification;
   };
 
   module.notify = function (eventItem) {
     this.eventItem = eventItem;
-    this.notification().show();
+    this.notification();
   };
 
   return module;

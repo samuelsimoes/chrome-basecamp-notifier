@@ -14,6 +14,8 @@
     "https://launchpad.37signals.com/*",
     "https://basecamp.com/*",
     "https://app.getsentry.com/*",
+    "http://*.cloudfront.net/*",
+    "https://*.cloudfront.net/*",
     "background"
   ],
   "web_accessible_resources": [
