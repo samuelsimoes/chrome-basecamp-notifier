@@ -12,6 +12,14 @@
     "url": "https://chrome.google.com/webstore/detail/basecamp-notifier/fihjmkangcncdhnbnenfipalmcegljii"
   },
   "devDependencies": {
-    "bower": "*"
+    "bower": "*",
+    "grunt": "*",
+    "grunt-contrib-clean": "*",
+    "grunt-contrib-copy": "*",
+    "grunt-env": "*",
+    "grunt-replace": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-settings": "*",
+    "grunt-shell": "*"
   }
 }
