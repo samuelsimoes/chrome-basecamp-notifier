@@ -10,15 +10,23 @@ Feel free to help us improve the extension.
 
 ##Instructions
 
-In order to run this project you need **[Bower](http://github.com/bower/bower)** to manage the dependencies, for install Bower use:
+1. `npm install && bower install`
 
-```npm install -g bower```
+2. Register an app in **[http://integrate.37signals.com](http://integrate.37signals.com)**.
 
-and then, inside projects folder:
+3. Run `cp .default-env .development-env` and update the app credentials on `.development-env`.
 
-```bower install```
+4. Run `grunt build` and load the extension as an [unpacked version on Chrome](http://superuser.com/a/247654/235416) from `dist/` folder.
 
-You also need register an app in **[http://integrate.37signals.com](http://integrate.37signals.com)**  and put the app infos into `js/config_keys.js`, follow the exemple inside `js/config_keys.js.default`.
+##To pack
+
+1. Run all steps above if you didn't.
+
+2. Run `cp .development-env .production-env` and update the infos case you use a diferent registered app on 37signals for the production version.
+
+3. Run `grunt pack --environment=production`
+
+4. Publish the `dist/basecamp_notifier_<version>_production.zip` on Chrome Store.
 
 ## Tests
 

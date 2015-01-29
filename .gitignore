@@ -2,3 +2,4 @@ node_modules
 src/js/vendor
 dist
 .*-env
+!.default-env
