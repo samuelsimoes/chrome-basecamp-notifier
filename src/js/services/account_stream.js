@@ -17,9 +17,8 @@ define([
     this.firstTime = true;
     this.dispatcher = dispatcher;
     this.events = new Events([], {
-      account: account,
-      userToken: userToken,
-      fetchPartly: true
+      accountId: account.getId(),
+      authToken: userToken.current()
     });
 
     if (filter) {

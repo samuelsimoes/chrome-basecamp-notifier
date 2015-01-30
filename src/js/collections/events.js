@@ -1,28 +1,25 @@
 define([
   "models/event",
   "services/events_cache",
-  "services/http_cache"
+  "collections/basecamp_notifier_collection"
 ], function(
   Event,
   EventsCache,
-  HttpCache
+  BasecampNotifierCollection
 ) {
-
-  return Backbone.Collection.extend({
+  return BasecampNotifierCollection.extend({
     model: Event,
 
-    initialize: function(models, options) {
-      this.page = 1;
-      this.account = options.account;
-      this.userToken = options.userToken;
+    // default page
+    page: 1,
 
-      if (options.fetchPartly) {
-        this.attachPartlyFetchBehavior();
-      }
+    initialize: function(models, options) {
+      this.accountId = options.accountId;
+      BasecampNotifierCollection.prototype.initialize.apply(this, arguments);
     },
 
     urlRoot: function () {
-      return "https://basecamp.com/" + this.account.getId() + "/api/v1/events.json";
+      return "https://basecamp.com/" + this.accountId + "/api/v1/events.json";
     },
 
     url: function () {
@@ -39,7 +36,7 @@ define([
 
     fetchNextPage: function () {
       var that = this;
-      var promise = this.fetchAuthorized({
+      var promise = this.fetch({
         remove: false,
         data: { page: this.page }
       });
@@ -51,40 +48,6 @@ define([
       return promise;
     },
 
-    attachPartlyFetchBehavior: function () {
-      this.on("before-send-request", function (xhr) {
-        var lastModifiedHeader = HttpCache.getLastModifiedHeader(this.urlRoot());
-
-        if (lastModifiedHeader) {
-          xhr.setRequestHeader("If-Modified-Since", lastModifiedHeader);
-        }
-      }, this);
-
-      this.on("success-request", function (xhr) {
-        HttpCache
-          .storeLastModifiedHeader(
-            this.urlRoot(),
-            xhr.getResponseHeader('Last-Modified')
-          );
-      }, this);
-    },
-
-    fetchAuthorized: function(params) {
-      var that = this;
-
-      var defaults = {
-        beforeSend: function(xhr) {
-          xhr.setRequestHeader("Authorization", ("Bearer " + that.userToken.current()));
-          that.trigger("before-send-request", xhr);
-        },
-        success: function (model, collection, event) {
-          that.trigger("success-request", event.xhr);
-        }
-      };
-
-      return this.fetch(_.extend(defaults, params));
-    },
-
     startStream: function () {
       var that = this;
 
@@ -93,7 +56,7 @@ define([
           that.modifiedSince = that.models[0].get("created_at");
         }
 
-        that.fetchAuthorized({ update: true, timeout: 50000 });
+        that.fetch({ update: true, timeout: 50000, fetchOnlyNewRecords: true });
       };
       fetchEvents();
 

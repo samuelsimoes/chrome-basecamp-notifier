@@ -29,11 +29,11 @@ define([
     },
 
     getEvents: function (attribute) {
-      return new Events([], { account: this, userToken: UserToken });
+      return new Events([], { accountId: this.getId(), authToken: UserToken.current() });
     },
 
     getStarredEvents: function () {
-      return new StarredEvents([], { account: this });
+      return new StarredEvents([], { accountId: this.getId() });
     }
   });
 });

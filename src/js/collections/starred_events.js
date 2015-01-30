@@ -10,17 +10,17 @@ define([
 
     addEvent: function (eventItem) {
       this.add(eventItem);
-      EventsCache.update("starred-items-" + this.account.getId(), this.toJSON());
+      EventsCache.update("starred-items-" + this.accountId, this.toJSON());
     },
 
     removeEvent: function (eventItem) {
       this.remove(eventItem);
-      EventsCache.update("starred-items-" + this.account.getId(), this.toJSON(), true);
+      EventsCache.update("starred-items-" + this.accountId, this.toJSON(), true);
     },
 
     fetch: function () {
       var promise = $.Deferred();
-      var storedItems = EventsCache.get("starred-items-" + this.account.getId());
+      var storedItems = EventsCache.get("starred-items-" + this.accountId);
       var that = this;
 
       this.set(storedItems);
