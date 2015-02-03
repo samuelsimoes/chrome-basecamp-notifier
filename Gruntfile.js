@@ -64,7 +64,7 @@ module.exports = function (grunt) {
   config.set("env.src", ".<%= envMode %>-env");
 
   config.set("watch", {
-    files: ["src/**/*.*"],
+    files: ["src/**/*.*", "Gruntfile.js"],
     tasks: ["build"],
     options: {
       spawn: false
