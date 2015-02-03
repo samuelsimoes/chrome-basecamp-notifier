@@ -4,7 +4,6 @@
 define([], function(){
   return {
     clientId: "@@basecampClientId",
-    clientSecret: "@@basecampSecret",
-    sentryUrl: "@@sentryUrl"
+    clientSecret: "@@basecampSecret"
   };
 });

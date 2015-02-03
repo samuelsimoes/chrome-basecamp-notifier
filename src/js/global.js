@@ -1,0 +1,1 @@
+Raven.config("@@sentryUrl").install();

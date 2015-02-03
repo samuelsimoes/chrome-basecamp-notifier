@@ -24,15 +24,11 @@ module.exports = function (grunt) {
       "jasmine": "vendor/jasmine/lib/jasmine-core/jasmine",
       "jasmine-html": "vendor/jasmine/lib/jasmine-core/jasmine-html",
       "easytab": "vendor/easytabs/lib/jquery.easytabs",
-      "raven": "vendor/raven-js/dist/1.0.8/raven",
       "app": "app"
     },
     shim: {
       "easytab": {
         deps: ["jquery"]
-      },
-      "raven": {
-        exports: "Raven"
       },
       "jasmine": {
         exports: "jasmine",
@@ -51,7 +47,8 @@ module.exports = function (grunt) {
       "**",
       "!js/**",
       "js/vendor/requirejs/require.js",
-      "js/vendor/raven-js/dist/1.0.8/raven.js"
+      "js/vendor/raven-js/dist/1.0.8/raven.js",
+      "js/global.js"
     ],
     dest: "dist/",
     options: {
@@ -82,7 +79,14 @@ module.exports = function (grunt) {
       }
     },
     files: [
-      { expand: true, src: ["dist/js/main.js", "dist/manifest.json"] }
+      {
+        expand: true,
+        src: [
+          "dist/js/global.js",
+          "dist/js/main.js",
+          "dist/manifest.json"
+        ]
+      }
     ]
   });
 

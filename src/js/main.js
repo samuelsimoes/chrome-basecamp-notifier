@@ -2,17 +2,13 @@ require([
   "services/background",
   "services/config_page_mediator",
   "views/popup/popup",
-  "app",
-  "raven"
+  "app"
 ], function (
   Background,
   ConfigPageMediator,
   PopupView,
-  App,
-  Raven
+  App
 ) {
-  Raven.config(App.sentryUrl).install();
-
   var view = $("body").data("view");
 
   if (view == "options") {
