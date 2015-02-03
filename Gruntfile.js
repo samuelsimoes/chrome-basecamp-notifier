@@ -47,7 +47,7 @@ module.exports = function (grunt) {
       "**",
       "!js/**",
       "js/vendor/requirejs/require.js",
-      "js/vendor/raven-js/dist/1.0.8/raven.js",
+      "js/vendor/raven-js/dist/raven.js",
       "js/global.js"
     ],
     dest: "dist/",

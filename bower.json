@@ -1,7 +1,7 @@
 {
   "name": "basecamp_notifier",
   "dependencies": {
-    "raven-js": "1.0.8",
+    "raven-js": "1.1.16",
     "jquery": "1.10.2",
     "backbone-amd": "1.0.0",
     "underscore-amd": "1.5.1",
