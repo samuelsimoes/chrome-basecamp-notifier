@@ -9,18 +9,48 @@ module.exports = function (grunt) {
   config.set("pkg", pkg);
   config.set("envMode", envMode);
 
+  config.set("requirejs.compile.options", {
+    name: "main",
+    baseUrl: "./src/js",
+    out: "dist/js/main.js",
+    generateSourceMaps: true,
+    preserveLicenseComments: false,
+    optimize: "none",
+    paths: {
+      "jquery": "vendor/jquery/jquery",
+      "underscore": "vendor/underscore-amd/underscore",
+      "backbone": "vendor/backbone-amd/backbone",
+      "text": "vendor/text/text",
+      "jasmine": "vendor/jasmine/lib/jasmine-core/jasmine",
+      "jasmine-html": "vendor/jasmine/lib/jasmine-core/jasmine-html",
+      "easytab": "vendor/easytabs/lib/jquery.easytabs",
+      "raven": "vendor/raven-js/dist/1.0.8/raven",
+      "app": "app"
+    },
+    shim: {
+      "easytab": {
+        deps: ["jquery"]
+      },
+      "raven": {
+        exports: "Raven"
+      },
+      "jasmine": {
+        exports: "jasmine",
+      },
+      "jasmine-html": {
+        deps: ["jasmine", "jquery"],
+        exports: "jasmine"
+      }
+    }
+  });
+
   config.set("copy.expand", {
     expand: true,
     cwd: "src/",
     src: [
       "**",
-      "!js/vendor/**",
+      "!js/**",
       "js/vendor/requirejs/require.js",
-      "js/vendor/jquery/jquery.js",
-      "js/vendor/underscore-amd/underscore.js",
-      "js/vendor/backbone-amd/backbone.js",
-      "js/vendor/text/text.js",
-      "js/vendor/easytabs/lib/jquery.easytabs.js",
       "js/vendor/raven-js/dist/1.0.8/raven.js"
     ],
     dest: "dist/",
@@ -52,7 +82,7 @@ module.exports = function (grunt) {
       }
     },
     files: [
-      { expand: true, src: ["dist/js/config_keys.js", "dist/manifest.json"] }
+      { expand: true, src: ["dist/js/main.js", "dist/manifest.json"] }
     ]
   });
 
@@ -63,6 +93,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-contrib-copy");
   grunt.loadNpmTasks("grunt-contrib-clean");
   grunt.loadNpmTasks("grunt-contrib-watch");
+  grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks("grunt-replace");
   grunt.loadNpmTasks("grunt-shell");
   grunt.loadNpmTasks("grunt-env");
@@ -71,6 +102,7 @@ module.exports = function (grunt) {
     "env",
     "clean",
     "copy",
+    "requirejs",
     "replace"
   ];
 

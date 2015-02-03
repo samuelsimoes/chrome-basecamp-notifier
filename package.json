@@ -16,9 +16,10 @@
     "grunt": "*",
     "grunt-contrib-clean": "*",
     "grunt-contrib-copy": "*",
+    "grunt-contrib-requirejs": "^0.4.4",
+    "grunt-contrib-watch": "*",
     "grunt-env": "*",
     "grunt-replace": "*",
-    "grunt-contrib-watch": "*",
     "grunt-settings": "*",
     "grunt-shell": "*"
   }
