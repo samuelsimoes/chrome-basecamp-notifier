@@ -22,5 +22,8 @@
     "grunt-replace": "*",
     "grunt-settings": "*",
     "grunt-shell": "*"
+  },
+  "dependencies": {
+    "react-tools": "^0.13.3"
   }
 }

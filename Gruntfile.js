@@ -16,7 +16,14 @@ module.exports = function (grunt) {
     generateSourceMaps: true,
     preserveLicenseComments: false,
     optimize: "none",
+    onBuildWrite: function (moduleName, path, singleContents) {
+      return singleContents.replace(/jsx!/g, "");
+    },
     paths: {
+      "fluxo": "vendor/fluxo/dist/fluxo",
+      "react": "vendor/react/react-with-addons",
+      "JSXTransformer": "vendor/react/JSXTransformer",
+      "jsx": "vendor/requirejs-react-jsx/jsx",
       "jquery": "vendor/jquery/jquery",
       "underscore": "vendor/underscore-amd/underscore",
       "backbone": "vendor/backbone-amd/backbone",
@@ -31,11 +38,20 @@ module.exports = function (grunt) {
         deps: ["jquery"]
       },
       "jasmine": {
-        exports: "jasmine",
+        exports: "jasmine"
       },
       "jasmine-html": {
         deps: ["jasmine", "jquery"],
         exports: "jasmine"
+      },
+      "react": {
+        "exports": "React"
+      },
+      "JSXTransformer": "JSXTransformer"
+    },
+    config: {
+      jsx: {
+        fileExtension: ".jsx"
       }
     }
   });
