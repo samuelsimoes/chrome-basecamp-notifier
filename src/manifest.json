@@ -11,11 +11,8 @@
     "tabs",
     "storage",
     "notifications",
-    "https://launchpad.37signals.com/*",
-    "https://basecamp.com/*",
-    "https://app.getsentry.com/*",
-    "http://*.cloudfront.net/*",
-    "https://*.cloudfront.net/*",
+    "http://*/*",
+    "https://*/*",
     "background"
   ],
   "web_accessible_resources": [
