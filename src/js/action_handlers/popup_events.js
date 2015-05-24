@@ -31,17 +31,16 @@ define([
     },
 
     updateAllEventsAsRead: function() {
-      var eventsCache = ArrayLocalStorage.getAll(this.account.id).reverse();
+      var eventsCache = ArrayLocalStorage.getAll(this.account.id);
 
       _.each(eventsCache, function(eventData) {
         if (!eventData.unread) { return; }
-        var newEventData = _.extend(eventData, { unread: false });
-        ArrayLocalStorage.updateItem(this.account.id, eventData.id, newEventData);
+        ArrayLocalStorage.updateItem(this.account.id, eventData.id, { unread: false });
       }, this);
     },
 
     loadStarredEvents: function() {
-      var eventsCache = ArrayLocalStorage.getAll((this.account.id + "-starred"));
+      var eventsCache = ArrayLocalStorage.getAll((this.account.id + "-starred")).reverse();
 
       this.starredEventsStore.removeAll();
 
