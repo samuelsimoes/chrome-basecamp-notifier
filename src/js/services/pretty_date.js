@@ -1,6 +1,4 @@
-define([
-], function(
-) {
+define([], function() {
   return function (dateString) {
     var rightNow = new Date();
     var then = new Date(new Date(dateString).getTime());

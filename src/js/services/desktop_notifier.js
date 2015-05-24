@@ -6,21 +6,21 @@ define([
   var module = {};
 
   module.avatarUrl = function() {
-    return this.eventItem.creatorAvatarUrl();
+    return this.eventItem.creator.avatar_url;
   };
 
   module.popUpWindow = function() {
-    return this.eventItem.creatorName() + " in " + this.eventItem.bucketName();
+    return this.eventItem.creator.name + " in " + this.eventItem.bucket.name;
   };
 
   module.popUpSummary = function() {
-    var treatedSummary = Text.stripTags(this.eventItem.summary());
+    var treatedSummary = Text.stripTags(this.eventItem.summary);
     treatedSummary = Text.unescapeHTML(treatedSummary);
     return Text.capitalize(treatedSummary);
   };
 
   module.itemUrl = function() {
-    return this.eventItem.link();
+    return this.eventItem.html_url;
   };
 
   module.notification = function() {

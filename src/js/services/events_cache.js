@@ -1,65 +1,25 @@
-define([
-  "services/configs_listened_accounts",
-  "underscore"
-], function(
-  ConfigListenedAccounts
-) {
+define(["services/array_local_storage"], function(ArrayLocalStorage) {
+  var CACHE_SIZE = 80;
 
-  return {
-    update: function (key, collection, override) {
-      var newCache;
+  return function(accountID, eventsData) {
+    eventsData = eventsData.sort(function(data) {
+      return new Date(data.created_at);
+    });
 
-      if (override) {
-        newCache = collection;
-      } else {
-        var actualCache = this.get(key);
-        newCache = _.union(collection, actualCache);
-      }
+    var trimmCache = function() {
+      var currentCache = ArrayLocalStorage.getAll(accountID);
 
-      newCache = _.first(newCache, 40);
+      trimmedCache = currentCache.slice(-CACHE_SIZE, currentCache.length);
 
-      var backgroundPage = chrome.extension.getBackgroundPage();
+      ArrayLocalStorage.update(accountID, trimmedCache);
+    };
 
-      if(!_.isObject(backgroundPage.eventsCache)) {
-        backgroundPage.eventsCache = {};
-      }
+    var cacheItem = function(eventData) {
+      ArrayLocalStorage.addItem(accountID, _.extend(eventData, { unread: true }));
+    };
 
-      backgroundPage.eventsCache[key] = newCache;
+    _.each(eventsData, cacheItem);
 
-      localStorage.setItem(key, JSON.stringify(newCache));
-    },
-
-    get: function (key) {
-      var backgroundPage = chrome.extension.getBackgroundPage();
-
-      if(!_.isObject(backgroundPage.eventsCache)) {
-        backgroundPage.eventsCache = {};
-      }
-
-      if (!backgroundPage.eventsCache[key]) {
-        var storedCache = localStorage.getItem(key);
-
-        if (!storedCache) {
-          backgroundPage.eventsCache[key] = [];
-        } else {
-          backgroundPage.eventsCache[key] = JSON.parse(storedCache);
-        }
-      }
-
-      return backgroundPage.eventsCache[key];
-    },
-
-    clearAllCache: function () {
-      var backgroundPage = chrome.extension.getBackgroundPage();
-
-      if(!_.isObject(backgroundPage.eventsCache)) {
-        backgroundPage.eventsCache = {};
-      }
-
-      _.each(ConfigListenedAccounts.listenedAccounts(), function (account) {
-        localStorage.removeItem(account.href + "/events.json");
-        backgroundPage.eventsCache[(account.href + "/events.json")] = [];
-      });
-    }
+    trimmCache();
   };
 });

@@ -4,7 +4,6 @@ define([
   "views/config/events",
   "views/config/misc_configs",
   "views/config/projects",
-  "services/events_cache",
   "collections/accounts",
   "text!templates/configs.html",
   "backbone",
@@ -15,7 +14,6 @@ define([
   EventsView,
   MiscConfigsView,
   ProjectsView,
-  EventsCache,
   Accounts,
   ConfigTpl
 ) {
@@ -39,7 +37,6 @@ define([
     },
 
     reloadBackground: function () {
-      EventsCache.clearAllCache();
       chrome.extension.getBackgroundPage().location.reload();
     },
 

@@ -1,12 +1,12 @@
 require([
   "services/background",
   "services/config_page_mediator",
-  "views/popup/popup",
+  "jsx!popup",
   "app"
 ], function (
   Background,
   ConfigPageMediator,
-  PopupView,
+  Popup,
   App
 ) {
   var view = $("body").data("view");
@@ -14,7 +14,7 @@ require([
   if (view == "options") {
     ConfigPageMediator.mediate();
   } else if (view == "popup") {
-    new PopupView().render();
+    Popup();
   } else if (view == "background") {
     Background();
   }
