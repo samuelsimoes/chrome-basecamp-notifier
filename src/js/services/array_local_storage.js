@@ -14,7 +14,7 @@ define(["underscore"], function() {
           toReplaceItem = _.findWhere(currentData, { id: itemID }),
           toReplaceItemIndex = currentData.indexOf(toReplaceItem);
 
-      currentData[toReplaceItemIndex] = _.extend(currentData, newData);
+      currentData[toReplaceItemIndex] = _.extend(toReplaceItem, newData);
 
       this.update(storageKey, currentData);
     },
