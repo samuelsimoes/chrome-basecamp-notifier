@@ -1,14 +1,18 @@
 define([
   "services/desktop_notifier",
+  "services/events_filter",
   "services/badge"
 ], function(
   DesktopNotifier,
+  EventsFilter,
   Badge
 ) {
   return function(eventsData) {
-    Badge.add(eventsData.length);
+    var filteredItems = EventsFilter(eventsData);
 
-    _.each(eventsData, function(eventData) {
+    Badge.add(filteredItems.length);
+
+    _.each(filteredItems, function(eventData) {
       DesktopNotifier.notify(eventData);
     });
   }
