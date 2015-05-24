@@ -11,7 +11,7 @@ define([
         <div className="comment-view">
           <img src={this.props.creator.avatar_url} className="creator-avatar" />
           <div className="content ballon">
-            <span className="text">{this.props.content}</span>
+            <span className="text" dangerouslySetInnerHTML={{__html: this.props.content}}/>
             <span className="time">{PrettyDate(this.props.created_at)}</span>
           </div>
 
