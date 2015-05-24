@@ -6,6 +6,12 @@ define([
   PrettyDate
 ) {
   return React.createClass({
+    sendToBasecamp: function(evt) {
+      evt.preventDefault();
+      evt.stopPropagation();
+      chrome.tabs.create({ url: this.props.url });
+    },
+
     renderCommentContent: function() {
       return (
         <div className="comment-view">
@@ -18,7 +24,9 @@ define([
           <a className="close-link bottom-link" href="#">
             Close <i className="icon-remove"></i>
           </a>
-          <a className="send-to-basecamp-link bottom-link" href="#">
+          <a className="send-to-basecamp-link bottom-link"
+             href="#"
+             onClick={this.sendToBasecamp}>
             View on Basecamp <i className="icon-share-alt"></i>
           </a>
         </div>
