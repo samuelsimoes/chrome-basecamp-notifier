@@ -327,3 +327,14 @@ h1:first-child {
   line-height: 30px;
   color: #C5BCA7;
 }
+
+.notification-list-blank-slate {
+  padding: 16px;
+  font-size: 15px;
+  color: #EEE9DA;
+}
+
+.notification-list-blank-slate .icon {
+  font-size: 19px;
+  margin-right: 10px;
+}
