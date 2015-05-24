@@ -55,11 +55,9 @@ define([
   //   });
   // };
 
-  return function() {
-    // Migrator();
+  // Migrator();
 
-    startAccountsEventsPooling();
+  startAccountsEventsPooling();
 
-    localStorage.setItem("currentVersion", chrome.runtime.getManifest().version);
-  };
+  localStorage.setItem("currentVersion", chrome.runtime.getManifest().version);
 });

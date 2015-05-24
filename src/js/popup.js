@@ -38,23 +38,24 @@ define([
     );
 
     React.render(
-      <Account name={account.name}
-               id={account.id}
-               starredEvents={starredEventsStore}
-               events={eventsStore} />,
+      React.createElement(
+        Account, {
+        name: account.name,
+        id: account.id,
+        starredEvents: starredEventsStore,
+        events: eventsStore
+      }),
       createContainer(account.id)
     );
   };
 
-  return function() {
-    Badge.update(0);
+  Badge.update(0);
 
-    var listenedAccounts = ConfigListenedAccounts.listenedAccounts();
+  var listenedAccounts = ConfigListenedAccounts.listenedAccounts();
 
-    _.each(listenedAccounts, showAccountEvents);
+  _.each(listenedAccounts, showAccountEvents);
 
-    document.getElementById("configs_button").addEventListener("click", function() {
-      chrome.tabs.create({ url: chrome.extension.getURL("options.html") });
-    });
-  };
+  document.getElementById("configs_button").addEventListener("click", function() {
+    chrome.tabs.create({ url: chrome.extension.getURL("options.html") });
+  });
 });

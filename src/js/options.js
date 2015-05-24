@@ -56,5 +56,5 @@ define([
     }
   }
 
-  return module;
+  module.mediate();
 });
