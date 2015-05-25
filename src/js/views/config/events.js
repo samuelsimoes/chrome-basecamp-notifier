@@ -1,16 +1,16 @@
 define([
   "services/configs_ignored_events",
   "views/config/event",
-  "models/event",
+  "services/event_type",
   "backbone"
 ], function(
   ConfigIgnoredEvents,
   EventView,
-  Event
+  EventTypes
 ) {
   return Backbone.View.extend({
     render: function() {
-      var events = Event.types;
+      var events = EventTypes.types;
 
       for(event in events) {
         var eventModel = _.extend(events[event], { key: event });

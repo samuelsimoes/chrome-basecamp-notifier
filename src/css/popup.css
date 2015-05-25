@@ -97,7 +97,6 @@ h1:first-child {
   text-shadow: 1px 1px 0px #FFF;
   line-height: 30px;
   overflow: hidden;
-  padding: 0 6px;
 }
 
 .icons-container {
@@ -133,28 +132,27 @@ h1:first-child {
   display: inline-block;
 }
 
-.second-line {
-  position: relative;
-  border-top: 2px solid #FFD0D0;
+.comment-view {
   background: #FFF4F0;
+  border-top: 2px solid #FFD0D0;
   box-sizing: border-box;
-  padding: 0 11px 0;
-  margin: 0 -6px;
+  padding: 10px 10px 32px 10px;
+  position: relative;
   min-height: 80px;
-  display: none;
+  clear: both;
 }
 
-.second-line .content a {
-  color: #000;
-}
-
-.second-line .creator-avatar {
-  top: 12px;
+.comment-view .creator-avatar {
+  top: 10px;
   background: #fff;
   position: absolute;
 }
 
-.second-line .bottom-link {
+.comment-view a {
+  color: #000;
+}
+
+.comment-view .bottom-link {
   margin-top: 2px;
   margin-left: 10px;
   float: right;
@@ -163,21 +161,29 @@ h1:first-child {
   text-decoration: none;
 }
 
-.second-line .bottom-link:hover {
-  color: #000;
-}
-
-.ballon {
+.comment-view .ballon {
   position: relative;
   background: #FFF;
   line-height: 18px;
   padding: 10px 13px;
-  margin-left: 69px;
-  margin-top: 13px;
+  margin: 0 0  0 70px;
   border-radius: 8px;
 }
 
-.ballon .time {
+.comment-view .ballon:after {
+  content: "";
+  position: absolute;
+  border-style: solid;
+  border-width: 15px 15px 15px 0;
+  border-color: rgba(0, 0, 0, 0) #FFF;
+  display: block;
+  width: 0;
+  z-index: 1;
+  left: -10px;
+  top: 13px;
+}
+
+.comment-view .time {
   display: block;
   margin-top: 6px;
   font-size: 9px;
@@ -186,24 +192,12 @@ h1:first-child {
   text-align: right;
 }
 
-.ballon:after {
-  content: '';
-  position: absolute;
-  border-style: solid;
-  border-width: 15px 15px 15px 0;
-  border-color: rgba(0, 0, 0, 0) #FFF;
-  display: block;
-  width: 0;
-  z-index: 1;
-  left: -9px;
-  top: 13px;
-}
-
 .first-line {
   cursor: pointer;
   width: 100%;
   position: relative;
   overflow: hidden;
+  padding: 0 5px;
 }
 
 .first-line .creator-avatar {
@@ -332,4 +326,15 @@ h1:first-child {
   font-size: 10px;
   line-height: 30px;
   color: #C5BCA7;
+}
+
+.notification-list-blank-slate {
+  padding: 16px;
+  font-size: 15px;
+  color: #EEE9DA;
+}
+
+.notification-list-blank-slate .icon {
+  font-size: 19px;
+  margin-right: 10px;
 }

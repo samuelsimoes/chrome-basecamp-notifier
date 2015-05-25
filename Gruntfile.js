@@ -10,13 +10,24 @@ module.exports = function (grunt) {
   config.set("envMode", envMode);
 
   config.set("requirejs.compile.options", {
-    name: "main",
     baseUrl: "./src/js",
-    out: "dist/js/main.js",
-    generateSourceMaps: true,
+    dir: "dist/js",
+    generateSourceMaps: false,
     preserveLicenseComments: false,
     optimize: "none",
+    modules: [
+      { name: "popup", include: ["popup"] },
+      { name: "background", include: ["background"] },
+      { name: "options", include: ["options"] }
+    ],
+    onBuildWrite: function (moduleName, path, singleContents) {
+      return singleContents.replace(/jsx!/g, "");
+    },
     paths: {
+      "fluxo": "vendor/fluxo/dist/fluxo",
+      "react": "vendor/react/react-with-addons",
+      "JSXTransformer": "vendor/react/JSXTransformer",
+      "jsx": "vendor/requirejs-react-jsx/jsx",
       "jquery": "vendor/jquery/jquery",
       "underscore": "vendor/underscore-amd/underscore",
       "backbone": "vendor/backbone-amd/backbone",
@@ -31,11 +42,20 @@ module.exports = function (grunt) {
         deps: ["jquery"]
       },
       "jasmine": {
-        exports: "jasmine",
+        exports: "jasmine"
       },
       "jasmine-html": {
         deps: ["jasmine", "jquery"],
         exports: "jasmine"
+      },
+      "react": {
+        "exports": "React"
+      },
+      "JSXTransformer": "JSXTransformer"
+    },
+    config: {
+      jsx: {
+        fileExtension: ".jsx"
       }
     }
   });
@@ -83,7 +103,9 @@ module.exports = function (grunt) {
         expand: true,
         src: [
           "dist/js/global.js",
-          "dist/js/main.js",
+          "dist/js/popup.js",
+          "dist/js/background.js",
+          "dist/js/options.js",
           "dist/manifest.json"
         ]
       }

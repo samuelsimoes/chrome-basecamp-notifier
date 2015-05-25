@@ -1,13 +1,9 @@
 define([
   "collections/projects",
-  "collections/events",
-  "collections/starred_events",
   "models/user_token",
   "backbone"
 ], function(
   Projects,
-  Events,
-  StarredEvents,
   UserToken
 ) {
 
@@ -26,14 +22,6 @@ define([
       }
 
       return this.projects;
-    },
-
-    getEvents: function (attribute) {
-      return new Events([], { accountId: this.getId(), authToken: UserToken.current() });
-    },
-
-    getStarredEvents: function () {
-      return new StarredEvents([], { accountId: this.getId() });
     }
   });
 });
