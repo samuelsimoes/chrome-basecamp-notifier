@@ -4,14 +4,18 @@ define([
   "jsx!components/popup/account",
   "services/configs_listened_accounts",
   "services/badge",
-  "action_handlers/popup_events"
+  "action_handlers/popup_events",
+  "models/user_token",
+  "app"
 ], function(
   React,
   Fluxo,
   Account,
   ConfigListenedAccounts,
   Badge,
-  EventsActionHandler
+  EventsActionHandler,
+  UserToken,
+  App
 ) {
   var createContainer = function(accountID) {
     var container = document.createElement("div"),
@@ -50,6 +54,10 @@ define([
   };
 
   Badge.update(0);
+
+  if (!UserToken.current()) {
+    return chrome.tabs.create({ url: App.askForAuthorizationUri });
+  }
 
   var listenedAccounts = ConfigListenedAccounts.listenedAccounts();
 
