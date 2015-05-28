@@ -31,8 +31,9 @@ define([
     },
 
     presentableSummary: function() {
-      var treatedsummary = Text.stripTags(this.props.summary),
-          treatedsummary = Text.unescapeHTML(treatedsummary);
+      var treatedsummary = Text.stripTags(this.props.summary);
+
+      treatedsummary = Text.unescapeHTML(treatedsummary);
 
       var creatornamelength = this.props.creatorName.length,
           summarylength = (105 - creatornamelength);
@@ -95,7 +96,7 @@ define([
           </div>
           {this.renderComment()}
         </li>
-      )
+      );
     }
   });
 });
