@@ -4,7 +4,7 @@ define([
   "jsx!components/popup/account",
   "services/configs_listened_accounts",
   "services/badge",
-  "action_handlers/popup_events",
+  "action_handlers/events_popup",
   "models/user_token",
   "app"
 ], function(
@@ -13,44 +13,43 @@ define([
   Account,
   ConfigListenedAccounts,
   Badge,
-  EventsActionHandler,
+  EventsPopupActionHandler,
   UserToken,
   App
 ) {
-  var createContainer = function(accountID) {
-    var container = document.createElement("div"),
-        containerId = ("account_" + accountID);
-
-    container.id = containerId;
+  var CreateEventListContainer = function() {
+    var container = document.createElement("div");
 
     document.body.appendChild(container);
 
     return container;
   };
 
-  var showAccountEvents = function(account) {
+  var ShowAccountEvents = function(account) {
     var actionHandlerIdentifier = ("Events" + account.id),
         eventsStore = new Fluxo.CollectionStore(),
         starredEventsStore = new Fluxo.CollectionStore();
 
     Fluxo.registerActionHandler(
       actionHandlerIdentifier,
-      EventsActionHandler,
+      EventsPopupActionHandler,
       eventsStore,
       starredEventsStore,
       account
     );
 
-    React.render(
+    var accountEventsComponent =
       React.createElement(
-        Account, {
-        name: account.name,
-        id: account.id,
-        starredEvents: starredEventsStore,
-        events: eventsStore
-      }),
-      createContainer(account.id)
-    );
+        Account,
+        {
+          name: account.name,
+          id: account.id,
+          starredEvents: starredEventsStore,
+          events: eventsStore
+        }
+      );
+
+    React.render(accountEventsComponent, CreateEventListContainer());
   };
 
   Badge.update(0);
@@ -61,7 +60,7 @@ define([
 
   var listenedAccounts = ConfigListenedAccounts.listenedAccounts();
 
-  _.each(listenedAccounts, showAccountEvents);
+  _.each(listenedAccounts, ShowAccountEvents);
 
   document.getElementById("configs_button").addEventListener("click", function() {
     chrome.tabs.create({ url: chrome.extension.getURL("options.html") });
