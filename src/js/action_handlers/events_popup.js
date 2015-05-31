@@ -23,9 +23,7 @@ define([
       var eventsCache = ArrayLocalStorage.getAll(this.account.id).reverse(),
           filteredCache = EventsFilter(_.first(eventsCache, MAX_EVENTS_ON_LIST));
 
-      this.eventsStore.removeAll();
-
-      this.eventsStore.addBunchFromData(filteredCache);
+      this.eventsStore.resetFromData(filteredCache);
 
       this.updateAllEventsAsRead();
     },
@@ -42,9 +40,7 @@ define([
     loadStarredEvents: function() {
       var eventsCache = ArrayLocalStorage.getAll((this.account.id + "-starred")).reverse();
 
-      this.starredEventsStore.removeAll();
-
-      this.starredEventsStore.addBunchFromData(eventsCache);
+      this.starredEventsStore.resetFromData(eventsCache);
     },
 
     starEvent: function(eventID) {
