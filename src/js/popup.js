@@ -60,6 +60,11 @@ define([
 
   var listenedAccounts = ConfigListenedAccounts.listenedAccounts();
 
+  if (listenedAccounts) {
+    var blankSlateAccounts = document.getElementById("blank_slate_accounts");
+    blankSlateAccounts.parentNode.removeChild(blankSlateAccounts);
+  }
+
   _.each(listenedAccounts, ShowAccountEvents);
 
   document.getElementById("configs_button").addEventListener("click", function() {

@@ -64,9 +64,6 @@ ul {
 body {
   font-family: "Lucida Grande","Helvetica Neue", helvetica, arial, sans-serif;
   font-size: 12px;
-}
-
-#content {
   max-height: 500px;
   overflow: auto;
   width: 800px;
