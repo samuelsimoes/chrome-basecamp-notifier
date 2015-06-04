@@ -1,6 +1,6 @@
 define([
   "collections/projects",
-  "models/user_token",
+  "services/user_token",
   "backbone"
 ], function(
   Projects,

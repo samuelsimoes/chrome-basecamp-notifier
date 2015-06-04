@@ -1,5 +1,5 @@
 define([
-  "models/user_token",
+  "services/user_token",
   "collections/accounts",
   "backbone"
 ], function(

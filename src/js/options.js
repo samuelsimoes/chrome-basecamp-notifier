@@ -1,5 +1,5 @@
 define([
-  "models/user_token",
+  "services/user_token",
   "models/user",
   "services/auth",
   "views/config/base"
@@ -26,9 +26,7 @@ define([
   module.resolveAuthThings = function() {
     var auth = Auth.authorize(this.authCode);
 
-    auth.done(function(token, user){
-      module.configView.render(user);
-    });
+    auth.done(_.bind(module.configView.render, module.configView));
 
     auth.fail(function(){
       alert("Error on load user, please try again.");
@@ -50,7 +48,7 @@ define([
 
       User.fetchCurrentUser().fail(function () {
         alert("Could not load your user information, please authorize the app again.");
-        localStorage.removeItem("currentToken");
+        UserToken.clearCurrentCredentials();
         Auth.getPermission();
       });
     }

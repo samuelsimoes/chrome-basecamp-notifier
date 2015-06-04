@@ -1,47 +1,27 @@
-define(["app", "models/user_token", "models/user"], function(App, UserToken, User) {
-  module = {};
+define(["app", "services/user_token", "models/user"], function(App, UserToken, User) {
+  return {
+    getPermission: function() {
+      window.location = App.askForAuthorizationUri;
+    },
 
-  var getToken = function(authCode) {
-    var promise = $.Deferred();
-    var token = new UserToken({ auth_code: authCode });
-    var tokenPromise = token.fetch({ type: "POST" });
+    authorize: function(authCode) {
+      var authPromise = $.Deferred(),
+          tokenPromise = UserToken.fetch(authCode);
 
-    tokenPromise.done(function() {
-      token.cacheToken();
-      promise.resolve(token);
-    });
+      tokenPromise.done(function() {
+        var userPromise = User.fetchCurrentUser();
 
-    return promise;
-  };
+        userPromise.done(authPromise.resolve);
 
-  module.getPermission = function() {
-    window.location = App.askForAuthorizationUri;
-  };
-
-  module.authorize = function(authCode) {
-    var promise = $.Deferred()
-    var tokenPromise = getToken(authCode);
-
-    tokenPromise.done(function(token){
-      var userPromise = User.fetchCurrentUser();
-
-      userPromise.done(function(user){
-        promise.resolve(token, user);
+        userPromise.fail(function(user) {
+          UserToken.clearCurrentCredentials();
+          authPromise.reject();
+        });
       });
 
-      // Case don't properly fetch user rollback
-      userPromise.fail(function(user){
-        localStorage.removeItem("currentToken")
-        promise.reject();
-      });
-    });
+      tokenPromise.fail(authPromise.reject);
 
-    tokenPromise.fail(function() {
-      promise.reject();
-    });
-
-    return promise.promise();
+      return authPromise.promise();
+    }
   };
-
-  return module;
 });

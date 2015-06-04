@@ -1,4 +1,4 @@
-define(["jquery", "underscore", "models/user_token"], function($, _, UserToken) {
+define(["jquery", "underscore", "services/user_token"], function($, _, UserToken) {
   return function(url, options) {
     var defer = $.Deferred(),
         options = options ? options : {};

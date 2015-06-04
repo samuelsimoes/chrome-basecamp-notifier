@@ -5,7 +5,7 @@ define([
   "services/configs_listened_accounts",
   "services/badge",
   "action_handlers/events_popup",
-  "models/user_token",
+  "services/user_token",
   "app"
 ], function(
   React,
