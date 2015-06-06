@@ -60,7 +60,7 @@ define([
 
   var listenedAccounts = ConfigListenedAccounts.getAccounts();
 
-  if (listenedAccounts) {
+  if (listenedAccounts && listenedAccounts.length) {
     var blankSlateAccounts = document.getElementById("blank_slate_accounts");
     blankSlateAccounts.parentNode.removeChild(blankSlateAccounts);
   }
