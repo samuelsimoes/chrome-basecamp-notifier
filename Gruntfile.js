@@ -33,9 +33,6 @@ module.exports = function (grunt) {
       "app": "app"
     },
     shim: {
-      "easytab": {
-        deps: ["jquery"]
-      },
       "react": {
         "exports": "React"
       },

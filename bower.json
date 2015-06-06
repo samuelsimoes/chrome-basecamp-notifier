@@ -3,11 +3,8 @@
   "dependencies": {
     "raven-js": "1.1.16",
     "jquery": "1.10.2",
-    "backbone-amd": "1.0.0",
     "underscore-amd": "1.5.1",
     "requirejs": "2.1.8",
-    "text": "2.0.8",
-    "easytabs": "3.2.0",
     "fluxo": "0.0.10",
     "requirejs-react-jsx": "~0.14.1"
   }
