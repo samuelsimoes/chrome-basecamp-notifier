@@ -95,7 +95,6 @@ input[type=submit] {
 
 .content {
   padding: 20px;
-  padding-bottom: 0;
 }
 
 .etabs {
@@ -120,9 +119,6 @@ input[type=submit] {
   margin-right: 1px;
   position: relative;
   z-index: 1;
-}
-
-.etabs .tab a {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   padding: 0 10px;
@@ -132,9 +128,10 @@ input[type=submit] {
   text-decoration: none;
   display: block;
   line-height: 30px;
+  cursor: pointer;
 }
 
-.etabs .tab.active a {
+.etabs .tab.active {
   border-bottom: 1px solid #fff;
 }
 
@@ -152,9 +149,8 @@ input[type=submit] {
 }
 
 .control-buttons {
-  margin: 20px -10px 0 -10px;
   border-top: 1px solid #DDD;
-  padding: 15px 10px 0 10px;
+  padding: 15px;
 }
 
 .share-icons {

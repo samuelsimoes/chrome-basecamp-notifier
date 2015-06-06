@@ -1,32 +1,17 @@
-define([
-  "services/configs_base",
-  "backbone"
-], function(
-  ConfigsBase
-) {
+define(["services/array_local_storage"], function(ArrayLocalStorage) {
+  var CACHE_KEY = "ignoredProjects"
 
-  var base = new ConfigsBase("ignoredProjects", []);
-  var module = {};
+  return {
+    isIgnored: function(projectID) {
+      return ArrayLocalStorage.include(CACHE_KEY, projectID);
+    },
 
-  module.ignoredProjectsIds = function() {
-    return base.get();
-  };
+    add: function(projectID) {
+      ArrayLocalStorage.add(CACHE_KEY, projectID);
+    },
 
-  module.toggle = function(project) {
-    var ignoredProjectsIds = this.ignoredProjectsIds();
-
-    if (this.isIgnored(project)) {
-      ignoredProjectsIds = _.difference(ignoredProjectsIds, [project.getId()]);
-    } else {
-      ignoredProjectsIds = _.union(ignoredProjectsIds, [project.getId()]);
+    remove: function(projectID) {
+      ArrayLocalStorage.remove(CACHE_KEY, projectID);
     }
-
-    base.save(ignoredProjectsIds);
   };
-
-  module.isIgnored = function(project) {
-    return _.contains(this.ignoredProjectsIds(), project.getId());
-  };
-
-  return module;
 });

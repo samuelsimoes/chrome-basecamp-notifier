@@ -1,31 +1,29 @@
-define(["services/configs_base", "backbone"], function(ConfigsBase) {
+define([
+  "services/user",
+  "services/array_local_storage",
+], function(
+  User,
+  ArrayLocalStorage
+) {
+  var CACHE_KEY = "listenedAccounts"
 
-  var base = new ConfigsBase("listenedAccounts", []);
-  var module = {};
+  return {
+    isListened: function(accountID) {
+      return ArrayLocalStorage.include(CACHE_KEY, accountID);
+    },
 
-  module.listenedAccounts = function() {
-    return base.get();
-  };
+    add: function(accountID) {
+      ArrayLocalStorage.add(CACHE_KEY, accountID);
+    },
 
-  module.isListened = function(account) {
-    return _.any(this.listenedAccounts(), function(listenedAccount) {
-      return listenedAccount.id == account.getId();
-    });
-  };
+    remove:function(accountID) {
+      ArrayLocalStorage.remove(CACHE_KEY, accountID);
+    },
 
-  module.toggle = function(account) {
-    var listenedAccounts = this.listenedAccounts();
-
-    if (this.isListened(account)) {
-      listenedAccounts = _.filter(listenedAccounts, function (listenedAccount) {
-        return listenedAccount.id != account.getId();
+    getAccounts: function() {
+      return _.filter(User.getCurrent().accounts, function(accountData) {
+        return ArrayLocalStorage.include(CACHE_KEY, accountData.id);
       });
-    } else {
-      listenedAccounts.push(account.toJSON());
     }
-
-    base.save(listenedAccounts);
   };
-
-  return module;
 });

@@ -1,4 +1,4 @@
-define(["services/array_local_storage"], function(ArrayLocalStorage) {
+define(["services/collection_local_storage"], function(CollectionLocalStorage) {
   var CACHE_SIZE = 80;
 
   return function(accountID, eventsData) {
@@ -7,15 +7,15 @@ define(["services/array_local_storage"], function(ArrayLocalStorage) {
     });
 
     var trimmCache = function() {
-      var currentCache = ArrayLocalStorage.getAll(accountID);
+      var currentCache = CollectionLocalStorage.getAll(accountID);
 
       trimmedCache = currentCache.slice(-CACHE_SIZE, currentCache.length);
 
-      ArrayLocalStorage.update(accountID, trimmedCache);
+      CollectionLocalStorage.update(accountID, trimmedCache);
     };
 
     var cacheItem = function(eventData) {
-      ArrayLocalStorage.addItem(accountID, _.extend(eventData, { unread: true }));
+      CollectionLocalStorage.addItem(accountID, _.extend(eventData, { unread: true }));
     };
 
     _.each(eventsData, cacheItem);

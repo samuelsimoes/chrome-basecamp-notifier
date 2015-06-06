@@ -1,27 +1,17 @@
-define(["services/configs_base", "backbone"], function(ConfigsBase) {
+define(["services/array_local_storage"], function(ArrayLocalStorage) {
+  var CACHE_KEY = "ignoredEvents"
 
-  var base = new ConfigsBase("ignoredEvents", []);
-  var module = {};
+  return {
+    isIgnored: function(eventType) {
+      return ArrayLocalStorage.include(CACHE_KEY, eventType);
+    },
 
-  module.ignoredEvents = function() {
-    return base.get();
-  };
+    add: function(eventType) {
+      ArrayLocalStorage.add(CACHE_KEY, eventType);
+    },
 
-  module.toggle = function(key) {
-    var ignoredEvents = this.ignoredEvents();
-
-    if (this.isIgnored(key)) {
-      ignoredEvents = _.difference(ignoredEvents, [key]);
-    } else {
-      ignoredEvents = _.union(ignoredEvents, [key]);
+    remove:function(eventType) {
+      ArrayLocalStorage.remove(CACHE_KEY, eventType);
     }
-
-    base.save(ignoredEvents);
   };
-
-  module.isIgnored = function(key) {
-    return _.contains(this.ignoredEvents(), key);
-  };
-
-  return module;
 });

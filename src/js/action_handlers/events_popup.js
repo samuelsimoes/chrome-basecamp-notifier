@@ -1,9 +1,9 @@
 define([
-  "services/array_local_storage",
+  "services/collection_local_storage",
   "services/events_filter",
   "services/event_comment_loader"
 ], function(
-  ArrayLocalStorage,
+  CollectionLocalStorage,
   EventsFilter,
   EventCommentLoader
 ) {
@@ -20,7 +20,7 @@ define([
     },
 
     loadEvents: function() {
-      var eventsCache = ArrayLocalStorage.getAll(this.account.id).reverse(),
+      var eventsCache = CollectionLocalStorage.getAll(this.account.id).reverse(),
           filteredCache = EventsFilter(_.first(eventsCache, MAX_EVENTS_ON_LIST));
 
       this.eventsStore.resetFromData(filteredCache);
@@ -29,16 +29,16 @@ define([
     },
 
     updateAllEventsAsRead: function() {
-      var eventsCache = ArrayLocalStorage.getAll(this.account.id);
+      var eventsCache = CollectionLocalStorage.getAll(this.account.id);
 
       _.each(eventsCache, function(eventData) {
         if (!eventData.unread) { return; }
-        ArrayLocalStorage.updateItem(this.account.id, eventData.id, { unread: false });
+        CollectionLocalStorage.updateItem(this.account.id, eventData.id, { unread: false });
       }, this);
     },
 
     loadStarredEvents: function() {
-      var eventsCache = ArrayLocalStorage.getAll((this.account.id + "-starred")).reverse();
+      var eventsCache = CollectionLocalStorage.getAll((this.account.id + "-starred")).reverse();
 
       this.starredEventsStore.resetFromData(eventsCache);
     },
@@ -50,9 +50,9 @@ define([
 
       var eventData = _.omit(toStarEvent.data, "showingComment", "unread");
 
-      ArrayLocalStorage.updateItem(this.account.id, eventID, eventData);
+      CollectionLocalStorage.updateItem(this.account.id, eventID, eventData);
 
-      ArrayLocalStorage.addItem((this.account.id + "-starred"), eventData);
+      CollectionLocalStorage.addItem((this.account.id + "-starred"), eventData);
 
       this.loadStarredEvents();
     },
@@ -65,10 +65,10 @@ define([
 
         var eventData = _.omit(toUnstarEvent.data, "showingComment", "unread");
 
-        ArrayLocalStorage.updateItem(this.account.id, eventID, eventData);
+        CollectionLocalStorage.updateItem(this.account.id, eventID, eventData);
       }
 
-      ArrayLocalStorage.removeItem((this.account.id + "-starred"), eventID);
+      CollectionLocalStorage.removeItem((this.account.id + "-starred"), eventID);
 
       this.loadStarredEvents();
     },

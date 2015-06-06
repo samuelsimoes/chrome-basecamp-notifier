@@ -1,12 +1,12 @@
 define([
-  "services/array_local_storage",
+  "services/collection_local_storage",
   "services/events_cache",
   "services/events_pooling",
   "services/configs_listened_accounts",
   "services/events_notifiers",
   "services/migrator"
 ], function(
-  ArrayLocalStorage,
+  CollectionLocalStorage,
   EventsCache,
   EventsPolling,
   ConfigListenedAccounts,
@@ -16,7 +16,7 @@ define([
   var poolingsIDs = [];
 
   var startEventsPooling = function(account) {
-    var lastCachedItem = (ArrayLocalStorage.lastItem(account.id) || {}),
+    var lastCachedItem = (CollectionLocalStorage.lastItem(account.id) || {}),
         firstRun = true;
 
     var onLoadNewItems = function(eventsData) {
@@ -35,25 +35,13 @@ define([
   };
 
   var startAccountsEventsPooling = function() {
-    _.each(ConfigListenedAccounts.listenedAccounts(), startEventsPooling);
+    _.each(ConfigListenedAccounts.getAccounts(), startEventsPooling);
   };
 
   var stopAllPollings = function() {
     _.map(poolingsIDs, clearInterval);
     poolingsIDs = [];
   };
-
-  // var handleStreamError = function () {
-  //   dispatcher.on("stream-error", function (event, xhr) {
-  //     if (xhr.status == 401) {
-  //       stopAllStreams();
-  //
-  //       UserToken.currentRefresh().done(function () {
-  //         startStreamEvents();
-  //       });
-  //     }
-  //   });
-  // };
 
   // Migrator();
 

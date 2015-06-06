@@ -30,11 +30,8 @@ module.exports = function (grunt) {
       "jsx": "vendor/requirejs-react-jsx/jsx",
       "jquery": "vendor/jquery/jquery",
       "underscore": "vendor/underscore-amd/underscore",
-      "backbone": "vendor/backbone-amd/backbone",
-      "text": "vendor/text/text",
       "jasmine": "vendor/jasmine/lib/jasmine-core/jasmine",
       "jasmine-html": "vendor/jasmine/lib/jasmine-core/jasmine-html",
-      "easytab": "vendor/easytabs/lib/jquery.easytabs",
       "app": "app"
     },
     shim: {

@@ -2,19 +2,19 @@ define([
   "react",
   "fluxo",
   "jsx!components/popup/account",
-  "services/configs_listened_accounts",
   "services/badge",
   "action_handlers/events_popup",
   "services/user_token",
+  "services/configs_listened_accounts",
   "app"
 ], function(
   React,
   Fluxo,
   Account,
-  ConfigListenedAccounts,
   Badge,
   EventsPopupActionHandler,
   UserToken,
+  ConfigListenedAccounts,
   App
 ) {
   var CreateEventListContainer = function() {
@@ -58,7 +58,7 @@ define([
     return chrome.tabs.create({ url: App.askForAuthorizationUri });
   }
 
-  var listenedAccounts = ConfigListenedAccounts.listenedAccounts();
+  var listenedAccounts = ConfigListenedAccounts.getAccounts();
 
   if (listenedAccounts) {
     var blankSlateAccounts = document.getElementById("blank_slate_accounts");

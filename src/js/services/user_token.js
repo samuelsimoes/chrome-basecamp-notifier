@@ -6,9 +6,9 @@ define(["app", "jquery", "underscore"], function(App, $, _) {
       return localStorage.getItem("currentToken");
     },
 
-    learCurrentCredentials: function() {
-      localStorage.clearItem("currentToken");
-      localStorage.clearItem("refreshToken");
+    clearCurrentCredentials: function() {
+      localStorage.clear("currentToken");
+      localStorage.clear("refreshToken");
     },
 
     fetch: function(authCode) {

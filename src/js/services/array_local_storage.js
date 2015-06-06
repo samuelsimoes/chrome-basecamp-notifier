@@ -9,42 +9,29 @@ define(["underscore"], function() {
       localStorage.setItem(storageKey, JSON.stringify(data));
     },
 
-    updateItem: function(storageKey, itemID, newData) {
-      var currentData = this.getAll(storageKey),
-          toReplaceItem = _.findWhere(currentData, { id: itemID }),
-          toReplaceItemIndex = currentData.indexOf(toReplaceItem);
+    include: function (storageKey, item) {
+      var currentData = this.getAll(storageKey);
+      return _.include(currentData, item);
+    },
 
-      currentData[toReplaceItemIndex] = _.extend(toReplaceItem, newData);
+    add: function(storageKey, item) {
+      if (this.include(storageKey, item)) { return; }
+
+      var currentData = this.getAll(storageKey);
+
+      currentData.push(item);
 
       this.update(storageKey, currentData);
     },
 
-    addItem: function(storageKey, data) {
+    remove: function(storageKey, item) {
       var currentData = this.getAll(storageKey);
 
-      currentData.push(data);
-
-      this.update(storageKey, currentData);
-    },
-
-    getItem: function(storageKey, id) {
-      var currentData = this.getAll(storageKey);
-      return _.findWhere(currentData, { id: id });
-    },
-
-    removeItem: function(storageKey, itemID) {
-      var currentData = this.getAll(storageKey);
-
-      var updatedData = _.filter(currentData, function(item) {
-        return item.id !== itemID;
+      var updatedData = _.filter(currentData, function(i) {
+        return i !== item;
       });
 
       this.update(storageKey, updatedData);
-    },
-
-    lastItem: function(storageKey) {
-      var currentData = this.getAll(storageKey);
-      return currentData[currentData.length-1];
     }
   };
 });
