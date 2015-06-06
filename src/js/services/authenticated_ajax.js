@@ -12,9 +12,9 @@ define(["jquery", "underscore", "services/user_token"], function($, _, UserToken
       success: function(data, textStatus, jqXHR) {
         defer.resolve(data, jqXHR.getResponseHeader("Last-Modified"));
       },
-      error: defer.fail,
+      error: defer.reject,
       complete: defer.always
-    })
+    });
 
     $.ajax(options);
 

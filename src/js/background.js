@@ -4,6 +4,8 @@ define([
   "services/events_pooling",
   "services/configs_listened_accounts",
   "services/events_notifiers",
+  "services/user_token",
+  "fluxo",
   "services/migrator"
 ], function(
   CollectionLocalStorage,
@@ -11,6 +13,8 @@ define([
   EventsPolling,
   ConfigListenedAccounts,
   EventsNotifiers,
+  UserToken,
+  Fluxo,
   Migrator
 ) {
   var poolingsIDs = [];
@@ -44,6 +48,12 @@ define([
   };
 
   // Migrator();
+
+  Fluxo.Radio.subscribe("eventsLoadingFail", function() {
+    stopAllPollings();
+
+    UserToken.refresh().done(startAccountsEventsPooling);
+  });
 
   startAccountsEventsPooling();
 

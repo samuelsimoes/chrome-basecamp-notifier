@@ -1,4 +1,4 @@
-define(["services/events_loader"], function(EventsLoader) {
+define(["fluxo", "services/events_loader"], function(Fluxo, EventsLoader) {
   var POOLING_INTERVAL_IN_SECONDS = 60;
 
   return function(accountID, since, onLoadCallback) {
@@ -11,7 +11,13 @@ define(["services/events_loader"], function(EventsLoader) {
     };
 
     var loadItems = function() {
-      EventsLoader(accountID, { data: { since: since }}).done(onLoadEventsData);
+      EventsLoader(accountID, { data: { since: since }})
+        .done(onLoadEventsData)
+        .fail(function(xhr) {
+          if (xhr.status == 401) {
+            Fluxo.Radio.publish("eventsLoadingFail");
+          }
+        });
     };
 
     loadItems();
