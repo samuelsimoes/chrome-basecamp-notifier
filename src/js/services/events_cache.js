@@ -18,7 +18,7 @@ define(["services/collection_local_storage"], function(CollectionLocalStorage) {
       CollectionLocalStorage.addItem(accountID, _.extend(eventData, { unread: true }));
     };
 
-    _.each(eventsData, cacheItem);
+    eventsData.forEach(cacheItem);
 
     trimmCache();
   };

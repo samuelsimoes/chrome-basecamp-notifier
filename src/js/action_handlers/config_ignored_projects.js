@@ -25,13 +25,13 @@ define([
 
       var accountsData = ConfigsListenedAccounts.getAccounts();
 
-      _.each(accountsData, function(accountData) {
+      accountsData.forEach(function(accountData) {
         ProjectsLoader(accountData.id).done(this._loadProject.bind(this, accountData));
-      }, this);
+      }.bind(this));
     },
 
     _loadProject: function (accountData, projectsData) {
-      _.each(projectsData, function(projectData) {
+      projectsData.forEach(function(projectData) {
         projectData.account_name = accountData.name;
         projectData.ignored = ConfigIgnoredProjects.isIgnored(projectData.id);
       });

@@ -47,7 +47,7 @@ define(["underscore"], function() {
     removeItem: function(storageKey, itemID) {
       var currentData = this.getAll(storageKey);
 
-      var updatedData = _.filter(currentData, function(item) {
+      var updatedData = currentData.filter(function(item) {
         return item.id !== itemID;
       });
 

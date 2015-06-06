@@ -18,7 +18,7 @@ define([
       return;
     }
 
-    _.each(filteredItems, function(eventData) {
+    filteredItems.forEach(function(eventData) {
       DesktopNotifier.notify(eventData);
     });
   }

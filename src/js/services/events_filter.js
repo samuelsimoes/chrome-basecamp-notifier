@@ -2,8 +2,7 @@ define([
   "services/configs_ignored_events",
   "services/configs_ignored_projects",
   "services/event_type",
-  "services/user",
-  "underscore"
+  "services/user"
 ], function(
   ConfigIgnoredEvents,
   ConfigIgnoredProjects,
@@ -11,14 +10,16 @@ define([
   User
 ) {
   return function(events) {
-    return _.filter(events, function(eventItem) {
+    return events.filter(function(eventItem) {
       var conditionsToRemove = [
         (eventItem.creator.id === User.currentUserID()),
         ConfigIgnoredProjects.isIgnored(eventItem.bucket.id),
         ConfigIgnoredEvents.isIgnored(EventType.discover(eventItem.action))
       ];
 
-      return !_.any(conditionsToRemove);
+      return conditionsToRemove.every(function(condition) {
+        return !condition;
+      });
     });
   };
 });

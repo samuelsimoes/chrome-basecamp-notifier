@@ -21,7 +21,7 @@ define([
     },
 
     getAccounts: function() {
-      return _.filter(User.getCurrent().accounts, function(accountData) {
+      return User.getCurrent().accounts.filter(function(accountData) {
         return ArrayLocalStorage.include(CACHE_KEY, accountData.id);
       });
     }

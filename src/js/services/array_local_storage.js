@@ -39,7 +39,7 @@ define(["underscore"], function() {
     remove: function(storageKey, item) {
       var currentData = this.getAll(storageKey);
 
-      var updatedData = _.filter(currentData, function(i) {
+      var updatedData = currentData.filter(function(i) {
         return i !== item;
       });
 

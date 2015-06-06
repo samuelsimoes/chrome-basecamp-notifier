@@ -22,7 +22,7 @@ define([
         return accountData.product === "bcx";
       });
 
-      _.each(accountsData, function(accountData) {
+      accountsData.forEach(function(accountData) {
         accountData.listened = ArrayLocalStorage.include("listenedAccounts", accountData.id);
       });
 

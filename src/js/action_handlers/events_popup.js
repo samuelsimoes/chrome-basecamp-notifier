@@ -21,7 +21,7 @@ define([
 
     loadEvents: function() {
       var eventsCache = CollectionLocalStorage.getAll(this.account.id).reverse(),
-          filteredCache = EventsFilter(_.first(eventsCache, MAX_EVENTS_ON_LIST));
+          filteredCache = EventsFilter(eventsCache.slice(0, MAX_EVENTS_ON_LIST));
 
       this.eventsStore.resetFromData(filteredCache);
 
@@ -31,10 +31,10 @@ define([
     updateAllEventsAsRead: function() {
       var eventsCache = CollectionLocalStorage.getAll(this.account.id);
 
-      _.each(eventsCache, function(eventData) {
+      eventsCache.forEach(function(eventData) {
         if (!eventData.unread) { return; }
         CollectionLocalStorage.updateItem(this.account.id, eventData.id, { unread: false });
-      }, this);
+      }.bind(this));
     },
 
     loadStarredEvents: function() {
@@ -96,7 +96,7 @@ define([
 
     findOnBothCollections: function(id) {
       var stores = [this.eventsStore.find(id), this.starredEventsStore.find(id)];
-      return _.filter(stores, function(item) { return item; });
+      return stores.filter(function(item) { return item; });
     }
   };
 });
