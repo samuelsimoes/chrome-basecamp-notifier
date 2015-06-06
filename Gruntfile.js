@@ -30,20 +30,11 @@ module.exports = function (grunt) {
       "jsx": "vendor/requirejs-react-jsx/jsx",
       "jquery": "vendor/jquery/jquery",
       "underscore": "vendor/underscore-amd/underscore",
-      "jasmine": "vendor/jasmine/lib/jasmine-core/jasmine",
-      "jasmine-html": "vendor/jasmine/lib/jasmine-core/jasmine-html",
       "app": "app"
     },
     shim: {
       "easytab": {
         deps: ["jquery"]
-      },
-      "jasmine": {
-        exports: "jasmine"
-      },
-      "jasmine-html": {
-        deps: ["jasmine", "jquery"],
-        exports: "jasmine"
       },
       "react": {
         "exports": "React"
