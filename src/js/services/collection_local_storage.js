@@ -1,11 +1,23 @@
 define(["underscore"], function() {
+  if (!window.collectionStorageMemoization) {
+    window.collectionStorageMemoization = {};
+  }
+
   return {
     getAll: function (storageKey) {
-      var storedCache = localStorage.getItem(storageKey);
-      return storedCache ? JSON.parse(storedCache) : [];
+      if (window.collectionStorageMemoization[storageKey]) {
+        return window.collectionStorageMemoization[storageKey];
+      } else {
+        var storedCache = JSON.parse(localStorage.getItem(storageKey)) || [];
+
+        window.collectionStorageMemoization[storageKey] = storedCache;
+
+        return storedCache;
+      }
     },
 
     update: function(storageKey, data) {
+      window.collectionStorageMemoization[storageKey] = data;
       localStorage.setItem(storageKey, JSON.stringify(data));
     },
 
