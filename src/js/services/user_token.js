@@ -24,7 +24,7 @@ define(["app", "jquery", "underscore"], function(App, $, _) {
 
     refresh: function() {
       var tokenPromise = this.tokenRequest({
-        refresh: localStorage.getItem("refreshToken"),
+        refresh_token: localStorage.getItem("refreshToken"),
         type: "refresh"
       });
 
