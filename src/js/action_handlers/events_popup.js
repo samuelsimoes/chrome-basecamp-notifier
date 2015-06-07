@@ -1,9 +1,9 @@
 define([
-  "services/collection_local_storage",
+  "services/array_local_storage",
   "services/events_filter",
   "services/event_comment_loader"
 ], function(
-  CollectionLocalStorage,
+  ArrayLocalStorage,
   EventsFilter,
   EventCommentLoader
 ) {
@@ -15,32 +15,32 @@ define([
       this.starredEventsStore = starredEventsStore;
       this.account = account;
 
-      this.loadEvents();
-      this.loadStarredEvents();
+      this.starredEventsCache = ArrayLocalStorage.getAll((this.account.id + "-starred"));
+      this.eventsCache = ArrayLocalStorage.getAll(this.account.id);
+
+      this._loadEvents();
+      this._loadStarredEvents();
     },
 
-    loadEvents: function() {
-      var eventsCache = CollectionLocalStorage.getAll(this.account.id).reverse(),
-          filteredCache = EventsFilter(eventsCache.slice(0, MAX_EVENTS_ON_LIST));
+    _loadEvents: function() {
+      var eventsCache = this.eventsCache.reverse().slice(0, MAX_EVENTS_ON_LIST),
+          filteredCache = EventsFilter(eventsCache),
+          starredEventsItemIDs = this.starredEventsCache.map(function(item) { return item.id; });
+
+      filteredCache.forEach(function(item) {
+        item.unread = ArrayLocalStorage.include("unreadEventsIDs", item.id);
+        item.starred = _.include(starredEventsItemIDs, item.id);
+
+        if (item.unread) {
+          ArrayLocalStorage.remove("unreadEventsIDs", item.id);
+        }
+      });
 
       this.eventsStore.resetFromData(filteredCache);
-
-      this.updateAllEventsAsRead();
     },
 
-    updateAllEventsAsRead: function() {
-      var eventsCache = CollectionLocalStorage.getAll(this.account.id);
-
-      eventsCache.forEach(function(eventData) {
-        if (!eventData.unread) { return; }
-        CollectionLocalStorage.updateItem(this.account.id, eventData.id, { unread: false });
-      }.bind(this));
-    },
-
-    loadStarredEvents: function() {
-      var eventsCache = CollectionLocalStorage.getAll((this.account.id + "-starred")).reverse();
-
-      this.starredEventsStore.resetFromData(eventsCache);
+    _loadStarredEvents: function() {
+      this.starredEventsStore.resetFromData(this.starredEventsCache.reverse());
     },
 
     starEvent: function(eventID) {
@@ -48,13 +48,11 @@ define([
 
       toStarEvent.setAttribute("starred", true);
 
-      var eventData = _.omit(toStarEvent.data, "showingComment", "unread");
+      var eventData = _.omit(toStarEvent.data, "showingComment");
 
-      CollectionLocalStorage.updateItem(this.account.id, eventID, eventData);
+      this.starredEventsStore.addFromData(eventData);
 
-      CollectionLocalStorage.addItem((this.account.id + "-starred"), eventData);
-
-      this.loadStarredEvents();
+      ArrayLocalStorage.add((this.account.id + "-starred"), eventData);
     },
 
     unstarEvent: function(eventID) {
@@ -62,15 +60,11 @@ define([
 
       if (toUnstarEvent) {
         toUnstarEvent.setAttribute("starred", false);
-
-        var eventData = _.omit(toUnstarEvent.data, "showingComment", "unread");
-
-        CollectionLocalStorage.updateItem(this.account.id, eventID, eventData);
       }
 
-      CollectionLocalStorage.removeItem((this.account.id + "-starred"), eventID);
+      this.starredEventsStore.remove(this.starredEventsStore.find(eventID));
 
-      this.loadStarredEvents();
+      ArrayLocalStorage.removeByID((this.account.id + "-starred"), eventID);
     },
 
     /**

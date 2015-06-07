@@ -1,5 +1,5 @@
 define([
-  "services/collection_local_storage",
+  "services/array_local_storage",
   "services/events_cache",
   "services/events_pooling",
   "services/configs_listened_accounts",
@@ -8,7 +8,7 @@ define([
   "fluxo",
   "services/migrator"
 ], function(
-  CollectionLocalStorage,
+  ArrayLocalStorage,
   EventsCache,
   EventsPolling,
   ConfigListenedAccounts,
@@ -20,7 +20,7 @@ define([
   var poolingsIDs = [];
 
   var startEventsPooling = function(account) {
-    var lastCachedItem = (CollectionLocalStorage.lastItem(account.id) || {}),
+    var lastCachedItem = (ArrayLocalStorage.lastItem(account.id) || {}),
         firstRun = true;
 
     var onLoadNewItems = function(eventsData) {

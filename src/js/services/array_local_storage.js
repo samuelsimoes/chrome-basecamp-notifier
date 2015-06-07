@@ -1,23 +1,16 @@
 define(["underscore"], function() {
-  if (!window.arrayLocalStorageMemoization) {
-    window.arrayLocalStorageMemoization = {};
-  }
-
   return {
     getAll: function (storageKey) {
-      if (window.arrayLocalStorageMemoization[storageKey]) {
-        return window.arrayLocalStorageMemoization[storageKey];
-      } else {
-        var storedCache = JSON.parse(localStorage.getItem(storageKey)) || [];
-
-        window.arrayLocalStorageMemoization[storageKey] = storedCache;
-
-        return storedCache;
+      if (!this[storageKey]) {
+        var storedCache = (JSON.parse(localStorage.getItem(storageKey)) || []);
+        this[storageKey] = storedCache;
       }
+
+      return this[storageKey];
     },
 
     update: function(storageKey, data) {
-      window.arrayLocalStorageMemoization[storageKey] = data;
+      this[storageKey] = data;
       localStorage.setItem(storageKey, JSON.stringify(data));
     },
 
@@ -36,14 +29,18 @@ define(["underscore"], function() {
       this.update(storageKey, currentData);
     },
 
+    removeByID: function(storageKey, itemID) {
+      var currentData = this.getAll(storageKey);
+      this.remove(storageKey, _.findWhere(currentData, { id: itemID }));
+    },
+
     remove: function(storageKey, item) {
       var currentData = this.getAll(storageKey);
+      this.update(storageKey, _.without(currentData, item));
+    },
 
-      var updatedData = currentData.filter(function(i) {
-        return i !== item;
-      });
-
-      this.update(storageKey, updatedData);
+    lastItem: function(storageKey, item) {
+      return _.last(this.getAll(storageKey));
     }
   };
 });
