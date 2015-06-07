@@ -8,12 +8,13 @@ define([
   ItemCheckbox
 ) {
   return React.createClass({
-    toggle: function (accountID) {
-      Fluxo.callAction("ConfigsListenedAccounts", "toggle", accountID);
+    toggle: function (account) {
+      var action = account.listened ? "unlisten" : "listen";
+      Fluxo.callAction("ConfigsListenedAccounts", action, account.id);
     },
 
     renderAccountOption: function(account) {
-      return <ItemCheckbox onChange={this.toggle.bind(this, account.id)}
+      return <ItemCheckbox onChange={this.toggle.bind(this, account)}
                            checked={account.listened}
                            key={account.id}
                            label={account.name} />;

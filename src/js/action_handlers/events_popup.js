@@ -24,7 +24,7 @@ define([
 
     _loadEvents: function() {
       var eventsCache = this.eventsCache.reverse().slice(0, MAX_EVENTS_ON_LIST),
-          filteredCache = EventsFilter(eventsCache),
+          filteredCache = EventsFilter(eventsCache, this.account.id),
           starredEventsItemIDs = this.starredEventsCache.map(function(item) { return item.id; });
 
       filteredCache.forEach(function(item) {

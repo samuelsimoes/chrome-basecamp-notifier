@@ -29,18 +29,39 @@ define([
       this.listenedAccountsStore.resetFromData(accountsData);
     },
 
-    toggle: function(accountID) {
-      var store = this.listenedAccountsStore.find(accountID),
-          listened = store.data.listened;
+    listen: function(accountID) {
+      var store = this.listenedAccountsStore.find(accountID);
 
-      var cacheAction = listened ? "remove" : "add";
+      var userIDLoading = User.fetchIDOnAccount(accountID);
 
-      ArrayLocalStorage[cacheAction]("listenedAccounts", accountID);
+      // We need first grab the current user ID on the new listened account to not
+      // show the current user events, and it's only possibile with the user ID on the
+      // account.
+      userIDLoading.done(function() {
+        ArrayLocalStorage.add("listenedAccounts", accountID);
 
-      store.setAttribute("listened", !listened);
+        store.setAttribute("listened", true);
 
+        this._onToggleAccount();
+      }.bind(this));
+
+      userIDLoading.fail(function() {
+        alert("Can't fetch account.");
+      });
+    },
+
+    unlisten: function(accountID) {
+      var store = this.listenedAccountsStore.find(accountID);
+
+      ArrayLocalStorage.remove("listenedAccounts", accountID);
+
+      store.setAttribute("listened", false);
+
+      this._onToggleAccount();
+    },
+
+    _onToggleAccount: function() {
       Fluxo.Radio.publish("listenedProjectsChanged");
-
       chrome.runtime.getBackgroundPage(function(page) { page.location.reload(); });
     }
   };
