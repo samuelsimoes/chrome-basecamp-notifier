@@ -13,7 +13,7 @@ define([
     },
 
     renderAccountOption: function(account) {
-      return <ItemCheckbox onClick={this.toggle.bind(this, account.id)}
+      return <ItemCheckbox onChange={this.toggle.bind(this, account.id)}
                            checked={account.listened}
                            key={account.id}
                            label={account.name} />;

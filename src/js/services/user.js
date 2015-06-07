@@ -3,11 +3,15 @@ define(["services/authenticated_ajax"], function(AuthenticatedAjax) {
 
   return {
     getCurrent: function() {
-      return JSON.parse(localStorage.getItem("currentUser"));
+      if (!this.current) {
+        this.current = JSON.parse(localStorage.getItem("currentUser"));
+      }
+
+      return this.current;
     },
 
-    currentUserID: function() {
-      return this.getCurrent()["identity"].id;
+    currentUserName: function() {
+      return (this.getCurrent().identity.first_name + " " + this.getCurrent().identity.last_name);
     },
 
     fetch: function() {

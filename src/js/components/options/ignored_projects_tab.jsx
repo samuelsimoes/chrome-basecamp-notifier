@@ -15,7 +15,7 @@ define([
     },
 
     renderProjectOption: function(project) {
-      return <ItemCheckbox onClick={this.toggle.bind(this, project.id)}
+      return <ItemCheckbox onChange={this.toggle.bind(this, project.id)}
                            key={project.id}
                            checked={project.ignored}
                            label={project.name} />;

@@ -7,7 +7,7 @@ define(["react"], function(React) {
         <div className="checkbox-ctn">
           <input type="checkbox"
                  id={random}
-                 onClick={this.props.onClick}
+                 onChange={this.props.onChange}
                  checked={this.props.checked} />
           <label htmlFor={random}>{this.props.label}</label>
         </div>

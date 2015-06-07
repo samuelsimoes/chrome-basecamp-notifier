@@ -13,7 +13,7 @@ define([
     },
 
     renderEventOption: function(eventType) {
-      return <ItemCheckbox onClick={this.toggle.bind(this, eventType.key)}
+      return <ItemCheckbox onChange={this.toggle.bind(this, eventType.key)}
                            key={eventType.key}
                            checked={eventType.ignored}
                            label={eventType.label} />;

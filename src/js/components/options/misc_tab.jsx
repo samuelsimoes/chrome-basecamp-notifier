@@ -14,7 +14,7 @@ define([
 
     render: function () {
       return (
-        <ItemCheckbox onClick={this.toggleNotification}
+        <ItemCheckbox onChange={this.toggleNotification}
                       checked={this.props.disableNotification}
                       label="Disable desktop notifications?" />
       );

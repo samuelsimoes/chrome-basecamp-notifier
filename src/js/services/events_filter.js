@@ -12,7 +12,13 @@ define([
   return function(events) {
     return events.filter(function(eventItem) {
       var conditionsToRemove = [
-        (eventItem.creator.id === User.currentUserID()),
+        // Sadly we can't use some ID checking here, which will be much more realible.
+        // Basecamp sends on the "identity" field on the authorization endpoint a global
+        // user ID, when on the event endpoint it sends the access ID.
+        //
+        // So, the last chance for us is to make this checking verifying the name of the creator
+        // with the identity name.
+        (eventItem.creator.name === User.currentUserName()),
         ConfigIgnoredProjects.isIgnored(eventItem.bucket.id),
         ConfigIgnoredEvents.isIgnored(EventType.discover(eventItem.action))
       ];
