@@ -10,16 +10,12 @@ module.exports = function (grunt) {
   config.set("envMode", envMode);
 
   config.set("requirejs.compile.options", {
+    name: "main",
     baseUrl: "./src/js",
-    dir: "dist/js",
-    generateSourceMaps: false,
+    out: "dist/js/main.js",
+    generateSourceMaps: true,
     preserveLicenseComments: false,
     optimize: "none",
-    modules: [
-      { name: "popup", include: ["popup"] },
-      { name: "background", include: ["background"] },
-      { name: "options", include: ["options"] }
-    ],
     onBuildWrite: function (moduleName, path, singleContents) {
       return singleContents.replace(/jsx!/g, "");
     },
@@ -88,9 +84,7 @@ module.exports = function (grunt) {
         expand: true,
         src: [
           "dist/js/global.js",
-          "dist/js/popup.js",
-          "dist/js/background.js",
-          "dist/js/options.js",
+          "dist/js/main.js",
           "dist/manifest.json"
         ]
       }

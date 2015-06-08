@@ -17,57 +17,59 @@ define([
   ConfigListenedAccounts,
   App
 ) {
-  var CreateEventListContainer = function() {
-    var container = document.createElement("div");
+  return function() {
+    var CreateEventListContainer = function() {
+      var container = document.createElement("div");
 
-    document.body.appendChild(container);
+      document.body.appendChild(container);
 
-    return container;
-  };
+      return container;
+    };
 
-  var ShowAccountEvents = function(account) {
-    var actionHandlerIdentifier = ("Events" + account.id),
-        eventsStore = new Fluxo.CollectionStore(),
-        starredEventsStore = new Fluxo.CollectionStore();
+    var ShowAccountEvents = function(account) {
+      var actionHandlerIdentifier = ("Events" + account.id),
+          eventsStore = new Fluxo.CollectionStore(),
+          starredEventsStore = new Fluxo.CollectionStore();
 
-    Fluxo.registerActionHandler(
-      actionHandlerIdentifier,
-      EventsPopupActionHandler,
-      eventsStore,
-      starredEventsStore,
-      account
-    );
-
-    var accountEventsComponent =
-      React.createElement(
-        Account,
-        {
-          name: account.name,
-          id: account.id,
-          starredEvents: starredEventsStore,
-          events: eventsStore
-        }
+      Fluxo.registerActionHandler(
+        actionHandlerIdentifier,
+        EventsPopupActionHandler,
+        eventsStore,
+        starredEventsStore,
+        account
       );
 
-    React.render(accountEventsComponent, CreateEventListContainer());
+      var accountEventsComponent =
+        React.createElement(
+          Account,
+          {
+            name: account.name,
+            id: account.id,
+            starredEvents: starredEventsStore,
+            events: eventsStore
+          }
+        );
+
+      React.render(accountEventsComponent, CreateEventListContainer());
+    };
+
+    Badge.update(0);
+
+    if (!UserToken.current()) {
+      return chrome.tabs.create({ url: App.askForAuthorizationUri });
+    }
+
+    var listenedAccounts = ConfigListenedAccounts.getAccounts();
+
+    if (listenedAccounts && listenedAccounts.length) {
+      var blankSlateAccounts = document.getElementById("blank_slate_accounts");
+      blankSlateAccounts.parentNode.removeChild(blankSlateAccounts);
+    }
+
+    _.each(listenedAccounts, ShowAccountEvents);
+
+    document.getElementById("configs_button").addEventListener("click", function() {
+      chrome.tabs.create({ url: chrome.extension.getURL("options.html") });
+    });
   };
-
-  Badge.update(0);
-
-  if (!UserToken.current()) {
-    return chrome.tabs.create({ url: App.askForAuthorizationUri });
-  }
-
-  var listenedAccounts = ConfigListenedAccounts.getAccounts();
-
-  if (listenedAccounts && listenedAccounts.length) {
-    var blankSlateAccounts = document.getElementById("blank_slate_accounts");
-    blankSlateAccounts.parentNode.removeChild(blankSlateAccounts);
-  }
-
-  _.each(listenedAccounts, ShowAccountEvents);
-
-  document.getElementById("configs_button").addEventListener("click", function() {
-    chrome.tabs.create({ url: chrome.extension.getURL("options.html") });
-  });
 });
