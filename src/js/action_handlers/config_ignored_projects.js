@@ -26,7 +26,7 @@ define([
       var accountsData = ConfigsListenedAccounts.getAccounts();
 
       accountsData.forEach(function(accountData) {
-        ProjectsLoader(accountData.id).done(this._loadProject.bind(this, accountData));
+        ProjectsLoader(accountData.id).then(this._loadProject.bind(this, accountData));
       }.bind(this));
     },
 

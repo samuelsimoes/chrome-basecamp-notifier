@@ -77,7 +77,7 @@ define([
 
       _.invoke(storesToShowComment, "setAttribute", "showingComment", true);
 
-      eventLoading.done(function(commentData) {
+      eventLoading.then(function(commentData) {
         _.invoke(storesToShowComment, "setAttribute", "comment", commentData);
       });
     },

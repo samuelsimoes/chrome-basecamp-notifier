@@ -49,14 +49,14 @@ define([
     fetchIDOnAccount: function(accountID) {
       var loading = AccountUserIdLoader(accountID, this.currentIdentityID());
 
-      loading.done(this.storeAccountUserID.bind(this, accountID));
+      loading.then(this.storeAccountUserID.bind(this, accountID));
 
       return loading;
     },
 
     fetch: function() {
       var promise = AuthenticatedAjax(USER_INFOS_URL);
-      promise.done(this.cacheUser);
+      promise.then(this.cacheUser);
       return promise;
     },
 

@@ -1,4 +1,4 @@
-define(["app", "jquery", "underscore"], function(App, $, _) {
+define(["services/ajax", "app", "jquery", "underscore"], function(Ajax, App, $, _) {
   var AUTHORIZATION_TOKEN_URL = "https://launchpad.37signals.com/authorization/token";
 
   return {
@@ -17,7 +17,7 @@ define(["app", "jquery", "underscore"], function(App, $, _) {
         type: "web_server"
       });
 
-      tokenPromise.done(this.cacheToken);
+      tokenPromise.then(this.cacheToken);
 
       return tokenPromise;
     },
@@ -28,7 +28,7 @@ define(["app", "jquery", "underscore"], function(App, $, _) {
         type: "refresh"
       });
 
-      tokenPromise.done(this.cacheToken);
+      tokenPromise.then(this.cacheToken);
 
       return tokenPromise;
     },
@@ -48,9 +48,9 @@ define(["app", "jquery", "underscore"], function(App, $, _) {
         client_secret: App.clientSecret
       });
 
-      return $.ajax({
+      return Ajax({
         url: AUTHORIZATION_TOKEN_URL,
-        method: "post",
+        method: "POST",
         data: options
       });
     }

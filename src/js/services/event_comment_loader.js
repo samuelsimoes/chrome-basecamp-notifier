@@ -12,7 +12,7 @@ define(["jquery", "underscore", "services/authenticated_ajax"], function($, _, A
 
     var eventLoadingPromise = AuthenticatedAjax(endpoint);
 
-    eventLoadingPromise.done(function(eventData) {
+    eventLoadingPromise.then(function(eventData) {
       var commentData;
 
       if (commentID) {
@@ -22,9 +22,7 @@ define(["jquery", "underscore", "services/authenticated_ajax"], function($, _, A
       }
 
       defer.resolve(commentData);
-    });
-
-    eventLoadingPromise.fail(defer.fail);
+    }, defer.fail);
 
     return defer.promise();
   };

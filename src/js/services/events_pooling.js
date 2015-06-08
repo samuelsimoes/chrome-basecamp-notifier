@@ -11,9 +11,8 @@ define(["fluxo", "services/events_loader"], function(Fluxo, EventsLoader) {
     };
 
     var loadItems = function() {
-      EventsLoader(accountID, { data: { since: since }})
-        .done(onLoadEventsData)
-        .fail(function(xhr) {
+      EventsLoader(accountID, { queryString: { since: since }})
+        .then(onLoadEventsData, function(_, xhr) {
           if (xhr.status == 401) {
             Fluxo.Radio.publish("eventsLoadingFail");
           }

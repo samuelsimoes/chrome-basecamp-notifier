@@ -20,12 +20,10 @@ define([
     var ResolveAuthReturn = function(authCode) {
       var auth = Auth.authorize(authCode);
 
-      auth.done(function() {
+      auth.then(function() {
         // reload without the auth code
         window.location = (window.location.origin + window.location.pathname);
-      });
-
-      auth.fail(function() {
+      }, function() {
         alert("Error on load user, please try again.");
       });
     };
@@ -48,9 +46,7 @@ define([
     } else {
       var currentUserFetch = User.fetch();
 
-      currentUserFetch.done(RenderConfig);
-
-      currentUserFetch.fail(function () {
+      currentUserFetch.then(RenderConfig, function() {
         alert("Could not load your user information, please authorize the app again.");
         UserToken.clearCurrentCredentials();
         Auth.getPermission();

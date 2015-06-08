@@ -22,9 +22,7 @@ define([
       defer.resolve(currentUser.id);
     };
 
-    peopleLoading.done(GrabTheUserID);
-
-    peopleLoading.fail(defer.reject);
+    peopleLoading.then(GrabTheUserID, defer.reject);
 
     return defer.promise();
   };

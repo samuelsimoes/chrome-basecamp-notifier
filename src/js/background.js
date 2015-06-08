@@ -53,7 +53,7 @@ define([
     Fluxo.Radio.subscribe("eventsLoadingFail", function() {
       stopAllPollings();
 
-      UserToken.refresh().done(startAccountsEventsPooling);
+      UserToken.refresh().then(startAccountsEventsPooling);
     });
 
     startAccountsEventsPooling();
