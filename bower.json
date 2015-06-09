@@ -2,7 +2,6 @@
   "name": "basecamp_notifier",
   "dependencies": {
     "raven-js": "1.1.16",
-    "jquery": "1.10.2",
     "underscore-amd": "1.5.1",
     "requirejs": "2.1.8",
     "fluxo": "0.0.10",

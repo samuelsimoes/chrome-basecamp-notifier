@@ -24,7 +24,6 @@ module.exports = function (grunt) {
       "react": "vendor/react/react-with-addons",
       "JSXTransformer": "vendor/react/JSXTransformer",
       "jsx": "vendor/requirejs-react-jsx/jsx",
-      "jquery": "vendor/jquery/jquery",
       "underscore": "vendor/underscore-amd/underscore",
       "app": "app"
     },

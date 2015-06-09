@@ -1,9 +1,7 @@
 define([
-  "jquery",
   "services/events_endpoint",
   "services/authenticated_ajax"
 ], function(
-  $,
   EventsEndpoint,
   AuthenticatedAjax
 ) {

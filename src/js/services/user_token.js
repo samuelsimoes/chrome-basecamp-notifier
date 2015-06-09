@@ -1,4 +1,4 @@
-define(["services/ajax", "app", "jquery", "underscore"], function(Ajax, App, $, _) {
+define(["services/ajax", "app", "underscore"], function(Ajax, App, _) {
   var AUTHORIZATION_TOKEN_URL = "https://launchpad.37signals.com/authorization/token";
 
   return {
