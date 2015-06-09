@@ -13,7 +13,7 @@ module.exports = function (grunt) {
     name: "main",
     baseUrl: "./src/js",
     out: "dist/js/main.js",
-    generateSourceMaps: true,
+    generateSourceMaps: false,
     preserveLicenseComments: false,
     optimize: "none",
     onBuildWrite: function (moduleName, path, singleContents) {
