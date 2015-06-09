@@ -9,8 +9,8 @@ define([
   EventsFilter,
   Badge
 ) {
-  return function(eventsData) {
-    var filteredItems = EventsFilter(eventsData);
+  return function(eventsData, accountID) {
+    var filteredItems = EventsFilter(eventsData, accountID);
 
     Badge.add(filteredItems.length);
 

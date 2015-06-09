@@ -30,7 +30,7 @@ define([
         if (firstRun) {
           firstRun = false;
         } else {
-          EventsNotifiers(eventsData);
+          EventsNotifiers(eventsData, account.id);
         }
       };
 
