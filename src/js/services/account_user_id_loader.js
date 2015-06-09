@@ -1,14 +1,14 @@
 define([
   "services/authenticated_ajax",
   "services/user",
-  "jquery"
+  "services/defer"
 ], function(
   AuthenticatedAjax,
   User,
-  $
+  Defer
 ) {
   return function(accountID, identityID) {
-    var defer = $.Deferred();
+    var defer = Defer();
 
     var peopleLoading = AuthenticatedAjax("https://basecamp.com/" + accountID + "/api/v1/people.json");
 
@@ -24,6 +24,6 @@ define([
 
     peopleLoading.then(GrabTheUserID, defer.reject);
 
-    return defer.promise();
+    return defer.promise;
   };
 });

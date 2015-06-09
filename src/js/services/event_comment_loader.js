@@ -1,10 +1,10 @@
-define(["jquery", "underscore", "services/authenticated_ajax"], function($, _, AuthenticatedAjax) {
+define(["services/defer", "underscore", "services/authenticated_ajax"], function(Defer, _, AuthenticatedAjax) {
   return function(eventData) {
     var endpoint = (eventData.url),
         commentAnchor = eventData.html_url.split("#")[1],
         commentID;
 
-    var defer = $.Deferred();
+    var defer = Defer();
 
     if (commentAnchor) {
       commentID = parseInt(commentAnchor.split("_")[1], 10);
@@ -22,8 +22,8 @@ define(["jquery", "underscore", "services/authenticated_ajax"], function($, _, A
       }
 
       defer.resolve(commentData);
-    }, defer.fail);
+    }, defer.reject);
 
-    return defer.promise();
+    return defer.promise;
   };
 });
