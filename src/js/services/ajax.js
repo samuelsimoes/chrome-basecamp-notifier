@@ -18,6 +18,8 @@ define(["services/defer"], function(Defer) {
 
     request = new XMLHttpRequest();
 
+    request.timeout = (options.timeout || 4000);
+
     var url = options.url;
 
     if (options.queryString) {
@@ -35,14 +37,20 @@ define(["services/defer"], function(Defer) {
       request.setRequestHeader(headerName, header);
     }
 
+    request.ontimeout = function() {
+      defer.reject(request);
+    };
+
+    request.onerror = function() {
+      defer.reject(request);
+    };
+
     request.onload = function() {
       var response = request.responseText;
 
       try {
         response = JSON.parse(response);
-      } catch (e) {
-        return;
-      }
+      } catch (e) {}
 
       if (request.status >= 100 && request.status < 400){
         defer.resolve(response, request);
