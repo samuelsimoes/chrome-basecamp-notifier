@@ -23,11 +23,10 @@ define([
     },
 
     _loadEvents: function() {
-      var eventsCache = this.eventsCache.reverse().slice(0, MAX_EVENTS_ON_LIST),
-          filteredCache = EventsFilter(eventsCache, this.account.id),
+      var eventsCache = this.eventsCache,
           starredEventsItemIDs = this.starredEventsCache.map(function(item) { return item.id; });
 
-      filteredCache.forEach(function(item) {
+      eventsCache.forEach(function(item) {
         item.unread = ArrayLocalStorage.include("unreadEventsIDs", item.id);
         item.starred = _.include(starredEventsItemIDs, item.id);
 
@@ -36,7 +35,7 @@ define([
         }
       });
 
-      this.eventsStore.resetFromData(filteredCache);
+      this.eventsStore.resetFromData(eventsCache);
     },
 
     _loadStarredEvents: function() {

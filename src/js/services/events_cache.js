@@ -2,25 +2,15 @@ define(["services/array_local_storage"], function(ArrayLocalStorage) {
   var CACHE_SIZE = 80;
 
   return function(accountID, eventsData) {
-    eventsData = eventsData.sort(function(data) {
-      return new Date(data.created_at);
+    var currentCache = ArrayLocalStorage.getAll(accountID),
+        cache = currentCache.concat(eventsData);
+
+    cache = cache.sort(function(a, b) {
+      return (new Date(b.created_at)) - (new Date(a.created_at));
     });
 
-    var trimmCache = function() {
-      var currentCache = ArrayLocalStorage.getAll(accountID);
+    cache = cache.slice(0, CACHE_SIZE);
 
-      trimmedCache = currentCache.slice(-CACHE_SIZE, currentCache.length);
-
-      ArrayLocalStorage.update(accountID, trimmedCache);
-    };
-
-    var cacheItem = function(eventData) {
-      ArrayLocalStorage.add("unreadEventsIDs", eventData.id);
-      ArrayLocalStorage.add(accountID, eventData);
-    };
-
-    eventsData.forEach(cacheItem);
-
-    trimmCache();
+    ArrayLocalStorage.update(accountID, cache);
   };
 });

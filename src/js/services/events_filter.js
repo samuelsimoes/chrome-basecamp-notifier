@@ -9,7 +9,7 @@ define([
   EventType,
   User
 ) {
-  return function(events, accountID) {
+  return function(accountID, events) {
     return events.filter(function(eventItem) {
       var conditionsToRemove = [
         (eventItem.creator.id === User.userIDOnAccount(accountID)),

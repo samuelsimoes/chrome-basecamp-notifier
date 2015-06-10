@@ -1,24 +1,26 @@
 define([
+  "services/array_local_storage",
   "services/desktop_notifier",
   "services/object_local_storage",
-  "services/events_filter",
   "services/badge"
 ], function(
+  ArrayLocalStorage,
   DesktopNotifier,
   ObjectLocalStorage,
-  EventsFilter,
   Badge
 ) {
-  return function(eventsData, accountID) {
-    var filteredItems = EventsFilter(eventsData, accountID);
+  return function(accountID, eventsData) {
+    Badge.add(eventsData.length);
 
-    Badge.add(filteredItems.length);
+    eventsData.forEach(function(eventData) {
+      ArrayLocalStorage.add("unreadEventsIDs", eventData.id);
+    });
 
     if (ObjectLocalStorage.getItem("miscConfigs", "disable_desktop_notifications")) {
       return;
     }
 
-    filteredItems.forEach(function(eventData) {
+    eventsData.forEach(function(eventData) {
       DesktopNotifier.notify(eventData);
     });
   }

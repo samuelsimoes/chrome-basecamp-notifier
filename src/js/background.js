@@ -1,62 +1,85 @@
 define([
-  "services/array_local_storage",
+  "services/events_filter",
   "services/events_cache",
   "services/events_pooling",
   "services/configs_listened_accounts",
   "services/events_notifiers",
   "services/user_token",
-  "fluxo",
   "services/migrator"
 ], function(
-  ArrayLocalStorage,
+  EventsFilter,
   EventsCache,
   EventsPolling,
   ConfigListenedAccounts,
   EventsNotifiers,
   UserToken,
-  Fluxo,
   Migrator
 ) {
+  var LastUpdateAt = {
+    key: function(accountID) {
+      return (accountID + "-last-created-at");
+    },
+
+    set: function(accountID, at) {
+      return localStorage.setItem(this.key(accountID), at);
+    },
+
+    get: function(accountID) {
+      return localStorage.getItem(this.key(accountID));
+    }
+  };
+
   return function() {
     var poolingsIDs = [];
 
-    var startEventsPooling = function(account) {
-      var lastCachedItem = (ArrayLocalStorage.lastItem(account.id) || {}),
-          firstRun = true;
 
-      var onLoadNewItems = function(eventsData) {
-        EventsCache(account.id, eventsData);
+    var OnLoadItems = function(accountID, eventsData) {
+      var filteredItems = EventsFilter(accountID, eventsData);
 
-        if (firstRun) {
-          firstRun = false;
-        } else {
-          EventsNotifiers(eventsData, account.id);
-        }
-      };
+      EventsCache(accountID, filteredItems);
 
-      var poolingID = EventsPolling(account.id, lastCachedItem.created_at, onLoadNewItems);
+      if (LastUpdateAt.get(accountID)) {
+        EventsNotifiers(accountID, filteredItems);
+      }
+
+      if (eventsData[0]) {
+        LastUpdateAt.set(accountID, eventsData[0].created_at);
+      }
+    };
+
+    var LoadingFail = function(xhr) {
+      if (xhr.status === 401) {
+        StopAllPollings();
+        UserToken.refresh().then(StartAccountsEventsPooling);
+      }
+    };
+
+    var Pooling = function(account) {
+      var lastUpdate = LastUpdateAt.get(account.id);
+
+      var poolingID =
+        EventsPolling(
+          account.id,
+          lastUpdate,
+          OnLoadItems.bind(null, account.id),
+          LoadingFail
+        );
 
       poolingsIDs.push(poolingID);
     };
 
-    var startAccountsEventsPooling = function() {
-      _.each(ConfigListenedAccounts.getAccounts(), startEventsPooling);
+    var StartAccountsEventsPooling = function() {
+      _.each(ConfigListenedAccounts.getAccounts(), Pooling);
     };
 
-    var stopAllPollings = function() {
+    var StopAllPollings = function() {
       _.map(poolingsIDs, clearInterval);
       poolingsIDs = [];
     };
 
     // Migrator();
 
-    Fluxo.Radio.subscribe("eventsLoadingFail", function() {
-      stopAllPollings();
-
-      UserToken.refresh().then(startAccountsEventsPooling);
-    });
-
-    startAccountsEventsPooling();
+    StartAccountsEventsPooling();
 
     localStorage.setItem("currentVersion", chrome.runtime.getManifest().version);
   };

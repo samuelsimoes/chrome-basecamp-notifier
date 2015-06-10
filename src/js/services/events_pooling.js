@@ -1,28 +1,21 @@
-define(["fluxo", "services/events_loader"], function(Fluxo, EventsLoader) {
+define(["services/events_loader"], function(EventsLoader) {
   var POOLING_INTERVAL_IN_SECONDS = 60;
 
-  return function(accountID, since, onLoadCallback) {
-    var onLoadEventsData = function(eventsData) {
-      if (eventsData[0]) {
+  return function(accountID, since, successCallback, errorCallback) {
+    var OnLoadEvents = function(eventsData) {
+      if (eventsData.length) {
         since = eventsData[0].created_at;
       }
 
-      onLoadCallback.call(null, eventsData);
+      successCallback(eventsData);
     };
 
-    var loadItems = function() {
-      EventsLoader(accountID, { queryString: { since: since }})
-        .then(onLoadEventsData, function(_, xhr) {
-          if (xhr.status == 401) {
-            Fluxo.Radio.publish("eventsLoadingFail");
-          }
-        });
+    var LoadItems = function() {
+      EventsLoader(accountID, { since: since }).then(OnLoadEvents, errorCallback);
     };
 
-    loadItems();
+    LoadItems();
 
-    var intervalID = setInterval(loadItems, (POOLING_INTERVAL_IN_SECONDS * 1000));
-
-    return intervalID;
+    return setInterval(LoadItems, (POOLING_INTERVAL_IN_SECONDS * 1000));
   };
 });
