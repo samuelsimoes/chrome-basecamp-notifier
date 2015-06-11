@@ -46,10 +46,14 @@ define([
     } else {
       var currentUserFetch = User.fetch();
 
-      currentUserFetch.then(RenderConfig, function() {
-        alert("Could not load your user information, please authorize the app again.");
-        UserToken.clearCurrentCredentials();
-        Auth.getPermission();
+      currentUserFetch.then(RenderConfig, function(xhr) {
+        if (xhr.status === 401) {
+          alert("Could not load your user information, please authorize the app again.");
+          UserToken.clearCurrentCredentials();
+          Auth.getPermission();
+        } else {
+          alert("Could not load your user information, please try again.");
+        }
       });
     }
 
