@@ -78,11 +78,23 @@ define([
 
       eventLoading.then(function(commentData) {
         _.invoke(storesToShowComment, "setAttribute", "comment", commentData);
+      }, function(xhr) {
+        var errorLoading;
+
+        if (xhr.deleted) {
+          errorLoading = "Can't fetch the comment. Maybe it was deleted.";
+        } else {
+          errorLoading = "Can't fetch the comment, try again.";
+        }
+
+        _.invoke(storesToShowComment, "setAttribute", "commentErrorLoading", errorLoading);
       });
     },
 
     hideComment: function(eventID) {
       var storesToHideComment = this.findOnBothCollections(eventID);
+
+      _.invoke(storesToHideComment, "setAttribute", "commentErrorLoading", null);
 
       _.invoke(storesToHideComment, "setAttribute", "showingComment", false);
     },

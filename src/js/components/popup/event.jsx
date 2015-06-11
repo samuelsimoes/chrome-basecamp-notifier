@@ -52,7 +52,9 @@ define([
 
     renderComment: function() {
       if (!this.props.showingComment) { return; }
-      return <Comment {...this.props.comment} url={this.props.html_url} />;
+      return <Comment error={this.props.commentErrorLoading} 
+                      {...this.props.comment} 
+                      url={this.props.html_url} />;
     },
 
     render: function() {

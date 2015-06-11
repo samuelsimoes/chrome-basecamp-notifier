@@ -41,9 +41,19 @@ define([
       );
     },
 
+    renderErrorMessage: function() {
+      return (
+        <div className="comment-view">
+          <p><i className="icon-remove icon-large"></i> {this.props.error}</p>
+        </div>
+      );
+    },
+
     render: function() {
       if (this.props.content) {
         return this.renderCommentContent();
+      } else if (this.props.error) {
+        return this.renderErrorMessage();
       } else {
         return this.renderLoadingMessage();
       }

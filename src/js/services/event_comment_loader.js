@@ -21,7 +21,12 @@ define(["services/defer", "underscore", "services/authenticated_ajax"], function
         commentData = eventData.comments[0];
       }
 
-      defer.resolve(commentData);
+      if (commentData) {
+        defer.resolve(commentData);
+      } else {
+        defer.reject({ deleted: true });
+      }
+
     }, defer.reject);
 
     return defer.promise;
