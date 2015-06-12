@@ -42,6 +42,9 @@ define([
 
       return (
         <div className="tab-content">
+          <div className="message">
+            <i className="icon-exclamation"></i> Only will affects new events
+          </div>
           {accountProjects}
         </div>
       );
