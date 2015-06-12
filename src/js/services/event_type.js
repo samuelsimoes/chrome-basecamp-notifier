@@ -53,6 +53,8 @@ define(["services/text"], function(Text) {
         return "deleted_file";
       } else if (Text.contains(action, "removed") && Text.contains(action, "from the project")) {
         return "removed_permission_from_project";
+      } else if (Text.contains(action, "created the project")) {
+        return "create_project";
       }
     },
 
@@ -79,7 +81,8 @@ define(["services/text"], function(Text) {
       created_document: { label: "Create a document", icon: "icon-file-text", key: "created_document" },
       created_event: { label: "Create an event", icon: "icon-calendar", key: "created_event" },
       uploaded_file: { label: "Upload a file", icon: "icon-picture", key: "uploaded_file" },
-      deleted_file: { label: "Delete a file", icon: "icon-remove", key: "deleted_file" }
+      deleted_file: { label: "Delete a file", icon: "icon-remove", key: "deleted_file" },
+      create_project: { label: "Create Project", icon: "icon-briefcase", key: "create_project" }
     }
   };
 });
