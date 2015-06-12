@@ -1,15 +1,24 @@
 define(["react"], function(React) {
   return React.createClass({
-    render: function () {
-      var random = Math.random().toString().substr(2, 6);
+    componentWillMount: function() {
+      this.randomID = Math.random().toString().substr(2, 6);
+    },
 
+    renderInput: function () {
+      if (this.props.loading) {
+        return <i className="icon-spinner icon-spin icon-large"></i>;
+      } else {
+        return <input type="checkbox"
+                      id={this.randomID}
+                      onChange={this.props.onChange}
+                      checked={this.props.checked} />;
+      }
+    },
+
+    render: function () {
       return (
         <div className="checkbox-ctn">
-          <input type="checkbox"
-                 id={random}
-                 onChange={this.props.onChange}
-                 checked={this.props.checked} />
-          <label htmlFor={random}>{this.props.label}</label>
+          {this.renderInput()} <label htmlFor={this.randomID}>{this.props.label}</label>
         </div>
       );
     },

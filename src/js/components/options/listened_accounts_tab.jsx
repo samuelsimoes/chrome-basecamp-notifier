@@ -15,6 +15,7 @@ define([
 
     renderAccountOption: function(account) {
       return <ItemCheckbox onChange={this.toggle.bind(this, account)}
+                           loading={account.loading}
                            checked={account.listened}
                            key={account.id}
                            label={account.name} />;

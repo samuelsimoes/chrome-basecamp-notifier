@@ -34,16 +34,20 @@ define([
 
       var userIDLoading = User.fetchIDOnAccount(accountID);
 
+      store.setAttribute("loading", true);
+
       // We need first grab the current user ID on the new listened account to not
       // show the current user events, and it's only possibile with the user ID on the
       // account.
       userIDLoading.then(function() {
         ArrayLocalStorage.add("listenedAccounts", accountID);
 
-        store.setAttribute("listened", true);
+        store.set({ loading: false, listened: true });
 
         this._onToggleAccount();
       }.bind(this), function() {
+        store.setAttribute("loading", false);
+
         alert("Can't fetch account.");
       });
     },
