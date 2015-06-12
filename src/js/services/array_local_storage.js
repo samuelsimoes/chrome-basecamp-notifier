@@ -1,16 +1,10 @@
 define(["underscore"], function() {
   return {
     getAll: function (storageKey) {
-      if (!this[storageKey]) {
-        var storedCache = (JSON.parse(localStorage.getItem(storageKey)) || []);
-        this[storageKey] = storedCache;
-      }
-
-      return this[storageKey];
+      return (JSON.parse(localStorage.getItem(storageKey)) || []);
     },
 
     update: function(storageKey, data) {
-      this[storageKey] = data;
       localStorage.setItem(storageKey, JSON.stringify(data));
     },
 
