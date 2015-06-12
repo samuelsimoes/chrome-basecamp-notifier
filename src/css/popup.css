@@ -15,6 +15,30 @@ strong {
   font-weight: bold;
 }
 
+.account {
+  position: relative;
+}
+
+.button-1 {
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 4px;
+  color: #C0C0C0;
+  border: 1px solid #C8C8C8;
+  cursor: pointer;
+}
+
+.button-1:hover {
+  color: #848484;
+  border-color: #848484;
+}
+
+.close-btn {
+  z-index: 1;
+  position: absolute;
+  right: 5px;
+  top: 41px;
+}
+
 #close-button {
   position: absolute;
   top: 10px;

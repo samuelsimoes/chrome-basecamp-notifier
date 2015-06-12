@@ -46,6 +46,16 @@ define([
       this.setState({ currentShowing: "starred-events" });
     },
 
+    renderClearButton: function () {
+      if (!this.state.events.stores.length || this.state.currentShowing !== "events") { return; }
+
+      return <button onClick={this.clear} className="button-1 close-btn">Clear</button>;
+    },
+
+    clear: function () {
+      Fluxo.callAction(("Events" + this.props.id), "clearLastEvents");
+    },
+
     render: function() {
       var eventsTabClasses =
         React.addons.classSet({
@@ -62,6 +72,8 @@ define([
       return (
         <div className="account">
           <h1>{this.props.name}</h1>
+
+          {this.renderClearButton()}
 
           <ul className="etabs">
             <li className={eventsTabClasses}>

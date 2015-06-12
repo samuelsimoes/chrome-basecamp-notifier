@@ -91,6 +91,11 @@ define([
       });
     },
 
+    clearLastEvents: function() {
+      ArrayLocalStorage.update(this.account.id, []);
+      this.eventsStore.removeAll();
+    },
+
     hideComment: function(eventID) {
       var storesToHideComment = this.findOnBothCollections(eventID);
 
