@@ -17,7 +17,7 @@ define(["services/defer"], function(Defer) {
     var defer = Defer(),
         request = new XMLHttpRequest();
 
-    request.timeout = (options.timeout || 4000);
+    request.timeout = (options.timeout || 20000);
 
     var url = options.url;
 
