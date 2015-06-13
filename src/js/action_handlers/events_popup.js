@@ -1,9 +1,11 @@
 define([
   "services/array_local_storage",
+  "services/events_cache",
   "services/events_filter",
   "services/event_comment_loader"
 ], function(
   ArrayLocalStorage,
+  EventsCache,
   EventsFilter,
   EventCommentLoader
 ) {
@@ -15,18 +17,17 @@ define([
       this.starredEventsStore = starredEventsStore;
       this.account = account;
 
-      this.starredEventsCache = ArrayLocalStorage.getAll((this.account.id + "-starred"));
-      this.eventsCache = ArrayLocalStorage.getAll(this.account.id);
+      this.starredEventsCache = EventsCache.getStarred(this.account.id);
+      this.eventsCache = EventsCache.get(this.account.id);
 
       this._loadEvents();
       this._loadStarredEvents();
     },
 
     _loadEvents: function() {
-      var eventsCache = this.eventsCache,
-          starredEventsItemIDs = this.starredEventsCache.map(function(item) { return item.id; });
+      var starredEventsItemIDs = this.starredEventsCache.map(function(item) { return item.id; });
 
-      eventsCache.forEach(function(item) {
+      this.eventsCache.forEach(function(item) {
         item.unread = ArrayLocalStorage.include("unreadEventsIDs", item.id);
         item.starred = _.include(starredEventsItemIDs, item.id);
 
@@ -35,11 +36,11 @@ define([
         }
       });
 
-      this.eventsStore.resetFromData(eventsCache);
+      this.eventsStore.resetFromData(this.eventsCache);
     },
 
     _loadStarredEvents: function() {
-      this.starredEventsStore.resetFromData(this.starredEventsCache.reverse());
+      this.starredEventsStore.resetFromData(this.starredEventsCache);
     },
 
     starEvent: function(eventID) {
@@ -51,7 +52,7 @@ define([
 
       this.starredEventsStore.addFromData(eventData);
 
-      ArrayLocalStorage.add((this.account.id + "-starred"), eventData);
+      EventsCache.storeStarred(this.account.id, eventData);
     },
 
     unstarEvent: function(eventID) {
@@ -63,7 +64,7 @@ define([
 
       this.starredEventsStore.remove(this.starredEventsStore.find(eventID));
 
-      ArrayLocalStorage.removeByID((this.account.id + "-starred"), eventID);
+      EventsCache.removeStarred(this.account.id, eventID);
     },
 
     /**
@@ -92,7 +93,7 @@ define([
     },
 
     clearLastEvents: function() {
-      ArrayLocalStorage.update(this.account.id, []);
+      EventsCache.clear(this.account.id);
       this.eventsStore.removeAll();
     },
 

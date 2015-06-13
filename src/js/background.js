@@ -36,7 +36,7 @@ define([
     var OnLoadItems = function(accountID, eventsData) {
       var filteredItems = EventsFilter(accountID, eventsData);
 
-      EventsCache(accountID, filteredItems);
+      EventsCache.addSome(accountID, filteredItems);
 
       if (LastUpdateAt.get(accountID)) {
         EventsNotifiers(accountID, filteredItems);
