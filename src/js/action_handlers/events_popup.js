@@ -28,11 +28,11 @@ define([
       var starredEventsItemIDs = this.starredEventsCache.map(function(item) { return item.id; });
 
       this.eventsCache.forEach(function(item) {
-        item.unread = ArrayLocalStorage.include("unreadEventsIDs", item.id);
+        item.unread = ArrayLocalStorage.include("unreadEvents", item.id);
         item.starred = _.include(starredEventsItemIDs, item.id);
 
         if (item.unread) {
-          ArrayLocalStorage.remove("unreadEventsIDs", item.id);
+          ArrayLocalStorage.remove("unreadEvents", item.id);
         }
       });
 

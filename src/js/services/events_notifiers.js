@@ -17,7 +17,7 @@ define([
     Badge.add(eventsData.length);
 
     eventsData.forEach(function(eventData) {
-      ArrayLocalStorage.add("unreadEventsIDs", eventData.id);
+      ArrayLocalStorage.add("unreadEvents", eventData.id);
     });
 
     if (ObjectLocalStorage.getItem("miscConfigs", "disable_desktop_notifications")) {
