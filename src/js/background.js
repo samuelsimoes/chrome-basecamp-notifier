@@ -5,6 +5,7 @@ define([
   "services/configs_listened_accounts",
   "services/events_notifiers",
   "services/user_token",
+  "services/events_last_update_at",
   "services/migrator"
 ], function(
   EventsFilter,
@@ -13,22 +14,9 @@ define([
   ConfigListenedAccounts,
   EventsNotifiers,
   UserToken,
+  EventsLastUpdatedAt,
   Migrator
 ) {
-  var LastUpdateAt = {
-    key: function(accountID) {
-      return (accountID + "-last-created-at");
-    },
-
-    set: function(accountID, at) {
-      return localStorage.setItem(this.key(accountID), at);
-    },
-
-    get: function(accountID) {
-      return localStorage.getItem(this.key(accountID));
-    }
-  };
-
   return function() {
     var poolingsIDs = [];
 
@@ -38,12 +26,12 @@ define([
 
       EventsCache.addSome(accountID, filteredItems);
 
-      if (LastUpdateAt.get(accountID)) {
+      if (EventsLastUpdatedAt.get(accountID)) {
         EventsNotifiers(accountID, filteredItems);
       }
 
       if (eventsData[0]) {
-        LastUpdateAt.set(accountID, eventsData[0].created_at);
+        EventsLastUpdatedAt.set(accountID, eventsData[0].created_at);
       }
     };
 
@@ -55,7 +43,7 @@ define([
     };
 
     var Pooling = function(account) {
-      var lastUpdate = LastUpdateAt.get(account.id);
+      var lastUpdate = EventsLastUpdatedAt.get(account.id);
 
       var poolingID =
         EventsPolling(
