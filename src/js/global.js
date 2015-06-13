@@ -1,1 +1,3 @@
-Raven.config("@@sentryUrl").install();
+Raven.config("@@sentryUrl", {
+  tags: { version: "@@version" }
+}).install();
