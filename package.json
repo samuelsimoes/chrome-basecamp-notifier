@@ -1,6 +1,6 @@
 {
   "name": "basecamp_notifier",
-  "version": "1.6.9",
+  "version": "2.0.0",
   "description": "Display Basecamp activity with desktop notifications.",
   "repository": {
     "type": "git",

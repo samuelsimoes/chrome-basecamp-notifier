@@ -65,7 +65,7 @@ define([
       poolingsIDs = [];
     };
 
-    // Migrator();
+    Migrator();
 
     StartAccountsEventsPooling();
 
