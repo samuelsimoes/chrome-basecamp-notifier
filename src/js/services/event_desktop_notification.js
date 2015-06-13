@@ -1,7 +1,9 @@
 define([
   "services/text",
+  "services/desktop_notification"
 ], function(
-  Text
+  Text,
+  DesktopNotification
 ) {
   var module = {};
 
@@ -24,27 +26,13 @@ define([
   };
 
   module.notification = function() {
-    var that = this;
-        notificationId = Math.random().toString(36).substring(7);
-
-    var notification =
-      chrome.notifications.create(
-        notificationId,
-        {
-          type: "basic",
-          title: this.popUpSummary(),
-          message: this.popUpWindow(),
-          iconUrl: this.avatarUrl()
-        },
-        function() {});
-
-    chrome.notifications.onClicked.addListener(function(clickedNotificationId) {
-      if (clickedNotificationId == notificationId) {
-        chrome.tabs.create({ url: that.itemUrl() });
-      }
-    });
-
-    return notification;
+    DesktopNotification({
+      title: this.popUpSummary(),
+      message: this.popUpWindow(),
+      iconUrl: this.avatarUrl()
+    }, function(itemURL) {
+      chrome.tabs.create({ url: itemURL });
+    }.bind(this, this.itemUrl()));
   };
 
   module.notify = function (eventItem) {

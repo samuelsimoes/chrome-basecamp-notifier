@@ -1,14 +1,16 @@
 define([
   "services/array_local_storage",
-  "services/desktop_notifier",
+  "services/event_desktop_notification",
   "services/object_local_storage",
   "services/badge"
 ], function(
   ArrayLocalStorage,
-  DesktopNotifier,
+  EventDesktopNotification,
   ObjectLocalStorage,
   Badge
 ) {
+  var MAX_DESKTOP_NOTIFICATIONS = 5;
+
   return function(accountID, eventsData) {
     Badge.add(eventsData.length);
 
@@ -20,8 +22,10 @@ define([
       return;
     }
 
-    eventsData.forEach(function(eventData) {
-      DesktopNotifier.notify(eventData);
+    var firstEvents = eventsData.slice(0, MAX_DESKTOP_NOTIFICATIONS);
+
+    firstEvents.forEach(function(eventData) {
+      EventDesktopNotification.notify(eventData);
     });
   }
 });
