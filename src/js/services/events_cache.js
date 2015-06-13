@@ -11,15 +11,15 @@ define(["services/array_local_storage"], function(ArrayLocalStorage) {
     },
 
     getStarred: function(accountID) {
-      return ArrayLocalStorage.getAll((accountID + "-starred"));
+      return ArrayLocalStorage.getAll(("starred-items-" + accountID));
     },
 
     storeStarred: function(accountID, data) {
-      return ArrayLocalStorage.add((accountID + "-starred"), data);
+      return ArrayLocalStorage.add(("starred-items-" + accountID), data);
     },
 
     removeStarred: function(accountID, eventID) {
-      return ArrayLocalStorage.removeByID((accountID + "-starred"), eventID);
+      return ArrayLocalStorage.removeByID(("starred-items-" + accountID), eventID);
     },
 
     addSome: function(accountID, data) {
