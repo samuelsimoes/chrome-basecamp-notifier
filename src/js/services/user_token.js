@@ -33,7 +33,9 @@ define(["services/ajax", "app", "underscore"], function(Ajax, App, _) {
       return tokenPromise;
     },
 
-    cacheToken: function(data) {
+    cacheToken: function(request) {
+      var data = request.response;
+
       localStorage.setItem("currentToken", data.access_token);
 
       if (data.refresh_token) {

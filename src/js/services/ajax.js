@@ -29,6 +29,8 @@ define(["services/defer"], function(Defer) {
 
     request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
+    request.responseType = (options.responseType || "json");
+
     var headers = (options.headers || {});
 
     for (var headerName in headers) {
@@ -45,16 +47,10 @@ define(["services/defer"], function(Defer) {
     };
 
     request.onload = function() {
-      var response = request.responseText;
-
-      try {
-        response = JSON.parse(response);
-      } catch (e) {}
-
       if (request.status >= 100 && request.status < 400){
-        defer.resolve(response, request);
+        defer.resolve(request);
       } else {
-        defer.reject(response, request);
+        defer.reject(request);
       }
     };
 

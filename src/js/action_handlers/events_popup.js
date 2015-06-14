@@ -77,12 +77,12 @@ define([
 
       _.invoke(storesToShowComment, "setAttribute", "showingComment", true);
 
-      eventLoading.then(function(commentData) {
-        _.invoke(storesToShowComment, "setAttribute", "comment", commentData);
-      }, function(xhr) {
+      eventLoading.then(function(request) {
+        _.invoke(storesToShowComment, "setAttribute", "comment", request.response);
+      }, function(request) {
         var errorLoading;
 
-        if (xhr.deleted) {
+        if (request.deleted) {
           errorLoading = "Can't fetch the comment. Maybe it was deleted.";
         } else {
           errorLoading = "Can't fetch the comment, try again.";

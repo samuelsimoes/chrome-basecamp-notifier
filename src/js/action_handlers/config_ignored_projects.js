@@ -30,7 +30,9 @@ define([
       }.bind(this));
     },
 
-    _loadProject: function (accountData, projectsData) {
+    _loadProject: function (accountData, request) {
+      var projectsData = request.response;
+
       projectsData.forEach(function(projectData) {
         projectData.account_name = accountData.name;
         projectData.ignored = ConfigIgnoredProjects.isIgnored(projectData.id);

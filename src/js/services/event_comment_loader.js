@@ -12,8 +12,9 @@ define(["services/defer", "underscore", "services/authenticated_ajax"], function
 
     var eventLoadingPromise = AuthenticatedAjax(endpoint);
 
-    eventLoadingPromise.then(function(eventData) {
-      var commentData;
+    eventLoadingPromise.then(function(request) {
+      var eventData = request.response,
+          commentData;
 
       if (commentID) {
         commentData = _.findWhere(eventData.comments, { id: commentID });
@@ -22,9 +23,10 @@ define(["services/defer", "underscore", "services/authenticated_ajax"], function
       }
 
       if (commentData) {
-        defer.resolve(commentData);
+        defer.resolve({ response: commentData });
       } else {
-        defer.reject({ deleted: true });
+        request.deleted = true;
+        defer.reject(request);
       }
 
     }, defer.reject);

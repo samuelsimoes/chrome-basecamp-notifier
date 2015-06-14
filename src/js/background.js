@@ -35,8 +35,8 @@ define([
       }
     };
 
-    var LoadingFail = function(xhr) {
-      if (xhr.status === 401) {
+    var LoadingFail = function(request) {
+      if (request.status === 401) {
         StopAllPollings();
         UserToken.refresh().then(StartAccountsEventsPooling);
       }

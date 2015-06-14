@@ -64,8 +64,8 @@ define([
       this.cacheUser();
     },
 
-    cacheUser: function (userData) {
-      localStorage.setItem("currentUser", JSON.stringify(userData));
+    cacheUser: function (request) {
+      localStorage.setItem("currentUser", JSON.stringify(request.response));
     }
   };
 });

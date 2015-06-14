@@ -27,19 +27,21 @@ define([
         since = options.since,
         url = EventsEndpoint(accountID);
 
-    var OnError = function(data, xhr) {
-      if (xhr === 404) {
-        defer.resolve(data);
+    var OnError = function(data, request) {
+      if (request.status === 404) {
+        defer.resolve({ response: data });
       } else {
-        defer.reject(xhr);
+        defer.reject(request);
       }
     };
 
-    var OnLoad = function(aggregatedData, page, eventsData) {
+    var OnLoad = function(aggregatedData, page, request) {
+      var eventsData = request.response;
+
       aggregatedData = aggregatedData.concat(eventsData);
 
       if (eventsData.length < 50 || !since) {
-        defer.resolve(aggregatedData);
+        defer.resolve({ response: aggregatedData });
       } else {
         var nextPage = (page + 1);
 
