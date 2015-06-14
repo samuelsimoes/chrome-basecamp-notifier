@@ -21,7 +21,11 @@ define([
     },
 
     getAccounts: function() {
-      return User.getCurrent().accounts.filter(function(accountData) {
+      var currentUser = User.getCurrent();
+
+      if (!currentUser) { return []; }
+
+      return currentUser.accounts.filter(function(accountData) {
         return ArrayLocalStorage.include(CACHE_KEY, accountData.id);
       });
     }
