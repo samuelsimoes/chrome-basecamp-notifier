@@ -43,6 +43,7 @@ a {
 
 .title {
   border-bottom: 1px solid #dddddd;
+  margin-bottom: 20px;
   padding: 18px;
 }
 
@@ -67,7 +68,7 @@ h1 {
   font-size: 12px;
 }
 
-input[type=submit] {
+input[type=submit], button {
   font-family: "Lucida Grande","Helvetica Neue", helvetica, arial, sans-serif;
   font-size: 11px;
   line-height: 16px;
@@ -106,10 +107,11 @@ input[type=submit] {
 
 .content {
   padding: 20px;
+  padding-top: 0;
 }
 
 .etabs {
-  margin: -10px -10px 15px -10px;
+  margin: 0 -10px 15px -10px;
   padding-left: 5px;
   position: relative;
   overflow: hidden;
@@ -184,4 +186,13 @@ input[type=submit] {
 
 .share-icons img {
   margin: 0 6px;
+}
+
+.form-field {
+  margin-bottom: 10px;
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  font-size: 13px;
+  border: 1px solid #C0C0C0;
 }

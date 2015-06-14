@@ -1,11 +1,17 @@
 define([
+  "fluxo",
   "render_config",
+  "jsx!components/contact_form",
+  "action_handlers/contact_form",
   "services/user_token",
   "services/user",
   "services/auth",
   "react"
 ], function(
+  Fluxo,
   RenderConfig,
+  ContactForm,
+  ContactFormHandler,
   UserToken,
   User,
   Auth,
@@ -61,6 +67,15 @@ define([
       UserToken.clearCurrentCredentials();
       chrome.extension.getViews({ type: "tab" })[0].close();
     });
+
+    var contactFormStore = new Fluxo.Store();
+
+    Fluxo.registerActionHandler("ContactForm", ContactFormHandler, contactFormStore);
+
+    React.render(
+      React.createElement(ContactForm, { contactForm: contactFormStore }),
+      document.getElementById("contact-ctn")
+    );
 
     document.getElementById("extension_version").innerHTML = localStorage.getItem("currentVersion");
   };

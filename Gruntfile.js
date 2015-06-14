@@ -74,6 +74,7 @@ module.exports = function (grunt) {
         "basecampClientId": "<%= process.env['BASECAMP_CLIENT_ID'] %>",
         "basecampSecret": "<%= process.env['BASECAMP_SECRET'] %>",
         "sentryUrl": "<%= process.env['SENTRY_URL'] %>",
+        "contactSupportEndpoint": "<%= process.env['CONTACT_SUPPORT_ENDPOINT'] %>",
         "version": "<%= pkg.version %>",
         "description": "<%= pkg.description %>"
       }
