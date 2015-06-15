@@ -1,10 +1,8 @@
 define([
   "services/authenticated_ajax",
-  "services/user",
   "services/defer"
 ], function(
   AuthenticatedAjax,
-  User,
   Defer
 ) {
   return function(accountID, identityID) {
