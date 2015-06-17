@@ -1,70 +1,62 @@
-define([
-  "fluxo",
-  "services/user",
-  "services/array_local_storage",
-  "underscore"
-], function(
-  Fluxo,
-  User,
-  ArrayLocalStorage,
-  _
-) {
-  return {
-    initialize: function (listenedAccountsStore) {
-      this.listenedAccountsStore = listenedAccountsStore;
-      this._load();
-    },
+import { Fluxo, _ } from "libs";
+import User from "services/user";
+import ArrayLocalStorage from "services/array_local_storage";
 
-    _load: function() {
-      var accountsData = User.getCurrent().accounts;
+ export default {
+  initialize: function (listenedAccountsStore) {
+    this.listenedAccountsStore = listenedAccountsStore;
+    this._load();
+  },
 
-      accountsData = _.filter(accountsData, function(accountData) {
-        return accountData.product === "bcx";
-      });
+  _load: function() {
+    var accountsData = User.getCurrent().accounts;
 
-      accountsData.forEach(function(accountData) {
-        accountData.listened = ArrayLocalStorage.include("listenedAccounts", accountData.id);
-      });
+    accountsData = _.filter(accountsData, function(accountData) {
+      return accountData.product === "bcx";
+    });
 
-      this.listenedAccountsStore.resetFromData(accountsData);
-    },
+    accountsData.forEach(function(accountData) {
+      accountData.listened = ArrayLocalStorage.include("listenedAccounts", accountData.id);
+    });
 
-    listen: function(accountID) {
-      var store = this.listenedAccountsStore.find(accountID);
+    this.listenedAccountsStore.resetFromData(accountsData);
+  },
 
-      var userIDLoading = User.fetchIDOnAccount(accountID);
+  listen: function(accountID) {
+    var store = this.listenedAccountsStore.find(accountID);
 
-      store.setAttribute("loading", true);
+    var userIDLoading = User.fetchIDOnAccount(accountID);
 
-      // We need first grab the current user ID on the new listened account to not
-      // show the current user events, and it's only possibile with the user ID on the
-      // account.
-      userIDLoading.then(function() {
-        ArrayLocalStorage.add("listenedAccounts", accountID);
+    store.setAttribute("loading", true);
 
-        store.set({ loading: false, listened: true });
+    // We need first grab the current user ID on the new listened account to not
+    // show the current user events, and it's only possibile with the user ID on the
+    // account.
+    userIDLoading.then(function() {
+      ArrayLocalStorage.add("listenedAccounts", accountID);
 
-        this._onToggleAccount();
-      }.bind(this), function() {
-        store.setAttribute("loading", false);
-
-        alert("Can't fetch account.");
-      });
-    },
-
-    unlisten: function(accountID) {
-      var store = this.listenedAccountsStore.find(accountID);
-
-      ArrayLocalStorage.remove("listenedAccounts", accountID);
-
-      store.setAttribute("listened", false);
+      store.set({ loading: false, listened: true });
 
       this._onToggleAccount();
-    },
+    }.bind(this), function() {
+      store.setAttribute("loading", false);
 
-    _onToggleAccount: function() {
-      Fluxo.Radio.publish("listenedProjectsChanged");
-      chrome.runtime.getBackgroundPage(function(page) { page.location.reload(); });
-    }
-  };
-});
+      alert("Can't fetch account.");
+    });
+  },
+
+  unlisten: function(accountID) {
+    var store = this.listenedAccountsStore.find(accountID);
+
+    ArrayLocalStorage.remove("listenedAccounts", accountID);
+
+    store.setAttribute("listened", false);
+
+    this._onToggleAccount();
+  },
+
+  _onToggleAccount: function() {
+    Fluxo.Radio.publish("listenedProjectsChanged");
+    chrome.runtime.getBackgroundPage(function(page) { page.location.reload(); });
+  }
+};

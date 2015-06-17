@@ -1,26 +1,26 @@
-define(["react"], function(React) {
-  return React.createClass({
-    componentWillMount: function() {
-      this.randomID = Math.random().toString().substr(2, 6);
-    },
+import { React } from "libs";
 
-    renderInput: function () {
-      if (this.props.loading) {
-        return <i className="icon-spinner icon-spin icon-large"></i>;
-      } else {
-        return <input type="checkbox"
-                      id={this.randomID}
-                      onChange={this.props.onChange}
-                      checked={this.props.checked} />;
-      }
-    },
+export default React.createClass({
+  componentWillMount: function() {
+    this.randomID = Math.random().toString().substr(2, 6);
+  },
 
-    render: function () {
-      return (
-        <div className="checkbox-ctn">
-          {this.renderInput()} <label htmlFor={this.randomID}>{this.props.label}</label>
-        </div>
-      );
-    },
-  });
+  renderInput: function () {
+    if (this.props.loading) {
+      return <i className="icon-spinner icon-spin icon-large"></i>;
+    } else {
+      return <input type="checkbox"
+                    id={this.randomID}
+                    onChange={this.props.onChange}
+                    checked={this.props.checked} />;
+    }
+  },
+
+  render: function () {
+    return (
+      <div className="checkbox-ctn">
+        {this.renderInput()} <label htmlFor={this.randomID}>{this.props.label}</label>
+      </div>
+    );
+  },
 });

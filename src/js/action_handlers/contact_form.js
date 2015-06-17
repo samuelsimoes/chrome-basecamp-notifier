@@ -1,38 +1,38 @@
-define(["services/ajax"], function (Ajax) {
-  return {
-    initialize: function (contactFormStore) {
-      this.contactFormStore = contactFormStore;
-    },
+import Ajax from "services/ajax";
 
-    submit: function (data) {
-      var request = Ajax({
-        url: "@@contactSupportEndpoint",
-        data: data,
-        method: "POST"
-      });
+export default {
+  initialize: function (contactFormStore) {
+    this.contactFormStore = contactFormStore;
+  },
 
-      data.loading = true;
+  submit: function (data) {
+    var request = Ajax({
+      url: "@@contactSupportEndpoint",
+      data: data,
+      method: "POST"
+    });
 
-      this.contactFormStore.set(data);
+    data.loading = true;
 
-      var onSend = function() {
-        alert("Thank you for your feedback.");
-        this.contactFormStore.set({ content: "", email: "" });
-      };
+    this.contactFormStore.set(data);
 
-      var onError = function(request) {
-        if (request.status === 422) {
-          alert(request.response.join("\n"));
-        } else {
-          alert("Can't sent the message.")
-        }
-      };
+    var onSend = function() {
+      alert("Thank you for your feedback.");
+      this.contactFormStore.set({ content: "", email: "" });
+    };
 
-      request
-        .then(onSend.bind(this), onError)
-        .then(function() {
-          this.contactFormStore.setAttribute("loading", false);
-        }.bind(this));
-    }
-  };
-});
+    var onError = function(request) {
+      if (request.status === 422) {
+        alert(request.response.join("\n"));
+      } else {
+        alert("Can't sent the message.")
+      }
+    };
+
+    request
+      .then(onSend.bind(this), onError)
+      .then(function() {
+        this.contactFormStore.setAttribute("loading", false);
+      }.bind(this));
+  }
+};

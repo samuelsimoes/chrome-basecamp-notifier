@@ -1,38 +1,38 @@
-define(["services/array_local_storage"], function(ArrayLocalStorage) {
-  var CACHE_SIZE = 80;
+import ArrayLocalStorage from "services/array_local_storage";
 
-  return {
-    get: function (accountID) {
-      return ArrayLocalStorage.getAll(accountID);
-    },
+var CACHE_SIZE = 80;
 
-    clear: function(accountID) {
-      return ArrayLocalStorage.update(accountID, []);
-    },
+export default {
+  get: function (accountID) {
+    return ArrayLocalStorage.getAll(accountID);
+  },
 
-    getStarred: function(accountID) {
-      return ArrayLocalStorage.getAll(("starred-items-" + accountID));
-    },
+  clear: function(accountID) {
+    return ArrayLocalStorage.update(accountID, []);
+  },
 
-    storeStarred: function(accountID, data) {
-      return ArrayLocalStorage.add(("starred-items-" + accountID), data);
-    },
+  getStarred: function(accountID) {
+    return ArrayLocalStorage.getAll(("starred-items-" + accountID));
+  },
 
-    removeStarred: function(accountID, eventID) {
-      return ArrayLocalStorage.removeByID(("starred-items-" + accountID), eventID);
-    },
+  storeStarred: function(accountID, data) {
+    return ArrayLocalStorage.add(("starred-items-" + accountID), data);
+  },
 
-    addSome: function(accountID, data) {
-      var currentCache = this.get(accountID),
-          cache = currentCache.concat(data);
+  removeStarred: function(accountID, eventID) {
+    return ArrayLocalStorage.removeByID(("starred-items-" + accountID), eventID);
+  },
 
-      cache = cache.sort(function(a, b) {
-        return (new Date(b.created_at)) - (new Date(a.created_at));
-      });
+  addSome: function(accountID, data) {
+    var currentCache = this.get(accountID),
+        cache = currentCache.concat(data);
 
-      cache = cache.slice(0, CACHE_SIZE);
+    cache = cache.sort(function(a, b) {
+      return (new Date(b.created_at)) - (new Date(a.created_at));
+    });
 
-      ArrayLocalStorage.update(accountID, cache);
-    }
-  };
-});
+    cache = cache.slice(0, CACHE_SIZE);
+
+    ArrayLocalStorage.update(accountID, cache);
+  }
+};

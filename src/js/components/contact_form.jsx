@@ -1,53 +1,53 @@
-define(["react", "underscore", "fluxo"], function (React, _, Fluxo) {
-  return React.createClass({
-    listenProps: ["contactForm"],
+import { React, Fluxo, _ } from "libs";
 
-    mixins: [React.addons.LinkedStateMixin, Fluxo.WatchComponent],
+export default React.createClass({
+  listenProps: ["contactForm"],
 
-    getInitialState: function() {
-      return {};
-    },
+  mixins: [React.addons.LinkedStateMixin, Fluxo.WatchComponent],
 
-    onSubmit: function (evt) {
-      evt.preventDefault();
-      Fluxo.callAction("ContactForm", "submit", this.state.contactForm);
-    },
+  getInitialState: function() {
+    return {};
+  },
 
-    onChange: function(attributeName, evt) {
-      var value = evt.target.value,
-          data = {};
+  onSubmit: function (evt) {
+    evt.preventDefault();
+    Fluxo.callAction("ContactForm", "submit", this.state.contactForm);
+  },
 
-      data[attributeName] = value;
+  onChange: function(attributeName, evt) {
+    var value = evt.target.value,
+        data = {};
 
-      this.setState({ contactForm: _.extend({}, this.state.contactForm, data) });
-    },
+    data[attributeName] = value;
 
-    render: function() {
-      var loading = this.state.contactForm.loading,
-          submitBtnText = loading ? "Sending..." : "Submit Feedback";
+    this.setState({ contactForm: _.extend({}, this.state.contactForm, data) });
+  },
 
-      return (
-        <form onSubmit={this.onSubmit}>
-          <textarea className="form-field"
-                    maxLength="300"
-                    required
-                    value={this.state.contactForm.content}
-                    onChange={this.onChange.bind(this, "content")}
-                    rows="3"
-                    placeholder="Any bug or suggestion? Send here!">
-          </textarea>
+  render: function() {
+    var loading = this.state.contactForm.loading,
+        submitBtnText = loading ? "Sending..." : "Submit Feedback";
 
-          <input maxLength="40"
-                 required
-                 value={this.state.contactForm.email}
-                 onChange={this.onChange.bind(this, "email")}
-                 type="email"
-                 className="form-field"
-                 placeholder="Your email" />
+    return (
+      <form onSubmit={this.onSubmit}>
+        <textarea className="form-field"
+                  maxLength="300"
+                  required
+                  value={this.state.contactForm.content}
+                  onChange={this.onChange.bind(this, "content")}
+                  rows="3"
+                  placeholder="Any bug or suggestion? Send here!">
+        </textarea>
 
-          <input type="submit" value={submitBtnText} />
-        </form>
-      );
-    }
-  });
+        <input maxLength="40"
+               required
+               value={this.state.contactForm.email}
+               onChange={this.onChange.bind(this, "email")}
+               type="email"
+               className="form-field"
+               placeholder="Your email" />
+
+        <input type="submit" value={submitBtnText} />
+      </form>
+    );
+  }
 });

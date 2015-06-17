@@ -1,33 +1,28 @@
-define([
-  "services/user",
-  "services/array_local_storage",
-], function(
-  User,
-  ArrayLocalStorage
-) {
-  var CACHE_KEY = "listenedAccounts"
+import User from "services/user";
+import ArrayLocalStorage from "services/array_local_storage";
 
-  return {
-    isListened: function(accountID) {
-      return ArrayLocalStorage.include(CACHE_KEY, accountID);
-    },
+var CACHE_KEY = "listenedAccounts";
 
-    add: function(accountID) {
-      ArrayLocalStorage.add(CACHE_KEY, accountID);
-    },
+export default {
+  isListened: function(accountID) {
+    return ArrayLocalStorage.include(CACHE_KEY, accountID);
+  },
 
-    remove:function(accountID) {
-      ArrayLocalStorage.remove(CACHE_KEY, accountID);
-    },
+  add: function(accountID) {
+    ArrayLocalStorage.add(CACHE_KEY, accountID);
+  },
 
-    getAccounts: function() {
-      var currentUser = User.getCurrent();
+  remove:function(accountID) {
+    ArrayLocalStorage.remove(CACHE_KEY, accountID);
+  },
 
-      if (!currentUser) { return []; }
+  getAccounts: function() {
+    var currentUser = User.getCurrent();
 
-      return currentUser.accounts.filter(function(accountData) {
-        return ArrayLocalStorage.include(CACHE_KEY, accountData.id);
-      });
-    }
-  };
-});
+    if (!currentUser) { return []; }
+
+    return currentUser.accounts.filter(function(accountData) {
+      return ArrayLocalStorage.include(CACHE_KEY, accountData.id);
+    });
+  }
+};

@@ -1,15 +1,15 @@
-define(["underscore"], function(_) {
-  return function(options, onClick) {
-    var notificationID = Math.random().toString().substring(2, 8);
+import { _ } from "libs";
 
-    _.defaults(options, { type: "basic" });
+export default function(options, onClick) {
+  var notificationID = Math.random().toString().substring(2, 8);
 
-    var notification =
-      chrome.notifications.create(notificationID, options, function() {});
+  _.defaults(options, { type: "basic" });
 
-    chrome.notifications.onClicked.addListener(function(clickedNotificationId) {
-      if (clickedNotificationId !== notificationID) { return; }
-      onClick();
-    });
-  };
-});
+  var notification =
+    chrome.notifications.create(notificationID, options, function() {});
+
+  chrome.notifications.onClicked.addListener(function(clickedNotificationId) {
+    if (clickedNotificationId !== notificationID) { return; }
+    onClick();
+  });
+};

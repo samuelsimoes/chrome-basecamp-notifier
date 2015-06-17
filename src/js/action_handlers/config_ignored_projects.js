@@ -1,55 +1,46 @@
-define([
-  "fluxo",
-  "services/configs_listened_accounts",
-  "services/projects_loader",
-  "services/configs_ignored_projects",
-  "underscore"
-], function(
-  Fluxo,
-  ConfigsListenedAccounts,
-  ProjectsLoader,
-  ConfigIgnoredProjects,
-  _
-) {
-  return {
-    initialize: function (ignoredProjectsStore) {
-      this.ignoredProjectsStore = ignoredProjectsStore;
+import { Fluxo, _ } from "libs";
+import ConfigsListenedAccounts from "services/configs_listened_accounts";
+import ProjectsLoader from "services/projects_loader";
+import ConfigsIgnoredProjects from "services/configs_ignored_projects";
 
-      this._load();
+export default {
+  initialize: function (ignoredProjectsStore) {
+    this.ignoredProjectsStore = ignoredProjectsStore;
 
-      Fluxo.Radio.subscribe("listenedProjectsChanged", this._load.bind(this));
-    },
+    this._load();
 
-    _load: function () {
-      this.ignoredProjectsStore.removeAll();
+    Fluxo.Radio.subscribe("listenedProjectsChanged", this._load.bind(this));
+  },
 
-      var accountsData = ConfigsListenedAccounts.getAccounts();
+  _load: function () {
+    this.ignoredProjectsStore.removeAll();
 
-      accountsData.forEach(function(accountData) {
-        ProjectsLoader(accountData.id).then(this._loadProject.bind(this, accountData));
-      }.bind(this));
-    },
+    var accountsData = ConfigsListenedAccounts.getAccounts();
 
-    _loadProject: function (accountData, request) {
-      var projectsData = request.response;
+    accountsData.forEach(function(accountData) {
+      ProjectsLoader(accountData.id).then(this._loadProject.bind(this, accountData));
+    }.bind(this));
+  },
 
-      projectsData.forEach(function(projectData) {
-        projectData.account_name = accountData.name;
-        projectData.ignored = ConfigIgnoredProjects.isIgnored(projectData.id);
-      });
+  _loadProject: function (accountData, request) {
+    var projectsData = request.response;
 
-      this.ignoredProjectsStore.addBunchFromData(projectsData);
-    },
+    projectsData.forEach(function(projectData) {
+      projectData.account_name = accountData.name;
+      projectData.ignored = ConfigsIgnoredProjects.isIgnored(projectData.id);
+    });
 
-    toggle: function(projectID) {
-      var store = this.ignoredProjectsStore.find(projectID),
-          ignored = store.data.ignored;
+    this.ignoredProjectsStore.addBunchFromData(projectsData);
+  },
 
-      var cacheAction = ignored ? "remove" : "add";
+  toggle: function(projectID) {
+    var store = this.ignoredProjectsStore.find(projectID),
+        ignored = store.data.ignored;
 
-      ConfigIgnoredProjects[cacheAction](projectID);
+    var cacheAction = ignored ? "remove" : "add";
 
-      store.setAttribute("ignored", !ignored);
-    }
-  };
-});
+    ConfigsIgnoredProjects[cacheAction](projectID);
+
+    store.setAttribute("ignored", !ignored);
+  }
+};

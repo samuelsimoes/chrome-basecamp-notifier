@@ -1,40 +1,40 @@
-define(["underscore"], function() {
-  return {
-    getAll: function (storageKey) {
-      return (JSON.parse(localStorage.getItem(storageKey)) || []);
-    },
+import { _ } from "libs";
 
-    update: function(storageKey, data) {
-      localStorage.setItem(storageKey, JSON.stringify(data));
-    },
+export default {
+  getAll: function (storageKey) {
+    return (JSON.parse(localStorage.getItem(storageKey)) || []);
+  },
 
-    include: function (storageKey, item) {
-      var currentData = this.getAll(storageKey);
-      return _.include(currentData, item);
-    },
+  update: function(storageKey, data) {
+    localStorage.setItem(storageKey, JSON.stringify(data));
+  },
 
-    add: function(storageKey, item) {
-      if (this.include(storageKey, item)) { return; }
+  include: function (storageKey, item) {
+    var currentData = this.getAll(storageKey);
+    return _.include(currentData, item);
+  },
 
-      var currentData = this.getAll(storageKey);
+  add: function(storageKey, item) {
+    if (this.include(storageKey, item)) { return; }
 
-      currentData.push(item);
+    var currentData = this.getAll(storageKey);
 
-      this.update(storageKey, currentData);
-    },
+    currentData.push(item);
 
-    removeByID: function(storageKey, itemID) {
-      var currentData = this.getAll(storageKey);
-      this.remove(storageKey, _.findWhere(currentData, { id: itemID }));
-    },
+    this.update(storageKey, currentData);
+  },
 
-    remove: function(storageKey, item) {
-      var currentData = this.getAll(storageKey);
-      this.update(storageKey, _.without(currentData, item));
-    },
+  removeByID: function(storageKey, itemID) {
+    var currentData = this.getAll(storageKey);
+    this.remove(storageKey, _.findWhere(currentData, { id: itemID }));
+  },
 
-    lastItem: function(storageKey, item) {
-      return _.last(this.getAll(storageKey));
-    }
-  };
-});
+  remove: function(storageKey, item) {
+    var currentData = this.getAll(storageKey);
+    this.update(storageKey, _.without(currentData, item));
+  },
+
+  lastItem: function(storageKey, item) {
+    return _.last(this.getAll(storageKey));
+  }
+};

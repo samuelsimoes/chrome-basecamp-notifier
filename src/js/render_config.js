@@ -1,58 +1,47 @@
-define([
-  "jsx!components/options/base",
-  "action_handlers/config_listened_accounts",
-  "action_handlers/config_ignored_events_types",
-  "action_handlers/config_ignored_projects",
-  "action_handlers/config_misc",
-  "react",
-  "fluxo"
-], function(
-  OptionsBase,
-  ConfigListenedAccountsActionHandler,
-  ConfigIgnoredEventsTypesActionHandler,
-  ConfigIgnoredProjectsActionHandler,
-  ConfigMiscActionHandler,
-  React,
-  Fluxo
-) {
-  return function() {
-    var listenedAccountsStore = new Fluxo.CollectionStore(),
-        ignoredEventsTypesStore = new Fluxo.CollectionStore(),
-        ignoredProjectsStore = new Fluxo.CollectionStore(),
-        miscStore = new Fluxo.Store();
+import { React, Fluxo } from "libs";
+import OptionsBase from "components/options/base";
+import ConfigListenedAccountsActionHandler from "action_handlers/config_listened_accounts";
+import ConfigIgnoredEventsTypesActionHandler from "action_handlers/config_ignored_events_types";
+import ConfigIgnoredProjectsActionHandler from "action_handlers/config_ignored_projects";
+import ConfigMiscActionHandler from "action_handlers/config_misc";
 
-    Fluxo.registerActionHandler(
-      "ConfigsListenedAccounts",
-      ConfigListenedAccountsActionHandler,
-      listenedAccountsStore
-    );
+export default function() {
+  var listenedAccountsStore = new Fluxo.CollectionStore(),
+      ignoredEventsTypesStore = new Fluxo.CollectionStore(),
+      ignoredProjectsStore = new Fluxo.CollectionStore(),
+      miscStore = new Fluxo.Store();
 
-    Fluxo.registerActionHandler(
-      "ConfigsIgnoredEventsTypes",
-      ConfigIgnoredEventsTypesActionHandler,
-      ignoredEventsTypesStore
-    );
+  Fluxo.registerActionHandler(
+    "ConfigsListenedAccounts",
+    ConfigListenedAccountsActionHandler,
+    listenedAccountsStore
+  );
 
-    Fluxo.registerActionHandler(
-      "ConfigsIgnoredProjects",
-      ConfigIgnoredProjectsActionHandler,
-      ignoredProjectsStore
-    );
+  Fluxo.registerActionHandler(
+    "ConfigsIgnoredEventsTypes",
+    ConfigIgnoredEventsTypesActionHandler,
+    ignoredEventsTypesStore
+  );
 
-    Fluxo.registerActionHandler(
-      "ConfigsMisc",
-      ConfigMiscActionHandler,
-      miscStore
-    );
+  Fluxo.registerActionHandler(
+    "ConfigsIgnoredProjects",
+    ConfigIgnoredProjectsActionHandler,
+    ignoredProjectsStore
+  );
 
-    React.render(
-      React.createElement(OptionsBase, {
-        listenedAccounts: listenedAccountsStore,
-        ignoredEventTypes: ignoredEventsTypesStore,
-        ignoredProjects: ignoredProjectsStore,
-        misc: miscStore
-      }),
-      document.getElementById("content-ctn")
-    );
-  };
-});
+  Fluxo.registerActionHandler(
+    "ConfigsMisc",
+    ConfigMiscActionHandler,
+    miscStore
+  );
+
+  React.render(
+    React.createElement(OptionsBase, {
+      listenedAccounts: listenedAccountsStore,
+      ignoredEventTypes: ignoredEventsTypesStore,
+      ignoredProjects: ignoredProjectsStore,
+      misc: miscStore
+    }),
+    document.getElementById("content-ctn")
+  );
+};

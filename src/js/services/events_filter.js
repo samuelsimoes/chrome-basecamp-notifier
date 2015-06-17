@@ -1,25 +1,18 @@
-define([
-  "services/configs_ignored_events",
-  "services/configs_ignored_projects",
-  "services/event_type",
-  "services/user"
-], function(
-  ConfigIgnoredEvents,
-  ConfigIgnoredProjects,
-  EventType,
-  User
-) {
-  return function(accountID, events) {
-    return events.filter(function(eventItem) {
-      var conditionsToRemove = [
-        (eventItem.creator.id === User.userIDOnAccount(accountID)),
-        ConfigIgnoredProjects.isIgnored(eventItem.bucket.id),
-        ConfigIgnoredEvents.isIgnored(EventType.discover(eventItem.action))
-      ];
+import ConfigsIgnoredEvents from "services/configs_ignored_events";
+import ConfigsIgnoredProjects from "services/configs_ignored_projects.js";
+import EventType from "services/event_type";
+import User from "services/user";
 
-      return conditionsToRemove.every(function(condition) {
-        return !condition;
-      });
+export default function(accountID, events) {
+  return events.filter(function(eventItem) {
+    var conditionsToRemove = [
+      (eventItem.creator.id === User.userIDOnAccount(accountID)),
+      ConfigsIgnoredProjects.isIgnored(eventItem.bucket.id),
+      ConfigsIgnoredEvents.isIgnored(EventType.discover(eventItem.action))
+    ];
+
+    return conditionsToRemove.every(function(condition) {
+      return !condition;
     });
-  };
-});
+  });
+};

@@ -1,94 +1,87 @@
-define([
-  "react",
-  "fluxo",
-  "jsx!components/popup/events"
-], function(
-  React,
-  Fluxo,
-  Events
-) {
-  return React.createClass({
-    mixins: [Fluxo.WatchComponent],
+import { Fluxo, React } from "libs";
+import Events from "components/popup/events";
 
-    listenProps: ["events", "starredEvents"],
+export default React.createClass({
+  mixins: [Fluxo.WatchComponent],
 
-    getInitialState: function() {
-      return { currentShowing: "events" };
-    },
+  listenProps: ["events", "starredEvents"],
 
-    renderEvents: function() {
-      if (this.state.currentShowing !== "events") { return; }
+  getInitialState: function() {
+    return { currentShowing: "events" };
+  },
 
-      return (
-        <div className="latest-notifications tab-content">
-          <Events accountID={this.props.id} events={this.state.events.stores} />
-        </div>
-      );
-    },
+  renderEvents: function() {
+    if (this.state.currentShowing !== "events") { return; }
 
-    renderStarred: function() {
-      if (this.state.currentShowing !== "starred-events") { return; }
+    return (
+      <div className="latest-notifications tab-content">
+        <Events accountID={this.props.id} events={this.state.events.stores} />
+      </div>
+    );
+  },
 
-      return (
-        <div className="latest-notifications tab-content">
-          <Events accountID={this.props.id} events={this.state.starredEvents.stores} />
-        </div>
-      );
-    },
+  renderStarred: function() {
+    if (this.state.currentShowing !== "starred-events") { return; }
 
-    showEvents: function(evt) {
-      evt.preventDefault();
-      this.setState({ currentShowing: "events" });
-    },
+    return (
+      <div className="latest-notifications tab-content">
+        <Events accountID={this.props.id} events={this.state.starredEvents.stores} />
+      </div>
+    );
+  },
 
-    showStarredEvents: function(evt) {
-      evt.preventDefault();
-      this.setState({ currentShowing: "starred-events" });
-    },
+  showEvents: function(evt) {
+    evt.preventDefault();
+    this.setState({ currentShowing: "events" });
+  },
 
-    renderClearButton: function () {
-      if (!this.state.events.stores.length || this.state.currentShowing !== "events") { return; }
+  showStarredEvents: function(evt) {
+    evt.preventDefault();
+    this.setState({ currentShowing: "starred-events" });
+  },
 
-      return <button onClick={this.clear} className="button-1 close-btn">Clear</button>;
-    },
+  renderClearButton: function () {
+    if (!this.state.events.stores.length || this.state.currentShowing !== "events") { return; }
 
-    clear: function () {
-      Fluxo.callAction(("Events" + this.props.id), "clearLastEvents");
-    },
+    return <button onClick={this.clear} className="button-1 close-btn">Clear</button>;
+  },
 
-    render: function() {
-      var eventsTabClasses =
-        React.addons.classSet({
-          tab: true,
-          active: (this.state.currentShowing === "events")
-        });
+  clear: function () {
+    Fluxo.callAction(("Events" + this.props.id), "clearLastEvents");
+  },
 
-      var starredEventsTabClasses =
-        React.addons.classSet({
-          tab: true,
-          active: (this.state.currentShowing === "starred-events")
-        });
+  render: function() {
+    var eventsTabClasses =
+      React.addons.classSet({
+        tab: true,
+        active: (this.state.currentShowing === "events")
+      });
 
-      return (
-        <div className="account">
-          <h1>{this.props.name}</h1>
+    var starredEventsTabClasses =
+      React.addons.classSet({
+        tab: true,
+        active: (this.state.currentShowing === "starred-events")
+      });
 
-          {this.renderClearButton()}
+    return (
+      <div className="account">
+        <h1>{this.props.name}</h1>
 
-          <ul className="etabs">
-            <li className={eventsTabClasses}>
-              <a onClick={this.showEvents} href="#">Latest Events</a>
-            </li>
-            <li className={starredEventsTabClasses}>
-              <a onClick={this.showStarredEvents} href="#">Starred Events</a>
-            </li>
-          </ul>
+        {this.renderClearButton()}
 
-          {this.renderEvents()}
+        <ul className="etabs">
+          <li className={eventsTabClasses}>
+            <a onClick={this.showEvents} href="#">Latest Events</a>
+          </li>
+          <li className={starredEventsTabClasses}>
+            <a onClick={this.showStarredEvents} href="#">Starred Events</a>
+          </li>
+        </ul>
 
-          {this.renderStarred()}
-        </div>
-      );
-    }
-  });
+        {this.renderEvents()}
+
+        {this.renderStarred()}
+      </div>
+    );
+  }
 });

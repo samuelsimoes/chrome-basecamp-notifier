@@ -1,27 +1,23 @@
-define([
-  "services/authenticated_ajax",
-  "services/defer"
-], function(
-  AuthenticatedAjax,
-  Defer
-) {
-  return function(accountID, identityID) {
-    var defer = Defer();
+import { _ } from "libs";
+import AuthenticatedAjax from "services/authenticated_ajax";
+import Defer from "services/defer";
 
-    var peopleLoading = AuthenticatedAjax("https://basecamp.com/" + accountID + "/api/v1/people.json");
+export default function(accountID, identityID) {
+  var defer = Defer();
 
-    var GrabTheUserID = function(request) {
-      var currentUser = _.findWhere(request.response, { identity_id: identityID });
+  var peopleLoading = AuthenticatedAjax("https://basecamp.com/" + accountID + "/api/v1/people.json");
 
-      if (!currentUser) {
-        throw new Error("Current user isn't found on the people of listened account.");
-      }
+  var GrabTheUserID = function(request) {
+    var currentUser = _.findWhere(request.response, { identity_id: identityID });
 
-      defer.resolve(currentUser.id);
-    };
+    if (!currentUser) {
+      throw new Error("Current user isn't found on the people of listened account.");
+    }
 
-    peopleLoading.then(GrabTheUserID, defer.reject);
-
-    return defer.promise;
+    defer.resolve(currentUser.id);
   };
-});
+
+  peopleLoading.then(GrabTheUserID, defer.reject);
+
+  return defer.promise;
+};

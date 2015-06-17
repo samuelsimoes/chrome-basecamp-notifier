@@ -1,23 +1,16 @@
-define([
-  "react",
-  "fluxo",
-  "jsx!components/options/item_checkbox"
-], function(
-  React,
-  Fluxo,
-  ItemCheckbox
-) {
-  return React.createClass({
-    toggleNotification: function () {
-      Fluxo.callAction("ConfigsMisc", "toggleNotification");
-    },
+import { React, Fluxo } from "libs";
+import ItemCheckbox from "components/options/item_checkbox";
 
-    render: function () {
-      return (
-        <ItemCheckbox onChange={this.toggleNotification}
-                      checked={this.props.disableNotification}
-                      label="Disable desktop notifications?" />
-      );
-    }
-  });
+export default React.createClass({
+  toggleNotification: function () {
+    Fluxo.callAction("ConfigsMisc", "toggleNotification");
+  },
+
+  render: function () {
+    return (
+      <ItemCheckbox onChange={this.toggleNotification}
+                    checked={this.props.disableNotification}
+                    label="Disable desktop notifications?" />
+    );
+  }
 });

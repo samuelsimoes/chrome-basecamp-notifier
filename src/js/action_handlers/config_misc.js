@@ -1,24 +1,20 @@
-define([
-  "services/object_local_storage"
-], function(
-  ObjectLocalStorage
-) {
-  return {
-    initialize: function (miscStore) {
-      this.miscStore = miscStore;
+import ObjectLocalStorage from "services/object_local_storage";
 
-      this.miscStore.setAttribute(
-        "disable_notifications",
-        ObjectLocalStorage.getItem("miscConfigs", "disable_desktop_notifications")
-      );
-    },
+export default {
+  initialize: function (miscStore) {
+    this.miscStore = miscStore;
 
-    toggleNotification: function () {
-      var notificationDisabled = this.miscStore.data.disable_notifications;
+    this.miscStore.setAttribute(
+      "disable_notifications",
+      ObjectLocalStorage.getItem("miscConfigs", "disable_desktop_notifications")
+    );
+  },
 
-      ObjectLocalStorage.setItem("miscConfigs", "disable_desktop_notifications", !notificationDisabled);
+  toggleNotification: function () {
+    var notificationDisabled = this.miscStore.data.disable_notifications;
 
-      this.miscStore.setAttribute("disable_notifications", !notificationDisabled)
-    }
-  };
-});
+    ObjectLocalStorage.setItem("miscConfigs", "disable_desktop_notifications", !notificationDisabled);
+
+    this.miscStore.setAttribute("disable_notifications", !notificationDisabled)
+  }
+};

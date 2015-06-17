@@ -1,21 +1,15 @@
-define([
-  "services/ajax",
-  "underscore",
-  "services/user_token"
-], function(
-  Ajax,
-  _,
-  UserToken
-) {
-  return function(url, options) {
-    options = (options || {});
+import { _ } from "libs";
+import Ajax from "services/ajax";
+import UserToken from "services/user_token";
 
-    options.headers = _.extend({
-      "Authorization": ("Bearer " + UserToken.current())
-    }, options.headers);
+export default function(url, options) {
+  options = (options || {});
 
-    options = _.defaults(options, { url: url });
+  options.headers = _.extend({
+    "Authorization": ("Bearer " + UserToken.current())
+  }, options.headers);
 
-    return Ajax(options);
-  };
-});
+  options = _.defaults(options, { url: url });
+
+  return Ajax(options);
+};

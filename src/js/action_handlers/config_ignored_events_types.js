@@ -1,37 +1,31 @@
-define([
-  "services/event_type",
-  "services/configs_ignored_events",
-  "underscore"
-], function(
-  EventType,
-  ConfigsIgnoredEvents,
-  _
-) {
-  return {
-    initialize: function (ignoredEventsTypesStore) {
-      this.ignoredEventsTypesStore = ignoredEventsTypesStore;
-      this._load();
-    },
+import { _ } from "libs";
+import EventType from "services/event_type";
+import ConfigsIgnoredEvents from "services/configs_ignored_events";
 
-    _load: function() {
-      var eventsData = _.values(EventType.types);
+export default {
+  initialize: function (ignoredEventsTypesStore) {
+    this.ignoredEventsTypesStore = ignoredEventsTypesStore;
+    this._load();
+  },
 
-      _.each(eventsData, function(item) {
-        item.ignored = ConfigsIgnoredEvents.isIgnored(item.key);
-      });
+  _load: function() {
+    var eventsData = _.values(EventType.types);
 
-      this.ignoredEventsTypesStore.resetFromData(eventsData);
-    },
+    _.each(eventsData, function(item) {
+      item.ignored = ConfigsIgnoredEvents.isIgnored(item.key);
+    });
 
-    toggle: function(eventType) {
-      var store = this.ignoredEventsTypesStore.findWhere({ key: eventType }),
-          ignored = store.data.ignored;
+    this.ignoredEventsTypesStore.resetFromData(eventsData);
+  },
 
-      var cacheAction = ignored ? "remove" : "add";
+  toggle: function(eventType) {
+    var store = this.ignoredEventsTypesStore.findWhere({ key: eventType }),
+        ignored = store.data.ignored;
 
-      ConfigsIgnoredEvents[cacheAction](eventType);
+    var cacheAction = ignored ? "remove" : "add";
 
-      store.setAttribute("ignored", !ignored);
-    }
-  };
-});
+    ConfigsIgnoredEvents[cacheAction](eventType);
+
+    store.setAttribute("ignored", !ignored);
+  }
+};

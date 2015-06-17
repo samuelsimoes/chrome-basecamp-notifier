@@ -1,17 +1,17 @@
-define(["services/array_local_storage"], function(ArrayLocalStorage) {
-  var CACHE_KEY = "ignoredProjects"
+import ArrayLocalStorage from "services/array_local_storage";
 
-  return {
-    isIgnored: function(projectID) {
-      return ArrayLocalStorage.include(CACHE_KEY, projectID);
-    },
+var CACHE_KEY = "ignoredProjects";
 
-    add: function(projectID) {
-      ArrayLocalStorage.add(CACHE_KEY, projectID);
-    },
+export default {
+  isIgnored: function(projectID) {
+    return ArrayLocalStorage.include(CACHE_KEY, projectID);
+  },
 
-    remove: function(projectID) {
-      ArrayLocalStorage.remove(CACHE_KEY, projectID);
-    }
-  };
-});
+  add: function(projectID) {
+    ArrayLocalStorage.add(CACHE_KEY, projectID);
+  },
+
+  remove: function(projectID) {
+    ArrayLocalStorage.remove(CACHE_KEY, projectID);
+  }
+};

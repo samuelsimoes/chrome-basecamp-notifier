@@ -1,60 +1,62 @@
-define(["services/ajax", "app", "underscore"], function(Ajax, App, _) {
-  var AUTHORIZATION_TOKEN_URL = "https://launchpad.37signals.com/authorization/token";
+import { _ } from "libs";
+import Ajax from "services/ajax";
+import App from "app";
 
-  return {
-    current: function() {
-      return localStorage.getItem("currentToken");
-    },
+var AUTHORIZATION_TOKEN_URL = "https://launchpad.37signals.com/authorization/token";
 
-    clearCurrentCredentials: function() {
-      localStorage.clear("currentToken");
-      localStorage.clear("refreshToken");
-    },
+export default {
+  current: function() {
+    return localStorage.getItem("currentToken");
+  },
 
-    fetch: function(authCode) {
-      var tokenPromise = this.tokenRequest({
-        code: authCode,
-        type: "web_server"
-      });
+  clearCurrentCredentials: function() {
+    localStorage.clear("currentToken");
+    localStorage.clear("refreshToken");
+  },
 
-      tokenPromise.then(this.cacheToken);
+  fetch: function(authCode) {
+    var tokenPromise = this.tokenRequest({
+      code: authCode,
+      type: "web_server"
+    });
 
-      return tokenPromise;
-    },
+    tokenPromise.then(this.cacheToken);
 
-    refresh: function() {
-      var tokenPromise = this.tokenRequest({
-        refresh_token: localStorage.getItem("refreshToken"),
-        type: "refresh"
-      });
+    return tokenPromise;
+  },
 
-      tokenPromise.then(this.cacheToken);
+  refresh: function() {
+    var tokenPromise = this.tokenRequest({
+      refresh_token: localStorage.getItem("refreshToken"),
+      type: "refresh"
+    });
 
-      return tokenPromise;
-    },
+    tokenPromise.then(this.cacheToken);
 
-    cacheToken: function(request) {
-      var data = request.response;
+    return tokenPromise;
+  },
 
-      localStorage.setItem("currentToken", data.access_token);
+  cacheToken: function(request) {
+    var data = request.response;
 
-      if (data.refresh_token) {
-        localStorage.setItem("refreshToken", data.refresh_token);
-      }
-    },
+    localStorage.setItem("currentToken", data.access_token);
 
-    tokenRequest: function(options) {
-      _.defaults(options, {
-        client_id: App.clientId,
-        redirect_uri: App.redirectUri,
-        client_secret: App.clientSecret
-      });
-
-      return Ajax({
-        url: AUTHORIZATION_TOKEN_URL,
-        method: "POST",
-        data: options
-      });
+    if (data.refresh_token) {
+      localStorage.setItem("refreshToken", data.refresh_token);
     }
-  };
-});
+  },
+
+  tokenRequest: function(options) {
+    _.defaults(options, {
+      client_id: App.clientId,
+      redirect_uri: App.redirectUri,
+      client_secret: App.clientSecret
+    });
+
+    return Ajax({
+      url: AUTHORIZATION_TOKEN_URL,
+      method: "POST",
+      data: options
+    });
+  }
+};
