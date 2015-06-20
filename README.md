@@ -8,7 +8,12 @@ Feel free to help us improve the extension.
 
 ![image](demo.jpg)
 
-##Instructions
+##Contributing
+
+To contribute you need be familiar with [React.js](http://facebook.github.io/react/) and [Fluxo](https://github.com/samuelsimoes/fluxo). The app also uses [Babel.js](http://babeljs.io)
+to give us the possibility to use ES6 features. :metal:
+
+##Building
 
 1. `npm install && bower install`
 
@@ -16,7 +21,7 @@ Feel free to help us improve the extension.
 
 3. Run `cp .default-env .development-env` and update the app credentials on `.development-env`.
 
-4. Run `grunt build` and load the extension as an [unpacked version on Chrome](http://superuser.com/a/247654/235416) from `dist/` folder.
+4. Run `npm run build` and load the extension as an [unpacked version on Chrome](http://superuser.com/a/247654/235416) from `dist/` folder.
 
 ##To pack
 
@@ -24,18 +29,9 @@ Feel free to help us improve the extension.
 
 2. Run `cp .development-env .production-env` and update the infos case you use a diferent registered app on 37signals for the production version.
 
-3. Run `grunt pack --environment=production`
+3. Run `BUILD_ENV=production npm run pack`
 
 4. Publish the `dist/basecamp_notifier_<version>_production.zip` on Chrome Store.
-
-## Tests
-
-To run the test suite you need run the specs inside Chrome because the Chrome Extension API, for this, when you [install the extension in unpacked mode](http://superuser.com/a/247654/235416) access:
-
-`chrome-extension://<you-chrome-extension-id>/spec_runner.html`.
-
-## To-do
-**[In issues =D](https://github.com/samuelsimoes/Chrome-Basecamp-Notifier/issues?state=open)**
 
 -----------------------------------------
 
