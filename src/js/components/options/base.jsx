@@ -1,12 +1,10 @@
-import { React, Fluxo } from "libs";
+import { React } from "libs";
 import ListenedAccountsTab from "components/options/listened_accounts_tab";
 import IgnoredEventsTab from "components/options/ignored_events_tab";
 import IgnoredProjectsTab from "components/options/ignored_projects_tab";
 import MiscTab from "components/options/misc_tab";
 
 export default React.createClass({
-  mixins: [Fluxo.WatchComponent],
-
   getInitialState: function() {
     return { currentTab: "listenedAccounts" };
   },
@@ -20,22 +18,22 @@ export default React.createClass({
 
   renderListenedAccounts: function () {
     if (this.state.currentTab !== "listenedAccounts") { return; }
-    return <ListenedAccountsTab accounts={this.state.listenedAccounts.stores} />;
+    return <ListenedAccountsTab accounts={this.props.listenedAccounts.stores} />;
   },
 
   renderIgnoredEvents: function () {
     if (this.state.currentTab !== "ignoredEvents") { return; }
-    return <IgnoredEventsTab eventTypes={this.state.ignoredEventTypes.stores} />;
+    return <IgnoredEventsTab eventTypes={this.props.ignoredEventTypes.stores} />;
   },
 
   renderIgnoredProjects: function () {
     if (this.state.currentTab !== "ignoredProjects") { return; }
-    return <IgnoredProjectsTab projects={this.state.ignoredProjects.stores} />;
+    return <IgnoredProjectsTab projects={this.props.ignoredProjects.stores} />;
   },
 
   renderMisc: function () {
     if (this.state.currentTab !== "misc") { return; }
-    return <MiscTab disableNotification={this.state.misc.disable_notifications} />;
+    return <MiscTab disableNotification={this.props.misc.disable_notifications} />;
   },
 
   setTab: function (key) {

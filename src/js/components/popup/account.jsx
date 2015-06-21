@@ -2,10 +2,6 @@ import { Fluxo, React } from "libs";
 import Events from "components/popup/events";
 
 export default React.createClass({
-  mixins: [Fluxo.WatchComponent],
-
-  listenProps: ["events", "starredEvents"],
-
   getInitialState: function() {
     return { currentShowing: "events" };
   },
@@ -15,7 +11,7 @@ export default React.createClass({
 
     return (
       <div className="latest-notifications tab-content">
-        <Events accountID={this.props.id} events={this.state.events.stores} />
+        <Events accountID={this.props.id} events={this.props.events.stores} />
       </div>
     );
   },
@@ -25,7 +21,7 @@ export default React.createClass({
 
     return (
       <div className="latest-notifications tab-content">
-        <Events accountID={this.props.id} events={this.state.starredEvents.stores} />
+        <Events accountID={this.props.id} events={this.props.starredEvents.stores} />
       </div>
     );
   },
@@ -41,7 +37,7 @@ export default React.createClass({
   },
 
   renderClearButton: function () {
-    if (!this.state.events.stores.length || this.state.currentShowing !== "events") { return; }
+    if (!this.props.events.stores.length || this.state.currentShowing !== "events") { return; }
 
     return <button onClick={this.clear} className="button-1 close-btn">Clear</button>;
   },

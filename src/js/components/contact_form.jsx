@@ -1,17 +1,9 @@
 import { React, Fluxo, _ } from "libs";
 
 export default React.createClass({
-  listenProps: ["contactForm"],
-
-  mixins: [React.addons.LinkedStateMixin, Fluxo.WatchComponent],
-
-  getInitialState: function() {
-    return {};
-  },
-
   onSubmit: function (evt) {
     evt.preventDefault();
-    Fluxo.callAction("ContactForm", "submit", this.state.contactForm);
+    Fluxo.callAction("ContactForm", "submit");
   },
 
   onChange: function(attributeName, evt) {
@@ -20,11 +12,11 @@ export default React.createClass({
 
     data[attributeName] = value;
 
-    this.setState({ contactForm: _.extend({}, this.state.contactForm, data) });
+    Fluxo.callAction("ContactForm", "updateData", _.extend({}, this.props.contactForm, data));
   },
 
   render: function() {
-    var loading = this.state.contactForm.loading,
+    var loading = this.props.contactForm.loading,
         submitBtnText = loading ? "Sending..." : "Submit Feedback";
 
     return (
@@ -32,7 +24,7 @@ export default React.createClass({
         <textarea className="form-field"
                   maxLength="300"
                   required
-                  value={this.state.contactForm.content}
+                  value={this.props.contactForm.content}
                   onChange={this.onChange.bind(this, "content")}
                   rows="3"
                   placeholder="Any bug or suggestion? Send here!">
@@ -40,7 +32,7 @@ export default React.createClass({
 
         <input maxLength="40"
                required
-               value={this.state.contactForm.email}
+               value={this.props.contactForm.email}
                onChange={this.onChange.bind(this, "email")}
                type="email"
                className="form-field"

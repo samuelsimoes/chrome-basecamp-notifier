@@ -3,7 +3,8 @@
   "dependencies": {
     "raven-js": "1.1.16",
     "underscore": "1.5.1",
-    "fluxo": "0.0.10",
+    "fluxo": "0.0.12",
+    "fluxo_react_connect_stores": "0.0.1",
     "react": "0.13.3"
   }
 }

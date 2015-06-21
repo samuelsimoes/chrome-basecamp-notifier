@@ -1,4 +1,4 @@
-import { React, Fluxo } from "libs";
+import { React, Fluxo, FluxoReactConnectStores } from "libs";
 import OptionsBase from "components/options/base";
 import ConfigListenedAccountsActionHandler from "action_handlers/config_listened_accounts";
 import ConfigIgnoredEventsTypesActionHandler from "action_handlers/config_ignored_events_types";
@@ -35,13 +35,15 @@ export default function() {
     miscStore
   );
 
+  var OptionsBaseConnected = FluxoReactConnectStores(OptionsBase, {
+    listenedAccounts: listenedAccountsStore,
+    ignoredEventTypes: ignoredEventsTypesStore,
+    ignoredProjects: ignoredProjectsStore,
+    misc: miscStore
+  });
+
   React.render(
-    React.createElement(OptionsBase, {
-      listenedAccounts: listenedAccountsStore,
-      ignoredEventTypes: ignoredEventsTypesStore,
-      ignoredProjects: ignoredProjectsStore,
-      misc: miscStore
-    }),
+    React.createElement(OptionsBaseConnected),
     document.getElementById("content-ctn")
   );
 };

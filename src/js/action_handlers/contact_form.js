@@ -5,16 +5,18 @@ export default {
     this.contactFormStore = contactFormStore;
   },
 
-  submit: function (data) {
+  updateData: function(data) {
+    this.contactFormStore.set(data);
+  },
+
+  submit: function () {
     var request = Ajax({
       url: "@@contactSupportEndpoint",
-      data: data,
+      data: this.contactFormStore.data,
       method: "POST"
     });
 
-    data.loading = true;
-
-    this.contactFormStore.set(data);
+    this.contactFormStore.setAttribute("loading", true);
 
     var onSend = function() {
       alert("Thank you for your feedback.");

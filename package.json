@@ -2,6 +2,7 @@
   "name": "basecamp_notifier",
   "version": "2.0.1",
   "description": "Display Basecamp activity with desktop notifications.",
+  "main": "./src/js/main.js",
   "scripts": {
     "build": "./build.sh",
     "pack": "./pack.sh"
@@ -14,6 +15,15 @@
     "name": "Samuel Simões",
     "email": "slip.cm@gmail.com",
     "url": "https://chrome.google.com/webstore/detail/basecamp-notifier/fihjmkangcncdhnbnenfipalmcegljii"
+  },
+  "browserify": {
+    "transform": [["babelify", { "ignore": "vendor" }]]
+  },
+  "browser": {
+    "underscore": "./src/js/vendor/underscore/underscore.js",
+    "fluxo": "./src/js/vendor/fluxo/dist/fluxo.js",
+    "react": "./src/js/vendor/react/react-with-addons.js",
+    "fluxo_react_connect_stores": "./src/js/vendor/fluxo_react_connect_stores/dist/fluxo_react_connect_stores.js"
   },
   "devDependencies": {
     "babel": "5.5.8",

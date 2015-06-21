@@ -1,5 +1,6 @@
-var Fluxo = require("vendor/fluxo/dist/fluxo"),
-    React = require("vendor/react/react-with-addons"),
-    _ = require("vendor/underscore/underscore");
+var Fluxo = require("fluxo"),
+    React = require("react"),
+    FluxoReactConnectStores = require("fluxo_react_connect_stores"),
+    _ = require("underscore");
 
-export { Fluxo, React, _ };
+export { Fluxo, React, _, FluxoReactConnectStores };

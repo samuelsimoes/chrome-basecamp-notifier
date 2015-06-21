@@ -1,4 +1,4 @@
-import { React, Fluxo, _ } from "libs";
+import { React, Fluxo, _, FluxoReactConnectStores } from "libs";
 import Account from "components/popup/account";
 import Badge from "services/badge";
 import EventsPopupHandler from "action_handlers/events_popup";
@@ -28,16 +28,13 @@ export default function() {
       account
     );
 
+    var ConnectedAccount = FluxoReactConnectStores(Account, {
+      starredEvents: starredEventsStore,
+      events: eventsStore
+    });
+
     var accountEventsComponent =
-      React.createElement(
-        Account,
-        {
-          name: account.name,
-          id: account.id,
-          starredEvents: starredEventsStore,
-          events: eventsStore
-        }
-      );
+      React.createElement(ConnectedAccount, { name: account.name, id: account.id });
 
     React.render(accountEventsComponent, CreateEventListContainer());
   };

@@ -15,11 +15,7 @@ cp src/js/vendor/raven-js/dist/raven.js dist/js/raven.js
 cp src/js/global.js dist/js/global.js
 
 # compile using Browserfiy with Babelfiy (Babel.js, ES6, you know)
-NODE_PATH='src/js' \
-node_modules/.bin/browserify src/js/main.js \
-                             --extension=.jsx \
-                             -t [ babelify --ignore /vendor/ ] \
-                             -o dist/js/main.js
+NODE_PATH='src/js' node_modules/.bin/browserify . --extension=.jsx -o dist/js/main.js
 
 # search placeholders and replace with build vars
 gsed -i -e "s|@@basecampClientId|${BASECAMP_CLIENT_ID}|g" \

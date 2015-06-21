@@ -1,4 +1,4 @@
-import { Fluxo, React } from "libs";
+import { Fluxo, React, FluxoReactConnectStores } from "libs";
 import RenderConfig from "render_config";
 import ContactForm from "components/contact_form";
 import ContactFormHandler from "action_handlers/contact_form";
@@ -61,10 +61,9 @@ export default function() {
 
   Fluxo.registerActionHandler("ContactForm", ContactFormHandler, contactFormStore);
 
-  React.render(
-    React.createElement(ContactForm, { contactForm: contactFormStore }),
-    document.getElementById("contact-ctn")
-  );
+  var ContactFormConnected = FluxoReactConnectStores(ContactForm, { contactForm: contactFormStore });
+
+  React.render(React.createElement(ContactFormConnected), document.getElementById("contact-ctn"));
 
   document.getElementById("extension_version").innerHTML = localStorage.getItem("currentVersion");
 };
