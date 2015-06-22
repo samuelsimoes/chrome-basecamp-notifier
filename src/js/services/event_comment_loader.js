@@ -1,5 +1,6 @@
 import { _ } from "libs";
 import ArrayLocalStorage from "services/array_local_storage";
+import AuthenticatedAjax from "services/authenticated_ajax";
 import Defer from "services/defer";
 
 export default function(eventData) {
