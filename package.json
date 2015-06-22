@@ -17,7 +17,7 @@
     "url": "https://chrome.google.com/webstore/detail/basecamp-notifier/fihjmkangcncdhnbnenfipalmcegljii"
   },
   "browserify": {
-    "transform": [["babelify", { "ignore": "vendor" }]]
+    "transform": [["babelify", { "ignore": "vendor", "whitelist": ["es6", "react"] }]]
   },
   "browser": {
     "underscore": "./src/js/vendor/underscore/underscore.js",
