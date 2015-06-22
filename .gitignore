@@ -3,3 +3,4 @@ src/js/vendor
 dist
 .*-env
 !.default-env
+browserify-cache.json

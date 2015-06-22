@@ -29,6 +29,7 @@
     "babel": "5.5.8",
     "babelify": "^6.1.2",
     "bower": "*",
-    "browserify": "10.2.4"
+    "browserify": "10.2.4",
+    "browserify-incremental": "*"
   }
 }
