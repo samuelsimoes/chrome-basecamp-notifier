@@ -24,7 +24,7 @@ export default function() {
       previousCache = JSON.parse(previousCache);
 
       if (previousCache[0]) {
-        EventsLastUpdatedAt.set(accountData.id, previousCache[0].created_at)
+        EventsLastUpdateAt.set(accountData.id, previousCache[0].created_at)
       }
     });
   }
