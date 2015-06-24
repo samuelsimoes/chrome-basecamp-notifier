@@ -1,8 +1,8 @@
 # Basecamp Chrome Notifier
 
-Extension for Google Chrome which notifies the activity in your Basecamp Accounts with desktop notifications.
+Extension for Google Chrome that notifies about activity on your Basecamp Accounts with desktop notifications, events type filter and projects filter.
 
-Feel free to help us improve the extension.
+Feel free to help us to improve the extension.
 
 **[Extension on Chrome Store](https://chrome.google.com/webstore/detail/basecamp-notifier/fihjmkangcncdhnbnenfipalmcegljii)**
 
