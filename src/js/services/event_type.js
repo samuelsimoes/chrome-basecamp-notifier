@@ -56,6 +56,10 @@ export default {
       return "removed_permission_from_project";
     } else if (Text.contains(action, "created the project")) {
       return "create_project";
+    } else if (Text.contains(action, "changed the project name")) {
+      return "project_renamed";
+    } else if (Text.contains(action, "changed the project description")) {
+      return "project_description_renamed";
     }
   },
 
@@ -83,6 +87,8 @@ export default {
     created_event: { label: "Create an event", icon: "icon-calendar", key: "created_event" },
     uploaded_file: { label: "Upload a file", icon: "icon-picture", key: "uploaded_file" },
     deleted_file: { label: "Delete a file", icon: "icon-remove", key: "deleted_file" },
-    create_project: { label: "Create Project", icon: "icon-briefcase", key: "create_project" }
+    create_project: { label: "Create Project", icon: "icon-briefcase", key: "create_project" },
+    project_renamed: { label: "Rename Project", icon: "icon-edit", key: "project_renamed" },
+    project_description_renamed: { label: "Change Project Description", icon: "icon-quote-left", key: "project_description_renamed" }
   }
 };
