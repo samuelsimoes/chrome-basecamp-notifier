@@ -1,15 +1,10 @@
 import { React } from "libs";
 import Text from "services/text";
 import PrettyDate from "services/pretty_date";
-import EventType from "services/event_type";
 import Comment from "components/popup/comment";
 
 export default React.createClass({
   mixins: [React.addons.PureRenderMixin],
-
-  componentWillMount: function() {
-    this.eventTypeInfos = EventType.discoverAndGetInfos(this.props.action);
-  },
 
   toggleStar: function(evt) {
     evt.preventDefault();
@@ -32,7 +27,7 @@ export default React.createClass({
   },
 
   onClick: function() {
-    if (this.eventTypeInfos.key === "comment") {
+    if (this.data.isComment) {
       var actionName = this.props.showingComment ? "hideComment" : "showComment";
       this.props.actions[actionName](this.props.id);
     } else {
@@ -48,7 +43,7 @@ export default React.createClass({
   },
 
   render: function() {
-    var iconClasses = React.addons.classSet("icon", this.eventTypeInfos.icon),
+    var iconClasses = React.addons.classSet("icon", this.props.icon),
         startIconClasses = React.addons.classSet({
           "icon": true,
           "icon-star": this.props.starred,

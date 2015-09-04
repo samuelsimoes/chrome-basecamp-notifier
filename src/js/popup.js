@@ -5,6 +5,7 @@ import EventsPopupHandler from "action_handlers/events_popup";
 import UserToken from "services/user_token";
 import ConfigsListenedAccounts from "services/configs_listened_accounts";
 import App from "app.js";
+import Events from "stores/events";
 
 export default function() {
   var CreateEventListContainer = function() {
@@ -16,8 +17,8 @@ export default function() {
   };
 
   var ShowAccountEvents = function(account) {
-    var eventsStore = new Fluxo.CollectionStore(),
-        starredEventsStore = new Fluxo.CollectionStore(),
+    var eventsStore = new Events(),
+        starredEventsStore = new Events(),
         actions = Object.create(EventsPopupHandler);
 
     actions.initialize(eventsStore, starredEventsStore, account.id);
