@@ -1,4 +1,4 @@
-import { Fluxo, React } from "libs";
+import { React } from "libs";
 import Events from "components/popup/events";
 
 export default React.createClass({
@@ -11,7 +11,7 @@ export default React.createClass({
 
     return (
       <div className="latest-notifications tab-content">
-        <Events accountID={this.props.id} events={this.props.events.stores} />
+        <Events actions={this.props.actions} events={this.props.events.stores} />
       </div>
     );
   },
@@ -21,7 +21,7 @@ export default React.createClass({
 
     return (
       <div className="latest-notifications tab-content">
-        <Events accountID={this.props.id} events={this.props.starredEvents.stores} />
+        <Events actions={this.props.actions} events={this.props.starredEvents.stores} />
       </div>
     );
   },
@@ -43,7 +43,7 @@ export default React.createClass({
   },
 
   clear: function () {
-    Fluxo.callAction(("Events" + this.props.id), "clearLastEvents");
+    this.props.actions.clearLastEvents();
   },
 
   render: function() {

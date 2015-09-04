@@ -5,6 +5,7 @@ export default React.createClass({
   renderEvent: function(data) {
     return <Event {...data}
                   key={data.id}
+                  actions={this.props.actions}
                   accountID={this.props.accountID}
                   creatorImage={data.creator.avatar_url}
                   creatorName={data.creator.name}

@@ -16,17 +16,11 @@ export default function() {
   };
 
   var ShowAccountEvents = function(account) {
-    var actionHandlerIdentifier = ("Events" + account.id),
-        eventsStore = new Fluxo.CollectionStore(),
-        starredEventsStore = new Fluxo.CollectionStore();
+    var eventsStore = new Fluxo.CollectionStore(),
+        starredEventsStore = new Fluxo.CollectionStore(),
+        actions = Object.create(EventsPopupHandler);
 
-    Fluxo.registerActionHandler(
-      actionHandlerIdentifier,
-      EventsPopupHandler,
-      eventsStore,
-      starredEventsStore,
-      account
-    );
+    actions.initialize(eventsStore, starredEventsStore, account.id);
 
     var ConnectedAccount = FluxoReactConnectStores(Account, {
       starredEvents: starredEventsStore,
@@ -34,7 +28,7 @@ export default function() {
     });
 
     var accountEventsComponent =
-      React.createElement(ConnectedAccount, { name: account.name, id: account.id });
+      React.createElement(ConnectedAccount, { name: account.name, actions: actions });
 
     React.render(accountEventsComponent, CreateEventListContainer());
   };

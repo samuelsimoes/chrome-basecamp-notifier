@@ -7,13 +7,13 @@ import EventCommentLoader from "services/event_comment_loader";
 var MAX_EVENTS_ON_LIST = 40;
 
 export default {
-  initialize: function (eventsStore, starredEventsStore, account) {
+  initialize: function (eventsStore, starredEventsStore, accountID) {
     this.eventsStore = eventsStore;
     this.starredEventsStore = starredEventsStore;
-    this.account = account;
+    this.accountID = accountID;
 
-    this.starredEventsCache = EventsCache.getStarred(this.account.id);
-    this.eventsCache = EventsCache.get(this.account.id);
+    this.starredEventsCache = EventsCache.getStarred(this.accountID);
+    this.eventsCache = EventsCache.get(this.accountID);
 
     this._loadEvents();
     this._loadStarredEvents();
@@ -47,7 +47,7 @@ export default {
 
     this.starredEventsStore.addFromData(eventData);
 
-    EventsCache.storeStarred(this.account.id, eventData);
+    EventsCache.storeStarred(this.accountID, eventData);
   },
 
   unstarEvent: function(eventID) {
@@ -59,7 +59,7 @@ export default {
 
     this.starredEventsStore.remove(this.starredEventsStore.find(eventID));
 
-    EventsCache.removeStarred(this.account.id, eventID);
+    EventsCache.removeStarred(this.accountID, eventID);
   },
 
   /**
@@ -88,7 +88,7 @@ export default {
   },
 
   clearLastEvents: function() {
-    EventsCache.clear(this.account.id);
+    EventsCache.clear(this.accountID);
     this.eventsStore.removeAll();
   },
 

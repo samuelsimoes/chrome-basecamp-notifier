@@ -1,4 +1,4 @@
-import { React, Fluxo } from "libs";
+import { React } from "libs";
 import Text from "services/text";
 import PrettyDate from "services/pretty_date";
 import EventType from "services/event_type";
@@ -8,7 +8,6 @@ export default React.createClass({
   mixins: [React.addons.PureRenderMixin],
 
   componentWillMount: function() {
-    this.actionHandlerIdentifier = ("Events" + this.props.accountID);
     this.eventTypeInfos = EventType.discoverAndGetInfos(this.props.action);
   },
 
@@ -18,7 +17,7 @@ export default React.createClass({
 
     var actionName = (this.props.starred) ? "unstarEvent" :  "starEvent";
 
-    Fluxo.callAction(this.actionHandlerIdentifier, actionName, this.props.id);
+    this.props.actions[actionName](this.props.id);
   },
 
   presentableSummary: function() {
@@ -35,7 +34,7 @@ export default React.createClass({
   onClick: function() {
     if (this.eventTypeInfos.key === "comment") {
       var actionName = this.props.showingComment ? "hideComment" : "showComment";
-      Fluxo.callAction(this.actionHandlerIdentifier, actionName, this.props.id);
+      this.props.actions[actionName](this.props.id);
     } else {
       chrome.tabs.create({ url: this.props.html_url });
     }
