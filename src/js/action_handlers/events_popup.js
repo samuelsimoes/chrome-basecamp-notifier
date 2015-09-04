@@ -1,10 +1,7 @@
 import { _ } from "libs";
 import ArrayLocalStorage from "services/array_local_storage";
 import EventsCache from "services/events_cache";
-import EventsFilter from "services/events_filter";
 import EventCommentLoader from "services/event_comment_loader";
-
-var MAX_EVENTS_ON_LIST = 40;
 
 export default {
   initialize: function (eventsStore, starredEventsStore, accountID) {
