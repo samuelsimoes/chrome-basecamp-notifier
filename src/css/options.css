@@ -1,5 +1,5 @@
 body {
-  background: url(../img/paper.png);
+  background: #FBFBF5;
   font-family: helvetica, arial, sans-serif !important;
 }
 
@@ -15,13 +15,14 @@ body {
 }
 
 .container {
-  border-radius: 8px;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
   background: #fff;
   width: 500px;
-  -webkit-box-shadow: 0px 0px 5px rgba(00, 00, 00, 0.2);
   border: 1px solid #CCC;
+  border-top: 0;
   position: absolute;
-  top: 10%;
+  top: 0;
   left: 50%;
   margin-left: -250px;
   margin-bottom: 40px;
@@ -49,7 +50,7 @@ a {
 
 h1 {
   color: #7D7A75;
-  font-weight: bold;
+  font-weight: lighter;
   font-size: 18px;
 }
 
@@ -69,19 +70,21 @@ h1 {
 }
 
 input[type=submit], button {
-  font-family: "Lucida Grande","Helvetica Neue", helvetica, arial, sans-serif;
-  font-size: 11px;
-  line-height: 16px;
+  font-family: "Helvetica Neue", helvetica, arial, sans-serif;
+  font-size: 12px;
+  line-height: 20px;
   padding: 2px 10px;
   margin: -1px 0 0;
   background: white;
   color: black;
   border: 1px solid #CCC;
-  -webkit-box-shadow: 0px 1px 0px #DDD;
   vertical-align: top;
-  -webkit-appearance: none;
-  border-radius: 5px;
+  border-radius: 3px;
   cursor: pointer;
+}
+
+input[type=submit]:hover, button:hover {
+  border: 1px solid #989595;
 }
 
 .flash {
@@ -132,8 +135,8 @@ input[type=submit], button {
   margin-right: 1px;
   position: relative;
   z-index: 1;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
   padding: 0 10px;
   border: 1px solid #DDD;
   border-bottom: 0;

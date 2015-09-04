@@ -21,22 +21,22 @@ strong {
 
 .button-1 {
   background-color: rgba(0, 0, 0, 0);
-  border-radius: 4px;
-  color: #C0C0C0;
-  border: 1px solid #C8C8C8;
+  color: #B7B2A5;
+  border: 1px solid #F0ECE1;
+  border-radius: 3px;
   cursor: pointer;
 }
 
 .button-1:hover {
-  color: #848484;
-  border-color: #848484;
+  color: #000;
+  border-color: #D4CDBB;
 }
 
 .close-btn {
   z-index: 1;
   position: absolute;
   right: 5px;
-  top: 41px;
+  top: 52px;
 }
 
 #close-button {
@@ -46,14 +46,18 @@ strong {
   cursor: pointer;
 }
 
-#configs_button {
+#configs-button {
   position: absolute;
   z-index: 2;
   right: 10px;
-  top: 7px;
+  top: 13px;
   font-size: 20px;
   text-decoration: none;
-  color: #000;
+  color: #DCDCC7;
+}
+
+#configs-button:hover {
+  color: #C3C3A3;
 }
 
 .load-more {
@@ -76,7 +80,6 @@ strong {
   color: black;
   border: 1px solid #CCC;
   -webkit-box-shadow: 0px 1px 0px #DDD;
-  border-radius: 5px;
   cursor: pointer;
 }
 
@@ -95,16 +98,13 @@ body {
 }
 
 h1 {
-  font-size: 12px;
-  font-weight: bold;
-  font-weight: light;
-  padding-left: 10px;
-  padding-bottom: 10px;
-  padding-top: 10px;
+  background: #FBFBF5;
+  font-size: 16px;
+  font-weight: lighter;
+  font-family: Helvetica, sans-serif;
+  padding: 14px;
   margin-top: 0px;
-  border-bottom: 2px solid #F0ECE1;
-  border-top: 2px solid #F0ECE1;
-  background: #f8f4e9;
+  border-bottom: 3px solid #F0ECE1;
   margin-bottom: 1px;
 }
 
@@ -127,7 +127,7 @@ h1:first-child {
   text-align: center;
   font-size: 15px;
   margin-right: 5px;
-  color: #E9E5DA;
+  color: #E2DED2;
   display: inline-block;
 }
 
@@ -154,7 +154,7 @@ h1:first-child {
 }
 
 .comment-view {
-  background: #FFF4F0;
+  background: #FAF9F4;
   border-top: 2px solid #FFD0D0;
   box-sizing: border-box;
   padding: 10px 10px 32px 10px;
@@ -167,6 +167,8 @@ h1:first-child {
   top: 10px;
   background: #fff;
   position: absolute;
+  width: 54px;
+  border-radius: 6px;
 }
 
 .comment-view a {
@@ -177,7 +179,6 @@ h1:first-child {
   margin-top: 2px;
   margin-left: 10px;
   float: right;
-  font-weight: bold;
   color: #9FA786;
   text-decoration: none;
 }
@@ -188,7 +189,8 @@ h1:first-child {
   line-height: 18px;
   padding: 10px 13px;
   margin: 0 0  0 70px;
-  border-radius: 8px;
+  border-radius: 3px;
+  border-bottom: 2px solid #F5EDEA;
 }
 
 .comment-view .ballon:after {
@@ -231,7 +233,7 @@ h1:first-child {
 }
 
 .creator-avatar {
-  border-radius: 50%;
+  border-radius: 20%;
 }
 
 .notification-list li:hover {
@@ -303,7 +305,7 @@ h1:first-child {
   content: "";
   width: 100%;
   z-index: 0;
-  border-bottom: 1px solid #DDD;
+  border-bottom: 1px solid #D4CDBB;
 }
 
 .etabs .tab {
@@ -314,10 +316,10 @@ h1:first-child {
 }
 
 .etabs .tab a {
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
   padding: 0 10px;
-  border: 1px solid #DDD;
+  border: 1px solid #D4CDBB;
   border-bottom: 0;
   font-size: 11px;
   text-decoration: none;
@@ -358,4 +360,8 @@ h1:first-child {
 .notification-list-blank-slate .icon {
   font-size: 19px;
   margin-right: 10px;
+}
+
+.tab-content {
+  border-bottom: 1px solid #FBEAEA;
 }

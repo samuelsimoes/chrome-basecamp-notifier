@@ -54,7 +54,7 @@ export default function() {
 
   _.each(listenedAccounts, ShowAccountEvents);
 
-  document.getElementById("configs_button").addEventListener("click", function() {
+  document.getElementById("configs-button").addEventListener("click", function() {
     chrome.tabs.create({ url: chrome.extension.getURL("options.html") });
   });
 };
