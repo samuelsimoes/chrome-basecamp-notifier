@@ -3,7 +3,7 @@ import Event from "components/popup/event";
 
 export default React.createClass({
   renderEvent: function(data) {
-    return <Event {...data} actions={this.props.action} key={data.id} />;
+    return <Event {...data} tabName={this.props.tabName} actions={this.props.actions} key={data.id} />;
   },
 
   renderEvents: function() {

@@ -41,5 +41,13 @@ export default Fluxo.Store.extend({
 
   unstar: function() {
     this.setAttribute("starred", false);
+  },
+
+  setComment: function(commentData) {
+    this.setAttribute("comment", commentData);
+  },
+
+  setCommentLoadError: function(commentErrorLoading) {
+    this.setAttribute("commentErrorLoading", commentErrorLoading);
   }
 });

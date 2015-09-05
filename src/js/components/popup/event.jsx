@@ -6,6 +6,10 @@ import Comment from "components/popup/comment";
 export default React.createClass({
   mixins: [React.addons.PureRenderMixin],
 
+  getInitialState: function() {
+    return { showingComment: false };
+  },
+
   toggleStar: function(evt) {
     evt.preventDefault();
     evt.stopPropagation();
@@ -27,16 +31,19 @@ export default React.createClass({
   },
 
   onClick: function() {
-    if (this.data.isComment) {
-      var actionName = this.props.showingComment ? "hideComment" : "showComment";
-      this.props.actions[actionName](this.props.id);
+    if (this.props.isComment) {
+      this.setState({ showingComment: !this.state.showComment });
+
+      if (!this.state.showingComment) {
+        this.props.loadComment(this.props.id, this.props.tabName);
+      }
     } else {
       chrome.tabs.create({ url: this.props.html_url });
     }
   },
 
   renderComment: function() {
-    if (!this.props.showingComment) { return; }
+    if (!this.state.showingComment) { return; }
     return <Comment error={this.props.commentErrorLoading}
                     {...this.props.comment}
                     url={this.props.html_url} />;

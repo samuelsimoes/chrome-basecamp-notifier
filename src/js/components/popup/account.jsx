@@ -11,7 +11,7 @@ export default React.createClass({
 
     return (
       <div className="latest-notifications tab-content">
-        <Events actions={this.props.actions} events={this.props.events.stores} />
+        <Events actions={this.props.actions} events={this.props.events.stores} tabName="events" />
       </div>
     );
   },
@@ -21,7 +21,7 @@ export default React.createClass({
 
     return (
       <div className="latest-notifications tab-content">
-        <Events actions={this.props.actions} events={this.props.starredEvents.stores} />
+        <Events actions={this.props.actions} events={this.props.starredEvents.stores} tabName="starredEvents" />
       </div>
     );
   },

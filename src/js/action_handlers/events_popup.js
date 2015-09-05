@@ -2,6 +2,7 @@ import { _ } from "libs";
 import ArrayLocalStorage from "services/array_local_storage";
 import EventsCache from "services/events_cache";
 import EventCommentLoader from "services/event_comment_loader";
+import EventCommentLoadingFeedback from "services/event_comment_loading_feedback";
 
 export default {
   initialize: function (events, starredEvents, accountID) {
@@ -18,11 +19,9 @@ export default {
 
     store.star();
 
-    var eventData = _.omit(store.data, "showingComment");
+    this.starredEvents.addFromData(store.data);
 
-    this.starredEvents.addFromData(eventData);
-
-    EventsCache.storeStarred(this.accountID, eventData);
+    EventsCache.storeStarred(this.accountID, store.data);
   },
 
   unstarEvent: function(eventID) {
@@ -40,46 +39,15 @@ export default {
     EventsCache.removeStarred(this.accountID, eventID);
   },
 
-  /**
-   * This action show the comment to a event at the same time on the
-   * starred events tab and the latest events tab.
-   */
-  showComment: function(eventID) {
-    var storesToShowComment = this.findOnBothCollections(eventID),
-        eventLoading = EventCommentLoader(storesToShowComment[0].data);
+  loadComment: function(eventID, tabName) {
+    var store = this[tabName].find(eventID),
+        eventLoading = EventCommentLoader(store.data);
 
-    _.invoke(storesToShowComment, "setAttribute", "showingComment", true);
-
-    eventLoading.then(function(request) {
-      _.invoke(storesToShowComment, "setAttribute", "comment", request.response);
-    }, function(request) {
-      var errorLoading;
-
-      if (request.deleted) {
-        errorLoading = "Can't fetch the comment. Maybe it was deleted.";
-      } else {
-        errorLoading = "Can't fetch the comment, try again.";
-      }
-
-      _.invoke(storesToShowComment, "setAttribute", "commentErrorLoading", errorLoading);
-    });
+    EventCommentLoadingFeedback(eventLoading, store);
   },
 
   clearLastEvents: function() {
     EventsCache.clear(this.accountID);
     this.events.removeAll();
-  },
-
-  hideComment: function(eventID) {
-    var storesToHideComment = this.findOnBothCollections(eventID);
-
-    _.invoke(storesToHideComment, "setAttribute", "commentErrorLoading", null);
-
-    _.invoke(storesToHideComment, "setAttribute", "showingComment", false);
-  },
-
-  findOnBothCollections: function(id) {
-    var stores = [this.events.find(id), this.starredEvents.find(id)];
-    return stores.filter(function(item) { return item; });
   }
 };
