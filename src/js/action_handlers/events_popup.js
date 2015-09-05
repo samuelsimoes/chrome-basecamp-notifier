@@ -1,4 +1,5 @@
 import { _ } from "libs";
+import ArrayLocalStorage from "services/array_local_storage";
 import EventsCache from "services/events_cache";
 import EventCommentLoader from "services/event_comment_loader";
 import EventCommentLoadingFeedback from "services/event_comment_loading_feedback";
@@ -18,9 +19,11 @@ export default {
 
     store.star();
 
-    this.starredEvents.addFromData(store.data);
-
     EventsCache.storeStarred(this.accountID, store.data);
+
+    ArrayLocalStorage.add("starredEvents", eventID);
+
+    this.starredEvents.addFromData(store.data);
   },
 
   unstarEvent: function(eventID) {
@@ -31,11 +34,11 @@ export default {
       store.unstar();
     }
 
-    starredStore.unstar();
+    EventsCache.removeStarred(this.accountID, eventID);
+
+    ArrayLocalStorage.remove("starredEvents", eventID);
 
     this.starredEvents.remove(starredStore);
-
-    EventsCache.removeStarred(this.accountID, eventID);
   },
 
   loadComment: function(eventID, tabName) {

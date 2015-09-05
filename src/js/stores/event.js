@@ -10,11 +10,16 @@ export default Fluxo.Store.extend({
     creatorImage: ["change:creator"],
     creatorName: ["change:creator"],
     bucketName: ["change:bucket"],
-    unread: []
+    unread: [],
+    starred: []
   },
 
   unread: function() {
     return ArrayLocalStorage.include("unreadEvents", this.data.id);
+  },
+
+  starred: function() {
+    return ArrayLocalStorage.include("starredEvents", this.data.id);
   },
 
   typeInfos: function() {
