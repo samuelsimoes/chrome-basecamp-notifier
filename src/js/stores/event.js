@@ -1,5 +1,6 @@
 import { Fluxo } from "libs";
 import EventType from "services/event_type";
+import ArrayLocalStorage from "services/array_local_storage";
 
 export default Fluxo.Store.extend({
   computed: {
@@ -8,7 +9,12 @@ export default Fluxo.Store.extend({
     icon: ["change:typeInfos"],
     creatorImage: ["change:creator"],
     creatorName: ["change:creator"],
-    bucketName: ["change:bucket"]
+    bucketName: ["change:bucket"],
+    unread: []
+  },
+
+  unread: function() {
+    return ArrayLocalStorage.include("unreadEvents", this.data.id);
   },
 
   typeInfos: function() {

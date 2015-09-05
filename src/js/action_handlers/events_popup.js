@@ -1,5 +1,4 @@
 import { _ } from "libs";
-import ArrayLocalStorage from "services/array_local_storage";
 import EventsCache from "services/events_cache";
 import EventCommentLoader from "services/event_comment_loader";
 import EventCommentLoadingFeedback from "services/event_comment_loading_feedback";
