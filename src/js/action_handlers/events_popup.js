@@ -4,57 +4,38 @@ import EventsCache from "services/events_cache";
 import EventCommentLoader from "services/event_comment_loader";
 
 export default {
-  initialize: function (eventsStore, starredEventsStore, accountID) {
-    this.eventsStore = eventsStore;
-    this.starredEventsStore = starredEventsStore;
+  initialize: function (events, starredEvents, accountID) {
+    this.events = events;
+    this.starredEvents = starredEvents;
     this.accountID = accountID;
 
-    this.starredEventsCache = EventsCache.getStarred(this.accountID);
-    this.eventsCache = EventsCache.get(this.accountID);
-
-    this._loadEvents();
-    this._loadStarredEvents();
-  },
-
-  _loadEvents: function() {
-    var starredEventsItemIDs = this.starredEventsCache.map(function(item) { return item.id; });
-
-    this.eventsCache.forEach(function(item) {
-      item.unread = ArrayLocalStorage.include("unreadEvents", item.id);
-      item.starred = _.include(starredEventsItemIDs, item.id);
-
-      if (item.unread) {
-        ArrayLocalStorage.remove("unreadEvents", item.id);
-      }
-    });
-
-    this.eventsStore.resetFromData(this.eventsCache);
-  },
-
-  _loadStarredEvents: function() {
-    this.starredEventsStore.resetFromData(this.starredEventsCache);
+    this.starredEvents.resetFromData(EventsCache.getStarred(this.accountID));
+    this.events.resetFromData(EventsCache.get(this.accountID));
   },
 
   starEvent: function(eventID) {
-    var toStarEvent = this.eventsStore.find(eventID);
+    var store = this.events.find(eventID);
 
-    toStarEvent.setAttribute("starred", true);
+    store.star();
 
-    var eventData = _.omit(toStarEvent.data, "showingComment");
+    var eventData = _.omit(store.data, "showingComment");
 
-    this.starredEventsStore.addFromData(eventData);
+    this.starredEvents.addFromData(eventData);
 
     EventsCache.storeStarred(this.accountID, eventData);
   },
 
   unstarEvent: function(eventID) {
-    var toUnstarEvent = this.eventsStore.find(eventID);
+    var starredStore = this.starredEvents.find(eventID),
+        store = this.events.find(eventID);
 
-    if (toUnstarEvent) {
-      toUnstarEvent.setAttribute("starred", false);
+    if (store) {
+      store.unstar();
     }
 
-    this.starredEventsStore.remove(this.starredEventsStore.find(eventID));
+    starredStore.unstar();
+
+    this.starredEvents.remove(starredStore);
 
     EventsCache.removeStarred(this.accountID, eventID);
   },
@@ -86,7 +67,7 @@ export default {
 
   clearLastEvents: function() {
     EventsCache.clear(this.accountID);
-    this.eventsStore.removeAll();
+    this.events.removeAll();
   },
 
   hideComment: function(eventID) {
@@ -98,7 +79,7 @@ export default {
   },
 
   findOnBothCollections: function(id) {
-    var stores = [this.eventsStore.find(id), this.starredEventsStore.find(id)];
+    var stores = [this.events.find(id), this.starredEvents.find(id)];
     return stores.filter(function(item) { return item; });
   }
 };

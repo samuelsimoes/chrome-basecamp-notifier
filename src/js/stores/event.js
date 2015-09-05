@@ -33,5 +33,13 @@ export default Fluxo.Store.extend({
 
   bucketName: function() {
     return this.data.bucket.name;
+  },
+
+  star: function() {
+    this.setAttribute("starred", true);
+  },
+
+  unstar: function() {
+    this.setAttribute("starred", false);
   }
 });
