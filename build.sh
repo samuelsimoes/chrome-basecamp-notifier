@@ -6,9 +6,7 @@ echo "[$(date)] build started"
 . .${BUILD_ENV:="development"}-env
 
 # copy src (without app javascript) to dist folder
-rm -rf dist
-cp -r src dist
-rm -rf dist/js/*
+rsync --archive --exclude='js/*' src/* dist
 
 # copy javascript that shouldn't be compiled
 cp src/js/vendor/raven-js/dist/raven.js dist/js/raven.js
