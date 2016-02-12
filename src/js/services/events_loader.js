@@ -7,13 +7,13 @@ import Defer from "services/defer";
  *
  * First of all, Basecamp only returns 50 items per page, so, remember that.
  *
- * Imagine that you stay way from you computer for a couple hours and while it
- * away time your team generate more than 50 events. So you need make a request
- * to events endpoint since the last event passed on the arguments and verifies if it
- * has a subsequent page to load the remaining events and it must be recursive,
- * once the away time can generated an unknow amount of pages.
+ * Imagine that you stay way from you computer for a couple hours and while this your team 
+ * generate more than 50 events. On this situation we need make a request to events endpoint
+ * since the last event date passed on the arguments and verify if the payload has a subsequent 
+ * page to load the remaining events and it must be recursive, once this away time may generated 
+ * many pages.
  *
- * Important notice that if the "since" isn't present (most common on the first
+ * Important: if the "since" argument isn't present (most common on the first
  * app request) the routine finish on the first payload.
  */
 export default function(accountID, options) {
